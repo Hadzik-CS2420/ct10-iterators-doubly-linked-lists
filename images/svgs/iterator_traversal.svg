@@ -1,0 +1,160 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 545">
+  <style>
+    text { font-family: 'Segoe UI', Arial, sans-serif; }
+    .title         { font-size: 18px; font-weight: bold; fill: #1a1a1a; }
+    .step-label    { font-size: 14px; font-weight: bold; fill: #333; }
+    .value         { font-size: 15px; font-weight: bold; fill: #fff; }
+    .value-sm      { font-size: 11px; font-weight: bold; fill: #fff; }
+    .ptr-label     { font-size: 12px; font-weight: bold; fill: #8e44ad; }
+    .code          { font-size: 12px; fill: #2c3e50; font-family: 'Consolas', monospace; }
+    .note          { font-size: 11px; fill: #777; font-style: italic; }
+    .badge-text    { font-size: 12px; fill: #7d5a00; font-weight: bold; font-family: 'Consolas', monospace; }
+    .null-stop     { font-size: 13px; font-weight: bold; fill: #8e44ad; }
+    .result-line   { font-size: 13px; font-weight: bold; fill: #8e44ad; }
+  </style>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="22" text-anchor="middle" class="title">Iterator Traversal: current_ Advancing Node by Node</text>
+
+  <!-- Loop code badge -->
+  <rect x="55" y="30" width="690" height="24" rx="12" fill="#fff8e1" stroke="#f39c12" stroke-width="1.5"/>
+  <text x="400" y="47" text-anchor="middle" class="badge-text">for (auto it = list.begin();  it != list.end();  ++it)  {  /* use *it */  }</text>
+
+  <!-- ===================== Step 1: begin() ===================== -->
+  <text x="20" y="78" class="step-label">Step 1: it = list.begin() — current_ = head_</text>
+  <text x="20" y="95" class="code">auto it = list.begin();   // Iterator{head_} — current_ now points to the first node;  *it yields 3001</text>
+
+  <!-- Node 3001 (highlighted — current_ is here) -->
+  <rect x="20"  y="112" width="70" height="40" rx="4" fill="#3498db" stroke="#2980b9" stroke-width="2.5"/>
+  <rect x="90"  y="112" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="55"  y="137" text-anchor="middle" class="value">3001</text>
+  <text x="115" y="137" text-anchor="middle" class="value-sm">next</text>
+  <line x1="140" y1="132" x2="178" y2="132" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 3002 -->
+  <rect x="180" y="112" width="70" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="250" y="112" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="215" y="137" text-anchor="middle" class="value">3002</text>
+  <text x="275" y="137" text-anchor="middle" class="value-sm">next</text>
+  <line x1="300" y1="132" x2="338" y2="132" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 3003 -->
+  <rect x="340" y="112" width="70" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="410" y="112" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="375" y="137" text-anchor="middle" class="value">3003</text>
+  <text x="435" y="137" text-anchor="middle" class="value-sm">next</text>
+  <line x1="460" y1="132" x2="498" y2="132" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 3004 -->
+  <rect x="500" y="112" width="70" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="570" y="112" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="535" y="137" text-anchor="middle" class="value">3004</text>
+  <text x="595" y="137" text-anchor="middle" class="value-sm">next</text>
+  <line x1="620" y1="132" x2="658" y2="132" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- nullptr -->
+  <rect x="660" y="121" width="68" height="22" rx="4" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1.5"/>
+  <text x="694" y="137" text-anchor="middle" style="font-size:12px; fill:#95a5a6; font-weight:bold;">nullptr</text>
+
+  <!-- current_ pointer below node 3001 (Step 1) -->
+  <text x="55" y="175" text-anchor="middle" class="ptr-label">current_</text>
+  <line x1="55" y1="163" x2="55" y2="159" stroke="#8e44ad" stroke-width="2"/>
+  <polygon points="51 159, 55 152, 59 159" fill="#8e44ad"/>
+
+  <text x="400" y="200" text-anchor="middle" class="note">operator!=: current_ (address of 3001) ≠ nullptr  →  loop body runs  |  operator*: returns current_-&gt;data = 3001</text>
+
+  <!-- ===================== Step 2: ++it advances ===================== -->
+  <text x="20" y="228" class="step-label">Step 2: ++it — current_ = current_-&gt;next</text>
+  <text x="20" y="245" class="code">++it;   // current_ = current_-&gt;next;  return *this;  →  current_ now points to 3002;  *it yields 3002</text>
+
+  <!-- Node 3001 (visited) -->
+  <rect x="20"  y="262" width="70" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="90"  y="262" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="55"  y="287" text-anchor="middle" class="value">3001</text>
+  <text x="115" y="287" text-anchor="middle" class="value-sm">next</text>
+  <line x1="140" y1="282" x2="178" y2="282" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 3002 (highlighted — current_ is here now) -->
+  <rect x="180" y="262" width="70" height="40" rx="4" fill="#3498db" stroke="#2980b9" stroke-width="2.5"/>
+  <rect x="250" y="262" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="215" y="287" text-anchor="middle" class="value">3002</text>
+  <text x="275" y="287" text-anchor="middle" class="value-sm">next</text>
+  <line x1="300" y1="282" x2="338" y2="282" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 3003 -->
+  <rect x="340" y="262" width="70" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="410" y="262" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="375" y="287" text-anchor="middle" class="value">3003</text>
+  <text x="435" y="287" text-anchor="middle" class="value-sm">next</text>
+  <line x1="460" y1="282" x2="498" y2="282" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 3004 -->
+  <rect x="500" y="262" width="70" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="570" y="262" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="535" y="287" text-anchor="middle" class="value">3004</text>
+  <text x="595" y="287" text-anchor="middle" class="value-sm">next</text>
+  <line x1="620" y1="282" x2="658" y2="282" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- nullptr -->
+  <rect x="660" y="271" width="68" height="22" rx="4" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1.5"/>
+  <text x="694" y="287" text-anchor="middle" style="font-size:12px; fill:#95a5a6; font-weight:bold;">nullptr</text>
+
+  <!-- current_ pointer below node 3002 (Step 2) -->
+  <text x="215" y="325" text-anchor="middle" class="ptr-label">current_</text>
+  <line x1="215" y1="313" x2="215" y2="309" stroke="#8e44ad" stroke-width="2"/>
+  <polygon points="211 309, 215 302, 219 309" fill="#8e44ad"/>
+
+  <text x="400" y="350" text-anchor="middle" class="note">this pattern repeats — one ++it per iteration visits 3003, then 3004, then lands on nullptr</text>
+
+  <!-- ===================== Step 3: nullptr reached ===================== -->
+  <text x="20" y="378" class="step-label">Step 3: it != list.end() is false — loop exits</text>
+  <text x="20" y="395" class="code">// after ++it on the last node:  current_ = last_node-&gt;next = nullptr  →  end() returns Iterator{nullptr}</text>
+
+  <!-- Node 3001 -->
+  <rect x="20"  y="412" width="70" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="90"  y="412" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="55"  y="437" text-anchor="middle" class="value">3001</text>
+  <text x="115" y="437" text-anchor="middle" class="value-sm">next</text>
+  <line x1="140" y1="432" x2="178" y2="432" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 3002 -->
+  <rect x="180" y="412" width="70" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="250" y="412" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="215" y="437" text-anchor="middle" class="value">3002</text>
+  <text x="275" y="437" text-anchor="middle" class="value-sm">next</text>
+  <line x1="300" y1="432" x2="338" y2="432" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 3003 -->
+  <rect x="340" y="412" width="70" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="410" y="412" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="375" y="437" text-anchor="middle" class="value">3003</text>
+  <text x="435" y="437" text-anchor="middle" class="value-sm">next</text>
+  <line x1="460" y1="432" x2="498" y2="432" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 3004 -->
+  <rect x="500" y="412" width="70" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="570" y="412" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="535" y="437" text-anchor="middle" class="value">3004</text>
+  <text x="595" y="437" text-anchor="middle" class="value-sm">next</text>
+  <line x1="620" y1="432" x2="658" y2="432" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- nullptr (highlighted — current_ is here, loop condition fails) -->
+  <rect x="660" y="412" width="68" height="40" rx="4" fill="#f4ecf7" stroke="#8e44ad" stroke-width="2.5"/>
+  <text x="694" y="437" text-anchor="middle" class="null-stop">nullptr</text>
+
+  <!-- current_ pointer below nullptr (Step 3) -->
+  <text x="694" y="475" text-anchor="middle" class="ptr-label">current_</text>
+  <line x1="694" y1="463" x2="694" y2="459" stroke="#8e44ad" stroke-width="2"/>
+  <polygon points="690 459, 694 452, 698 459" fill="#8e44ad"/>
+
+  <text x="400" y="502" text-anchor="middle" class="result-line">current_ == nullptr  →  it != end() is false  →  loop body does not run  →  traversal complete</text>
+
+  <!-- Bottom note -->
+  <text x="400" y="527" text-anchor="middle" class="note">same traversal pattern as print() — exposed as operators so any caller can walk the list without knowing its internals</text>
+</svg>

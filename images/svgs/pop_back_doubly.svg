@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 480">
+  <style>
+    text { font-family: 'Segoe UI', Arial, sans-serif; }
+    .title { font-size: 18px; font-weight: bold; fill: #1a1a1a; }
+    .step-label { font-size: 14px; font-weight: bold; fill: #333; }
+    .value { font-size: 15px; font-weight: bold; fill: #fff; }
+    .value-sm { font-size: 11px; font-weight: bold; fill: #fff; }
+    .field-label { font-size: 11px; font-weight: bold; fill: #fff; }
+    .ptr-label { font-size: 12px; font-weight: bold; fill: #8e44ad; }
+    .deleted { font-size: 12px; font-weight: bold; fill: #e74c3c; }
+    .code { font-size: 12px; fill: #2c3e50; font-family: 'Consolas', monospace; }
+    .note { font-size: 11px; fill: #777; font-style: italic; }
+    .step-num { font-size: 12px; font-weight: bold; fill: #e74c3c; }
+  </style>
+
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+    </marker>
+    <marker id="ptr-arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8e44ad"/>
+    </marker>
+  </defs>
+
+  <text x="400" y="28" text-anchor="middle" class="title">pop_back: O(1) Removal Using tail_&#x2192;prev</text>
+
+  <!-- ==================== BEFORE ==================== -->
+  <text x="30" y="62" class="step-label">Before: list contains 4001 &#x2194; 4002 &#x2194; 4003 &#x2194; 4004</text>
+
+  <!-- head_ pointer -->
+  <text x="90" y="82" text-anchor="middle" class="ptr-label">head_</text>
+  <line x1="90" y1="87" x2="90" y2="107" stroke="#8e44ad" stroke-width="2" marker-end="url(#ptr-arrow)"/>
+
+  <!-- Node 4001 -->
+  <rect x="30" y="110" width="40" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <rect x="70" y="110" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="130" y="110" width="40" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="50" y="135" text-anchor="middle" class="field-label">p</text>
+  <text x="100" y="135" text-anchor="middle" class="value">4001</text>
+  <text x="150" y="135" text-anchor="middle" class="field-label">n</text>
+
+  <!-- Arrow 4001→4002 -->
+  <line x1="170" y1="130" x2="198" y2="130" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 4002 -->
+  <rect x="200" y="110" width="40" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <rect x="240" y="110" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="300" y="110" width="40" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="220" y="135" text-anchor="middle" class="field-label">p</text>
+  <text x="270" y="135" text-anchor="middle" class="value">4002</text>
+  <text x="320" y="135" text-anchor="middle" class="field-label">n</text>
+
+  <!-- Arrow 4002→4003 -->
+  <line x1="340" y1="130" x2="368" y2="130" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 4003 (will become new tail) -->
+  <rect x="370" y="110" width="40" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <rect x="410" y="110" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="470" y="110" width="40" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="390" y="135" text-anchor="middle" class="field-label">p</text>
+  <text x="440" y="135" text-anchor="middle" class="value">4003</text>
+  <text x="490" y="135" text-anchor="middle" class="field-label">n</text>
+
+  <!-- Arrow 4003→4004 -->
+  <line x1="510" y1="130" x2="538" y2="130" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 4004 (to be deleted) -->
+  <rect x="540" y="110" width="40" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <rect x="580" y="110" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="640" y="110" width="40" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="560" y="135" text-anchor="middle" class="field-label">p</text>
+  <text x="610" y="135" text-anchor="middle" class="value">4004</text>
+  <text x="660" y="135" text-anchor="middle" class="field-label">n</text>
+
+  <!-- tail_ pointer (before — at 4004) -->
+  <text x="610" y="82" text-anchor="middle" class="ptr-label">tail_</text>
+  <line x1="610" y1="87" x2="610" y2="107" stroke="#8e44ad" stroke-width="2" marker-end="url(#ptr-arrow)"/>
+
+  <!-- key insight: tail_->prev reaches 4003 directly -->
+  <text x="525" y="172" text-anchor="middle" class="note" style="fill: #2980b9; font-style: normal; font-weight: bold;">tail_&#x2192;prev</text>
+  <path d="M 560 155 C 560 170, 460 170, 460 155" fill="none" stroke="#2980b9" stroke-width="2" stroke-dasharray="6,3"/>
+  <polygon points="456 155, 460 148, 464 155" fill="#2980b9"/>
+
+  <!-- ==================== AFTER ==================== -->
+  <text x="30" y="210" class="step-label">After: pop_back() &#x2014; 4004 removed, tail_ retreats to 4003</text>
+
+  <!-- head_ pointer -->
+  <text x="90" y="230" text-anchor="middle" class="ptr-label">head_</text>
+  <line x1="90" y1="235" x2="90" y2="255" stroke="#8e44ad" stroke-width="2" marker-end="url(#ptr-arrow)"/>
+
+  <!-- Node 4001 -->
+  <rect x="30" y="258" width="40" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <rect x="70" y="258" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="130" y="258" width="40" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="50" y="283" text-anchor="middle" class="field-label">p</text>
+  <text x="100" y="283" text-anchor="middle" class="value">4001</text>
+  <text x="150" y="283" text-anchor="middle" class="field-label">n</text>
+
+  <!-- Arrow 4001→4002 -->
+  <line x1="170" y1="278" x2="198" y2="278" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 4002 -->
+  <rect x="200" y="258" width="40" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <rect x="240" y="258" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="300" y="258" width="40" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="220" y="283" text-anchor="middle" class="field-label">p</text>
+  <text x="270" y="283" text-anchor="middle" class="value">4002</text>
+  <text x="320" y="283" text-anchor="middle" class="field-label">n</text>
+
+  <!-- Arrow 4002→4003 -->
+  <line x1="340" y1="278" x2="368" y2="278" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Node 4003 (new tail — highlighted) -->
+  <rect x="370" y="258" width="40" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <rect x="410" y="258" width="60" height="40" rx="4" fill="#3498db" stroke="#2980b9" stroke-width="2.5"/>
+  <rect x="470" y="258" width="40" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="390" y="283" text-anchor="middle" class="field-label">p</text>
+  <text x="440" y="283" text-anchor="middle" class="value">4003</text>
+  <text x="490" y="283" text-anchor="middle" class="field-label">n</text>
+
+  <!-- tail_ pointer (after — moved to 4003) -->
+  <text x="440" y="230" text-anchor="middle" class="ptr-label">tail_</text>
+  <line x1="440" y1="235" x2="440" y2="255" stroke="#8e44ad" stroke-width="2" marker-end="url(#ptr-arrow)"/>
+
+  <!-- nullptr after 4003 -->
+  <line x1="510" y1="278" x2="548" y2="278" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
+  <rect x="550" y="268" width="65" height="22" rx="4" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1.5"/>
+  <text x="582" y="284" text-anchor="middle" style="font-size: 12px; fill: #95a5a6; font-weight: bold;">nullptr</text>
+
+  <!-- Deleted node ghost -->
+  <rect x="560" y="310" width="140" height="30" rx="4" fill="none" stroke="#e74c3c" stroke-width="2" stroke-dasharray="6,3"/>
+  <text x="630" y="330" text-anchor="middle" class="deleted">4004 deleted</text>
+
+  <!-- ==================== Steps explanation ==================== -->
+  <text x="30" y="370" class="step-num">Pointer updates:</text>
+  <text x="30" y="390" class="code">1. temp  = tail_               // save old tail (4004) for deletion</text>
+  <text x="30" y="408" class="code">2. tail_ = tail_-&gt;prev         // retreat tail to the previous node (4003) &#x2014; O(1)!</text>
+  <text x="30" y="426" class="code">3. tail_-&gt;next = nullptr       // new tail (4003) has nothing after it</text>
+  <text x="30" y="444" class="code">4. delete temp; --size_;       // free old tail and update count</text>
+
+  <!-- Comparison note -->
+  <text x="400" y="470" text-anchor="middle" class="note">O(1) &#x2014; tail_&#x2192;prev reaches the second-to-last node in one step. No trailing pointer traversal needed.</text>
+</svg>
