@@ -59,15 +59,16 @@ bool DoublyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 //   If the list was empty, head_ was nullptr AND tail_ needs to be set too.
 
 void DoublyLinkedList::push_front(int value) {
-    // TODO: Create a new DoublyNode on the heap with the given value
-    //       (next points to current head_, prev is nullptr)
+    auto* node = new DoublyNode{value, head_, nullptr};
 
-    // TODO: If the list is NOT empty: set head_->prev to point back to the new node
+    if (head_) {
+        head_->prev = node;
+    } else {
+        tail_ = node;
+    }
 
-    // TODO: If the list WAS empty: set tail_ to the new node
-    //       (the new node is both the head and the tail)
-
-    // TODO: Set head_ to the new node and increment size_
+    head_ = node;
+    ++size_;
 }
 
 // --- push_back ---
@@ -87,15 +88,16 @@ void DoublyLinkedList::push_front(int value) {
 //   Again, the old_tail->next step only applies if the list was non-empty.
 
 void DoublyLinkedList::push_back(int value) {
-    // TODO: Create a new DoublyNode on the heap with the given value
-    //       (prev points to current tail_, next is nullptr)
+    auto* node = new DoublyNode{value, nullptr, tail_};
 
-    // TODO: If the list is NOT empty: set tail_->next to point forward to the new node
+    if (tail_) {
+        tail_->next = node;
+    } else {
+        head_ = node;
+    }
 
-    // TODO: If the list WAS empty: set head_ to the new node
-    //       (the new node is both the head and the tail)
-
-    // TODO: Set tail_ to the new node and increment size_
+    tail_ = node;
+    ++size_;
 }
 
 // --- pop_front ---
@@ -113,14 +115,17 @@ void DoublyLinkedList::pop_front() {
         throw std::underflow_error("Cannot pop from an empty list");
     }
 
-    // TODO: Save head_ to a temp pointer
+    auto* temp = head_;
+    head_      = head_->next;
 
-    // TODO: Advance head_ to the next node
+    if (head_) {
+        head_->prev = nullptr;
+    } else {
+        tail_ = nullptr;
+    }
 
-    // TODO: If the new head_ is NOT nullptr: clear its prev pointer to nullptr
-    //       Otherwise (list is now empty): set tail_ = nullptr
-
-    // TODO: Delete the saved old head and decrement size_
+    delete temp;
+    --size_;
 }
 
 // --- pop_back ---
@@ -144,12 +149,15 @@ void DoublyLinkedList::pop_back() {
         throw std::underflow_error("Cannot pop from an empty list");
     }
 
-    // TODO: Save tail_ to a temp pointer
+    auto* temp = tail_;
+    tail_      = tail_->prev;
 
-    // TODO: Retreat tail_ to the previous node (tail_->prev)
+    if (tail_) {
+        tail_->next = nullptr;
+    } else {
+        head_ = nullptr;
+    }
 
-    // TODO: If the new tail_ is NOT nullptr: clear its next pointer to nullptr
-    //       Otherwise (list is now empty): set head_ = nullptr
-
-    // TODO: Delete the saved old tail and decrement size_
+    delete temp;
+    --size_;
 }

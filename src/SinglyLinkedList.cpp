@@ -157,10 +157,7 @@ bool SinglyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 //   - returns int& (by reference) so you can modify the node's data directly
 
 int& SinglyLinkedList::Iterator::operator*() {
-    // TODO: Return a reference to the data field of the current node
-    //       (Hint: current_ is a Node* — access its data member)
-
-    return current_->data; // placeholder — replace with your implementation
+    return current_->data;
 }
 
 // --- operator++ ---
@@ -170,10 +167,8 @@ int& SinglyLinkedList::Iterator::operator*() {
 //   then returns a reference to *this so chaining works.
 
 SinglyLinkedList::Iterator& SinglyLinkedList::Iterator::operator++() {
-    // TODO: Advance current_ to the next node
-    // TODO: Return *this
-
-    return *this; // placeholder — ensure this is the last line after your implementation
+    current_ = current_->next;
+    return *this;
 }
 
 // --- operator!= ---
@@ -183,10 +178,7 @@ SinglyLinkedList::Iterator& SinglyLinkedList::Iterator::operator++() {
 //   end() returns Iterator{nullptr}, so when current_ reaches nullptr the loop stops.
 
 bool SinglyLinkedList::Iterator::operator!=(const Iterator& other) const {
-    // TODO: Return true if this iterator's current_ differs from other's current_
-    //       (Hint: compare current_ with other.current_)
-
-    return false; // placeholder — remove this line when done
+    return current_ != other.current_;
 }
 
 // --- begin() ---
@@ -195,9 +187,7 @@ bool SinglyLinkedList::Iterator::operator!=(const Iterator& other) const {
 //   If the list is empty, head_ is nullptr — begin() == end(), so the loop body never runs.
 
 SinglyLinkedList::Iterator SinglyLinkedList::begin() {
-    // TODO: Return an Iterator constructed with head_
-
-    return Iterator{nullptr}; // placeholder — remove this line when done
+    return Iterator{head_};
 }
 
 // --- end() ---
@@ -206,7 +196,5 @@ SinglyLinkedList::Iterator SinglyLinkedList::begin() {
 //   For a linked list, "one past the last" is nullptr — what next points to after the tail.
 
 SinglyLinkedList::Iterator SinglyLinkedList::end() {
-    // TODO: Return an Iterator constructed with nullptr
-
-    return Iterator{nullptr}; // placeholder — this happens to be correct; make it explicit
+    return Iterator{nullptr};
 }
