@@ -162,6 +162,10 @@ int& SinglyLinkedList::Iterator::operator*() {
 
 // --- operator++ ---
 
+// ? SEE DIAGRAM: images/for_loop_order_post.png  — for loop execution order with it++ (return value discarded)
+// ? SEE DIAGRAM: images/for_loop_order.png        — same loop with ++it; increment runs AFTER the body
+// ? SEE DIAGRAM: images/pointer_loop_increment_asm.png — why ++it is preferred: iterator objects can't be optimized like raw pointers
+
 // ! DISCUSSION: Pre-increment (++it) advances the iterator to the next node.
 //   It moves current_ forward by one step (current_ = current_->next),
 //   then returns a reference to *this so chaining works.
