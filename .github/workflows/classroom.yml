@@ -1,0 +1,359 @@
+name: Autograding Tests
+on:
+  - push
+  - repository_dispatch
+permissions:
+  checks: write
+  actions: read
+  contents: read
+
+jobs:
+  run-autograding-tests:
+    runs-on: ubuntu-latest
+    if: github.actor != 'github-classroom[bot]'
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Build Project
+      continue-on-error: true
+      run: |
+        cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+        cmake --build build --config Release
+
+    - name: Build Check (2 points)
+      id: build
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Build Check (2 points)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            echo "Build successful"
+          else
+            echo "Build failed" && exit 1
+          fi
+        timeout: 10
+        max-score: 2
+
+    # ==================== Iterator Tests (13 points) ====================
+
+    - name: Begin Returns First Element (2 points)
+      id: begin-first
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Begin Returns First Element (2 points)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=IteratorTest.BeginReturnsFirstElement
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 2
+
+    - name: Dereference After Increment (2 points)
+      id: deref-increment
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Dereference After Increment (2 points)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=IteratorTest.DereferenceAfterIncrement
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 2
+
+    - name: End Equals Null Sentinel (2 points)
+      id: end-sentinel
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: End Equals Null Sentinel (2 points)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=IteratorTest.EndEqualsNullSentinel
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 2
+
+    - name: Empty List Begin Equals End (2 points)
+      id: empty-begin-end
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Empty List Begin Equals End (2 points)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=IteratorTest.EmptyListBeginEqualsEnd
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 2
+
+    - name: Range Based For Collects All Values (3 points)
+      id: range-for
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Range Based For Collects All Values (3 points)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=IteratorTest.RangeBasedForCollectsAllValues
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 3
+
+    - name: Explicit Iterator Matches Range Based For (2 points)
+      id: explicit-iter
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Explicit Iterator Matches Range Based For (2 points)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=IteratorTest.ExplicitIteratorMatchesRangeBasedFor
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 2
+
+    # ==================== DoublyLinkedList: push_front Tests (3 points) ====================
+
+    - name: Push Front Single Element (1 point)
+      id: push-front-single
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Push Front Single Element (1 point)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=DoublyLinkedListTest.PushFrontSingleElement
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 1
+
+    - name: Push Front Multiple Elements Correct Order (2 points)
+      id: push-front-order
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Push Front Multiple Elements Correct Order (2 points)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=DoublyLinkedListTest.PushFrontMultipleElementsCorrectOrder
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 2
+
+    # ==================== DoublyLinkedList: push_back Tests (4 points) ====================
+
+    - name: Push Back Single Element (1 point)
+      id: push-back-single
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Push Back Single Element (1 point)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=DoublyLinkedListTest.PushBackSingleElement
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 1
+
+    - name: Push Back Multiple Elements Correct Order (1 point)
+      id: push-back-order
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Push Back Multiple Elements Correct Order (1 point)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=DoublyLinkedListTest.PushBackMultipleElementsCorrectOrder
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 1
+
+    - name: Push Back And Push Front Mixed (2 points)
+      id: push-back-mixed
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Push Back And Push Front Mixed (2 points)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=DoublyLinkedListTest.PushBackAndPushFrontMixed
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 2
+
+    # ==================== DoublyLinkedList: pop_front Tests (3 points) ====================
+
+    - name: Pop Front Removes Head (1 point)
+      id: pop-front-head
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Pop Front Removes Head (1 point)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=DoublyLinkedListTest.PopFrontRemovesHead
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 1
+
+    - name: Pop Front To Empty (1 point)
+      id: pop-front-empty
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Pop Front To Empty (1 point)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=DoublyLinkedListTest.PopFrontToEmpty
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 1
+
+    - name: Pop Front Throws On Empty (1 point)
+      id: pop-front-throws
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Pop Front Throws On Empty (1 point)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=DoublyLinkedListTest.PopFrontThrowsOnEmpty
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 1
+
+    # ==================== DoublyLinkedList: pop_back Tests (5 points) ====================
+
+    - name: Pop Back Removes Tail (1 point)
+      id: pop-back-tail
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Pop Back Removes Tail (1 point)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=DoublyLinkedListTest.PopBackRemovesTail
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 1
+
+    - name: Pop Back Single Node (1 point)
+      id: pop-back-single
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Pop Back Single Node (1 point)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=DoublyLinkedListTest.PopBackSingleNode
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 1
+
+    - name: Pop Back To Empty (1 point)
+      id: pop-back-empty
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Pop Back To Empty (1 point)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=DoublyLinkedListTest.PopBackToEmpty
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 1
+
+    - name: Pop Back Then Push Back (1 point)
+      id: pop-back-then-push
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Pop Back Then Push Back (1 point)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=DoublyLinkedListTest.PopBackThenPushBack
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 1
+
+    - name: Pop Back Throws On Empty (1 point)
+      id: pop-back-throws
+      uses: classroom-resources/autograding-command-grader@v1
+      with:
+        test-name: Pop Back Throws On Empty (1 point)
+        setup-command: ''
+        command: |
+          if [ -f build/run_tests ]; then
+            cd build && ./run_tests --gtest_filter=DoublyLinkedListTest.PopBackThrowsOnEmpty
+          else
+            exit 1
+          fi
+        timeout: 10
+        max-score: 1
+
+    - name: Autograding Reporter
+      uses: classroom-resources/autograding-grading-reporter@v1
+      env:
+        BUILD_RESULTS:               "${{steps.build.outputs.result}}"
+        BEGIN-FIRST_RESULTS:         "${{steps.begin-first.outputs.result}}"
+        DEREF-INCREMENT_RESULTS:     "${{steps.deref-increment.outputs.result}}"
+        END-SENTINEL_RESULTS:        "${{steps.end-sentinel.outputs.result}}"
+        EMPTY-BEGIN-END_RESULTS:     "${{steps.empty-begin-end.outputs.result}}"
+        RANGE-FOR_RESULTS:           "${{steps.range-for.outputs.result}}"
+        EXPLICIT-ITER_RESULTS:       "${{steps.explicit-iter.outputs.result}}"
+        PUSH-FRONT-SINGLE_RESULTS:   "${{steps.push-front-single.outputs.result}}"
+        PUSH-FRONT-ORDER_RESULTS:    "${{steps.push-front-order.outputs.result}}"
+        PUSH-BACK-SINGLE_RESULTS:    "${{steps.push-back-single.outputs.result}}"
+        PUSH-BACK-ORDER_RESULTS:     "${{steps.push-back-order.outputs.result}}"
+        PUSH-BACK-MIXED_RESULTS:     "${{steps.push-back-mixed.outputs.result}}"
+        POP-FRONT-HEAD_RESULTS:      "${{steps.pop-front-head.outputs.result}}"
+        POP-FRONT-EMPTY_RESULTS:     "${{steps.pop-front-empty.outputs.result}}"
+        POP-FRONT-THROWS_RESULTS:    "${{steps.pop-front-throws.outputs.result}}"
+        POP-BACK-TAIL_RESULTS:       "${{steps.pop-back-tail.outputs.result}}"
+        POP-BACK-SINGLE_RESULTS:     "${{steps.pop-back-single.outputs.result}}"
+        POP-BACK-EMPTY_RESULTS:      "${{steps.pop-back-empty.outputs.result}}"
+        POP-BACK-THEN-PUSH_RESULTS:  "${{steps.pop-back-then-push.outputs.result}}"
+        POP-BACK-THROWS_RESULTS:     "${{steps.pop-back-throws.outputs.result}}"
+      with:
+        runners: build,begin-first,deref-increment,end-sentinel,empty-begin-end,range-for,explicit-iter,push-front-single,push-front-order,push-back-single,push-back-order,push-back-mixed,pop-front-head,pop-front-empty,pop-front-throws,pop-back-tail,pop-back-single,pop-back-empty,pop-back-then-push,pop-back-throws
