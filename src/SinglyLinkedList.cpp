@@ -153,7 +153,9 @@ bool SinglyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 //   for (int val : list)        for (auto it = list.begin(); it != list.end(); ++it)
 //       std::cout << val;           std::cout << *it;
 
-// --- 1. begin() ---
+// ---------------------------------------------------------------------------
+// 1. begin()
+// ---------------------------------------------------------------------------
 
 // ! DISCUSSION: begin() returns an iterator starting at head_ (the first node).
 //   - if the list is empty, head_ is nullptr — begin() == end(), so the loop body never runs
@@ -162,7 +164,9 @@ SinglyLinkedList::Iterator SinglyLinkedList::begin() {
     return Iterator{head_};
 }
 
-// --- 2. end() ---
+// ---------------------------------------------------------------------------
+// 2. end()
+// ---------------------------------------------------------------------------
 
 // ! DISCUSSION: end() returns a sentinel iterator pointing "one past the last" node.
 //   - for a linked list, "one past the last" is nullptr — what next points to after the tail
@@ -171,7 +175,9 @@ SinglyLinkedList::Iterator SinglyLinkedList::end() {
     return Iterator{nullptr};
 }
 
-// --- 3. operator!= ---
+// ---------------------------------------------------------------------------
+// 3. operator!=
+// ---------------------------------------------------------------------------
 
 // ! DISCUSSION: Operator overloading — != is given a custom meaning on Iterator.
 //   - the for-loop checks it != list.end() before each iteration
@@ -182,7 +188,9 @@ bool SinglyLinkedList::Iterator::operator!=(const Iterator& other) const {
     return current_ != other.current_;
 }
 
-// --- 4. operator* ---
+// ---------------------------------------------------------------------------
+// 4. operator*
+// ---------------------------------------------------------------------------
 
 // ! DISCUSSION: Operator overloading — * is given a custom meaning on Iterator.
 //   - *it returns current_->data (the int stored in the node at this position)
@@ -193,7 +201,9 @@ int& SinglyLinkedList::Iterator::operator*() {
     return current_->data;
 }
 
-// --- 5. operator++ ---
+// ---------------------------------------------------------------------------
+// 5. operator++
+// ---------------------------------------------------------------------------
 
 // ? SEE DIAGRAM: images/for_loop_order_post.png  — for loop execution order with it++ (return value discarded)
 // ? SEE DIAGRAM: images/for_loop_order.png        — same loop with ++it; increment runs AFTER the body
