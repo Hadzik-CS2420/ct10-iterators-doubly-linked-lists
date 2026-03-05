@@ -137,11 +137,15 @@ bool SinglyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 
 // ! DISCUSSION: An iterator wraps a pointer and gives it a standard interface.
 //   The for-each loop (range-based for) calls these five pieces:
-//   - begin()     — get an iterator pointing to the first node
-//   - end()       — get a sentinel iterator (nullptr) marking one past the last
-//   - operator!=  — check whether to continue (has the iterator reached end?)
-//   - operator*   — read (or modify) the current node's value
-//   - operator++  — advance to the next node
+//   - begin()     — returns an iterator pointing to the first node
+//   - end()       — returns a sentinel iterator (nullptr) marking one past the last
+//   - operator!=  — checks whether to continue (has the iterator reached end?)
+//   - operator*   — reads (or modifies) the current node's value
+//   - operator++  — advances to the next node
+//
+//   operator*, operator++, and operator!= use operator overloading — giving C++
+//   operators custom behavior on a user-defined type. The compiler calls our
+//   functions whenever it sees *, ++, or != applied to an Iterator object.
 //
 //   Equivalent forms — the compiler rewrites range-based for into the explicit version:
 //
@@ -151,10 +155,10 @@ bool SinglyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 
 // --- operator* ---
 
-// ! DISCUSSION: Dereferencing an iterator gives access to the current node's data.
-//   - *it returns current_->data (the int inside the node)
+// ! DISCUSSION: Operator overloading — * is given a custom meaning on Iterator.
+//   - *it returns current_->data (the int stored in the node at this position)
 //   - mirrors how *ptr gives access to the value a raw pointer points to
-//   - returns int& (by reference) so you can modify the node's data directly
+//   - returns int& (reference) so changes go through to the node directly
 
 int& SinglyLinkedList::Iterator::operator*() {
     return current_->data;
@@ -166,9 +170,10 @@ int& SinglyLinkedList::Iterator::operator*() {
 // ? SEE DIAGRAM: images/for_loop_order.png        — same loop with ++it; increment runs AFTER the body
 // ? SEE DIAGRAM: images/pointer_loop_increment_asm.png — why ++it is preferred: iterator objects can't be optimized like raw pointers
 
-// ! DISCUSSION: Pre-increment (++it) advances the iterator to the next node.
-//   It moves current_ forward by one step (current_ = current_->next),
-//   then returns a reference to *this so chaining works.
+// ! DISCUSSION: Operator overloading — ++ is given a custom meaning on Iterator.
+//   - pre-increment (++it) advances current_ to the next node (current_ = current_->next)
+//   - returns Iterator& (*this) so the for-loop can call it naturally
+//   - note: post-increment (it++) would be a separate overload that returns a copy before advancing
 
 SinglyLinkedList::Iterator& SinglyLinkedList::Iterator::operator++() {
     current_ = current_->next;
@@ -177,9 +182,10 @@ SinglyLinkedList::Iterator& SinglyLinkedList::Iterator::operator++() {
 
 // --- operator!= ---
 
-// ! DISCUSSION: The for-loop checks it != list.end() before each iteration.
-//   Two iterators are equal when they point to the same node (same address).
-//   end() returns Iterator{nullptr}, so when current_ reaches nullptr the loop stops.
+// ! DISCUSSION: Operator overloading — != is given a custom meaning on Iterator.
+//   - the for-loop checks it != list.end() before each iteration
+//   - two iterators are equal when they point to the same node (same address)
+//   - end() returns Iterator{nullptr}, so the loop stops when current_ reaches nullptr
 
 bool SinglyLinkedList::Iterator::operator!=(const Iterator& other) const {
     return current_ != other.current_;
@@ -187,8 +193,8 @@ bool SinglyLinkedList::Iterator::operator!=(const Iterator& other) const {
 
 // --- begin() ---
 
-// ! DISCUSSION: begin() creates an iterator starting at the first node.
-//   If the list is empty, head_ is nullptr — begin() == end(), so the loop body never runs.
+// ! DISCUSSION: begin() returns an iterator starting at head_ (the first node).
+//   - if the list is empty, head_ is nullptr — begin() == end(), so the loop body never runs
 
 SinglyLinkedList::Iterator SinglyLinkedList::begin() {
     return Iterator{head_};
@@ -196,8 +202,8 @@ SinglyLinkedList::Iterator SinglyLinkedList::begin() {
 
 // --- end() ---
 
-// ! DISCUSSION: end() returns an iterator pointing one past the last node.
-//   For a linked list, "one past the last" is nullptr — what next points to after the tail.
+// ! DISCUSSION: end() returns a sentinel iterator pointing "one past the last" node.
+//   - for a linked list, "one past the last" is nullptr — what next points to after the tail
 
 SinglyLinkedList::Iterator SinglyLinkedList::end() {
     return Iterator{nullptr};
