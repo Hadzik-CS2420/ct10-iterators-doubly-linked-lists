@@ -168,10 +168,11 @@ SinglyLinkedList::Iterator SinglyLinkedList::begin() {
 // 2. end()
 // ---------------------------------------------------------------------------
 
-// ! DISCUSSION: end() returns a sentinel iterator pointing "one past the last" node.
-//   - a sentinel is a special marker value that signals "stop here — there is nothing more"
-//   - for a linked list, nullptr is the natural sentinel: the last node's next already points there,
-//     so when the iterator advances past the tail, current_ becomes nullptr naturally
+// ! DISCUSSION: end() does NOT point to the last node — it constructs a brand new Iterator{nullptr}.
+//   - end() has no connection to any node in the list; it simply creates a fresh iterator
+//     whose current_ is nullptr, which serves as the agreed-upon "stop" signal
+//   - the loop works by comparison: when ++it advances past the tail, current_ becomes nullptr;
+//     that nullptr matches the nullptr inside end(), so operator!= returns false and the loop stops
 //   - this "one past the last" convention is used by every STL container (vector, list, map, etc.),
 //     so the same range-based for and algorithm syntax works uniformly across all of them
 //   - end() is never dereferenced — calling *it when it == end() is undefined behavior
