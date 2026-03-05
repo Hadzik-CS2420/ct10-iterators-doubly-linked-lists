@@ -1,0 +1,119 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 570">
+  <!-- Background -->
+  <rect width="1100" height="570" fill="#fff" rx="12"/>
+
+  <!-- ===== TITLE ===== -->
+  <text x="550" y="34" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="20" font-weight="bold" fill="#222">
+    ++p vs p++  — what the compiler actually generates
+  </text>
+  <text x="550" y="54" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="13" fill="#666">
+    For raw int* the output is identical. For Iterator objects, p++ always constructs a temporary.
+  </text>
+
+  <!-- ===== VERTICAL DIVIDER ===== -->
+  <line x1="550" y1="68" x2="550" y2="484" stroke="#ccc" stroke-width="1.5" stroke-dasharray="6,4"/>
+
+  <!-- ===== COLUMN HEADERS ===== -->
+  <rect x="50" y="68" width="460" height="36" rx="6" fill="#e8f5e9" stroke="#2e7d32" stroke-width="2"/>
+  <text x="280" y="92" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="16" font-weight="bold" fill="#2e7d32">++p  (pre-increment)</text>
+
+  <rect x="590" y="68" width="460" height="36" rx="6" fill="#fff3e0" stroke="#e65100" stroke-width="2"/>
+  <text x="820" y="92" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="16" font-weight="bold" fill="#e65100">p++  (post-increment)</text>
+
+  <!-- ===================================================== -->
+  <!-- SECTION 1: raw int*                                   -->
+  <!-- ===================================================== -->
+  <rect x="50" y="116" width="1000" height="26" rx="4" fill="#f0f4f8" stroke="#9e9e9e" stroke-width="1"/>
+  <text x="550" y="134" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="12" font-weight="bold" fill="#444">── raw int*  (sizeof(int) = 4) — compiler optimizes away the difference ──</text>
+
+  <!-- Left: ++p assembly — green solid border -->
+  <rect x="50" y="150" width="460" height="80" rx="6" fill="#1e1e1e" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="68" y="170" font-family="Consolas, monospace" font-size="12" fill="#608b4e">; per-iteration increment (++p):</text>
+  <text x="68" y="190" font-family="Consolas, monospace" font-size="13" fill="#4ec9b0">add</text>
+  <text x="100" y="190" font-family="Consolas, monospace" font-size="13" fill="#d4d4d4">  rdi, 4</text>
+  <text x="68" y="210" font-family="Consolas, monospace" font-size="11" fill="#608b4e">; sizeof(int) = 4 — one instruction, done</text>
+
+  <!-- Right: p++ assembly — gray dashed border (same output) -->
+  <rect x="590" y="150" width="460" height="80" rx="6" fill="#1e1e1e" stroke="#888" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="608" y="167" font-family="Consolas, monospace" font-size="11" fill="#888">; p++ saves old p — but the for-loop never reads it:</text>
+  <text x="608" y="186" font-family="Consolas, monospace" font-size="13" fill="#d4d4d4">add</text>
+  <text x="640" y="186" font-family="Consolas, monospace" font-size="13" fill="#d4d4d4">  rdi, 4</text>
+  <text x="608" y="204" font-family="Consolas, monospace" font-size="10" fill="#888">; compiler sees no observable effect from saving the old value</text>
+  <text x="608" y="218" font-family="Consolas, monospace" font-size="10" fill="#888">; → skips the save, emits the same instruction as ++p</text>
+
+  <!-- Section 1 badges -->
+  <rect x="130" y="242" width="200" height="28" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="230" y="261" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="13" font-weight="bold" fill="#2e7d32">1 instruction</text>
+
+  <rect x="630" y="242" width="290" height="28" rx="8" fill="#f5f5f5" stroke="#888" stroke-width="1.5"/>
+  <text x="775" y="261" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="13" font-weight="bold" fill="#666">1 instruction  (same output)</text>
+
+  <!-- ===================================================== -->
+  <!-- HORIZONTAL DIVIDER between sections                   -->
+  <!-- ===================================================== -->
+  <line x1="50" y1="284" x2="1050" y2="284" stroke="#ddd" stroke-width="1.5"/>
+
+  <!-- ===================================================== -->
+  <!-- SECTION 2: Iterator object                            -->
+  <!-- ===================================================== -->
+  <rect x="50" y="292" width="1000" height="26" rx="4" fill="#fff8f0" stroke="#e65100" stroke-width="1"/>
+  <text x="550" y="310" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="12" font-weight="bold" fill="#e65100">── Iterator object — compiler must honor the operator++ contract ──</text>
+
+  <!-- Left: ++it — green solid border -->
+  <rect x="50" y="326" width="460" height="114" rx="6" fill="#1e1e1e" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="68" y="344" font-family="Consolas, monospace" font-size="13" fill="#4ec9b0">Iterator</text>
+  <text x="136" y="344" font-family="Consolas, monospace" font-size="13" fill="#d4d4d4">&amp;  operator++() {</text>
+  <text x="292" y="344" font-family="Consolas, monospace" font-size="11" fill="#608b4e">  ; returns reference — no copy</text>
+  <text x="68" y="364" font-family="Consolas, monospace" font-size="13" fill="#d4d4d4">current_ = current_->next</text>
+  <text x="290" y="364" font-family="Consolas, monospace" font-size="11" fill="#608b4e">  ; advance the pointer</text>
+  <text x="68" y="384" font-family="Consolas, monospace" font-size="13" fill="#4ec9b0">return</text>
+  <text x="120" y="384" font-family="Consolas, monospace" font-size="13" fill="#d4d4d4"> *this</text>
+  <text x="200" y="384" font-family="Consolas, monospace" font-size="11" fill="#608b4e">          ; *this is already the new state</text>
+
+  <!-- Right: it++ — orange dashed border -->
+  <rect x="590" y="326" width="460" height="114" rx="6" fill="#1e1e1e" stroke="#e65100" stroke-width="1.5" stroke-dasharray="5,3"/>
+  <text x="608" y="344" font-family="Consolas, monospace" font-size="13" fill="#4ec9b0">Iterator</text>
+  <text x="676" y="344" font-family="Consolas, monospace" font-size="13" fill="#d4d4d4">  operator++(int) {</text>
+  <text x="832" y="344" font-family="Consolas, monospace" font-size="11" fill="#608b4e">; must return old value</text>
+  <text x="608" y="362" font-family="Consolas, monospace" font-size="13" fill="#ce9178">temp</text>
+  <text x="648" y="362" font-family="Consolas, monospace" font-size="13" fill="#d4d4d4"> = *this</text>
+  <text x="800" y="362" font-family="Consolas, monospace" font-size="11" fill="#608b4e">; *this = this Iterator object</text>
+  <text x="608" y="380" font-family="Consolas, monospace" font-size="13" fill="#d4d4d4">current_ = current_->next</text>
+  <text x="820" y="380" font-family="Consolas, monospace" font-size="11" fill="#608b4e">; advance</text>
+  <text x="608" y="398" font-family="Consolas, monospace" font-size="13" fill="#ce9178">return</text>
+  <text x="660" y="398" font-family="Consolas, monospace" font-size="13" fill="#d4d4d4"> temp</text>
+  <text x="800" y="398" font-family="Consolas, monospace" font-size="11" fill="#608b4e">; old copy returned</text>
+  <text x="608" y="416" font-family="Consolas, monospace" font-size="10" fill="#888">; (destructor fires at end of statement)</text>
+
+  <!-- Section 2 badges -->
+  <rect x="100" y="452" width="260" height="28" rx="8" fill="#e8f5e9" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="230" y="471" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="13" font-weight="bold" fill="#2e7d32">2 steps — no copy</text>
+
+  <rect x="600" y="452" width="400" height="28" rx="8" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="800" y="471" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="13" font-weight="bold" fill="#e65100">copy constructor + 2 steps + destructor</text>
+
+  <!-- ===== BOTTOM CALLOUT ===== -->
+  <rect x="50" y="492" width="1000" height="66" rx="8" fill="#f3e5f5" stroke="#7b1fa2" stroke-width="1.5"/>
+  <text x="550" y="510" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="12" font-weight="bold" fill="#7b1fa2">
+    For raw int* the compiler optimizes away the difference — both emit add rdi, 4. For Iterator objects it cannot.
+  </text>
+  <text x="550" y="528" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="12" font-weight="bold" fill="#7b1fa2">
+    Post-increment is contractually obligated to remember where it was — that memory is the copy.
+  </text>
+  <text x="550" y="546" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="11" fill="#555">
+    Use ++it as a habit: it is never slower than it++, and for Iterator objects it is always faster.
+  </text>
+</svg>

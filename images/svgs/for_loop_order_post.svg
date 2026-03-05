@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 640">
+  <!-- Background -->
+  <rect width="1100" height="640" fill="#fff" rx="12"/>
+
+  <!-- ===== DEFS ===== -->
+  <defs>
+    <marker id="ag" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#4ec9b0"/>
+    </marker>
+    <marker id="ao" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e65100"/>
+    </marker>
+    <marker id="ao2" viewBox="0 0 10 10" refX="10" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#e65100"/>
+    </marker>
+  </defs>
+
+  <!-- ===== TITLE ===== -->
+  <text x="550" y="34" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="20" font-weight="bold" fill="#222">
+    A pointer for loop with p++
+  </text>
+  <text x="550" y="54" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="13" fill="#666">
+    The increment runs after the body — the old pointer value is thrown away
+  </text>
+
+  <!-- ===== ANATOMY SECTION ===== -->
+  <rect x="60" y="70" width="980" height="90" rx="8" fill="#1e1e1e"/>
+
+  <!-- for keyword -->
+  <text x="80" y="100" font-family="Consolas, monospace" font-size="16" fill="#569cd6">for</text>
+  <text x="112" y="100" font-family="Consolas, monospace" font-size="16" fill="#d4d4d4"> (</text>
+
+  <!-- ① init — teal -->
+  <text x="132" y="100" font-family="Consolas, monospace" font-size="16" fill="#4ec9b0">int* p = arr</text>
+  <text x="280" y="100" font-family="Consolas, monospace" font-size="16" fill="#d4d4d4">;</text>
+
+  <!-- ② condition — purple -->
+  <text x="298" y="100" font-family="Consolas, monospace" font-size="16" fill="#c586c0"> p != end</text>
+  <text x="408" y="100" font-family="Consolas, monospace" font-size="16" fill="#d4d4d4">;</text>
+
+  <!-- ④ increment — orange (p++) -->
+  <text x="426" y="100" font-family="Consolas, monospace" font-size="16" font-weight="bold" fill="#ce9178"> p++</text>
+  <text x="473" y="100" font-family="Consolas, monospace" font-size="16" fill="#d4d4d4">) {</text>
+
+  <!-- body line -->
+  <text x="104" y="124" font-family="Consolas, monospace" font-size="14" fill="#9cdcfe">cout</text>
+  <text x="140" y="124" font-family="Consolas, monospace" font-size="14" fill="#d4d4d4"> &lt;&lt; </text>
+  <text x="170" y="124" font-family="Consolas, monospace" font-size="14" fill="#ce9178">*p</text>
+  <text x="194" y="124" font-family="Consolas, monospace" font-size="14" fill="#d4d4d4">;   </text>
+  <text x="240" y="124" font-family="Consolas, monospace" font-size="14" fill="#608b4e">// ③ body uses *p here</text>
+  <text x="80" y="148" font-family="Consolas, monospace" font-size="16" fill="#d4d4d4">}</text>
+
+  <!-- ===== PART LABELS — bracket connectors ===== -->
+
+  <!-- ① init bracket: spans "int* p = arr" x=132–280, center=206 -->
+  <line x1="132" y1="163" x2="280" y2="163" stroke="#4ec9b0" stroke-width="2"/>
+  <line x1="132" y1="158" x2="132" y2="163" stroke="#4ec9b0" stroke-width="2"/>
+  <line x1="280" y1="158" x2="280" y2="163" stroke="#4ec9b0" stroke-width="2"/>
+  <line x1="206" y1="163" x2="206" y2="175" stroke="#4ec9b0" stroke-width="1.5"/>
+  <text x="206" y="190" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="12" font-weight="bold" fill="#4ec9b0">① init</text>
+  <text x="206" y="206" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="11" fill="#666">runs once</text>
+  <text x="206" y="220" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="11" fill="#666">before everything</text>
+
+  <!-- ② condition bracket: spans " p != end" x=298–408, center=353 -->
+  <line x1="298" y1="163" x2="408" y2="163" stroke="#c586c0" stroke-width="2"/>
+  <line x1="298" y1="158" x2="298" y2="163" stroke="#c586c0" stroke-width="2"/>
+  <line x1="408" y1="158" x2="408" y2="163" stroke="#c586c0" stroke-width="2"/>
+  <line x1="353" y1="163" x2="353" y2="175" stroke="#c586c0" stroke-width="1.5"/>
+  <text x="353" y="190" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="12" font-weight="bold" fill="#c586c0">② condition</text>
+  <text x="353" y="206" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="11" fill="#666">checked before</text>
+  <text x="353" y="220" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="11" fill="#666">each body</text>
+
+  <!-- ③ body bracket: spans body content x=104–420, center=262 — label staggered to second tier -->
+  <line x1="104" y1="132" x2="420" y2="132" stroke="#888" stroke-width="1.5" stroke-dasharray="4,3"/>
+  <line x1="104" y1="128" x2="104" y2="132" stroke="#888" stroke-width="1.5"/>
+  <line x1="420" y1="128" x2="420" y2="132" stroke="#888" stroke-width="1.5"/>
+  <line x1="262" y1="163" x2="262" y2="228" stroke="#888" stroke-width="1.5"/>
+  <text x="262" y="241" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="12" font-weight="bold" fill="#888">③ body</text>
+  <text x="262" y="255" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="11" fill="#666">executes with current p</text>
+  <text x="262" y="269" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="11" fill="#e65100">p has NOT moved yet</text>
+
+  <!-- ④ increment bracket: spans " p++" x=426–473, center=449 — orange -->
+  <line x1="426" y1="163" x2="473" y2="163" stroke="#e65100" stroke-width="2"/>
+  <line x1="426" y1="158" x2="426" y2="163" stroke="#e65100" stroke-width="2"/>
+  <line x1="473" y1="158" x2="473" y2="163" stroke="#e65100" stroke-width="2"/>
+  <line x1="449" y1="163" x2="449" y2="175" stroke="#e65100" stroke-width="1.5"/>
+  <text x="449" y="190" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="12" font-weight="bold" fill="#e65100">④ p++</text>
+  <text x="449" y="206" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="11" fill="#666">runs AFTER the body</text>
+  <text x="449" y="220" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="11" fill="#e65100">old value discarded</text>
+
+  <g transform="translate(0, 40)">
+  <!-- ===== EXECUTION TRACE ===== -->
+  <text x="550" y="256" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="13" font-weight="bold" fill="#333">Step-by-step trace for:  int arr[] = {10, 20, 30};</text>
+
+  <!-- Memory array — fixed, drawn once -->
+  <!-- arr[0]=10 (will be highlighted orange in step ③, but drawn base here) -->
+  <rect x="380" y="266" width="60" height="34" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="410" y="277" text-anchor="middle" font-family="Consolas, monospace" font-size="9" fill="#888">arr[0]</text>
+  <text x="410" y="293" text-anchor="middle" font-family="Consolas, monospace" font-size="14" font-weight="bold" fill="#1565c0">10</text>
+  <!-- arr[1]=20 -->
+  <rect x="444" y="266" width="60" height="34" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="474" y="277" text-anchor="middle" font-family="Consolas, monospace" font-size="9" fill="#888">arr[1]</text>
+  <text x="474" y="293" text-anchor="middle" font-family="Consolas, monospace" font-size="14" font-weight="bold" fill="#1565c0">20</text>
+  <!-- arr[2]=30 -->
+  <rect x="508" y="266" width="60" height="34" rx="4" fill="#e3f2fd" stroke="#1565c0" stroke-width="1.5"/>
+  <text x="538" y="277" text-anchor="middle" font-family="Consolas, monospace" font-size="9" fill="#888">arr[2]</text>
+  <text x="538" y="293" text-anchor="middle" font-family="Consolas, monospace" font-size="14" font-weight="bold" fill="#1565c0">30</text>
+  <!-- end sentinel -->
+  <rect x="572" y="266" width="60" height="34" rx="4" fill="#f5f5f5" stroke="#aaa" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="602" y="286" text-anchor="middle" font-family="Consolas, monospace" font-size="11" fill="#aaa">end</text>
+
+  <!-- ======= ROW BACKGROUNDS ======= -->
+  <rect x="60" y="312" width="980" height="36" rx="4" fill="#e8fdf8"/>
+  <rect x="60" y="352" width="980" height="36" rx="4" fill="#faf4ff"/>
+  <rect x="60" y="392" width="980" height="36" rx="4" fill="#f5f5f5"/>
+  <rect x="60" y="432" width="980" height="36" rx="4" fill="#fff3e0"/>
+  <rect x="60" y="472" width="980" height="36" rx="4" fill="#faf4ff"/>
+  <rect x="60" y="512" width="980" height="36" rx="4" fill="#f5f5f5"/>
+
+  <!-- ======= STEP ROWS ======= -->
+
+  <!-- Step ①: init — arrow hits top-left of arr[0] -->
+  <circle cx="80" cy="330" r="14" fill="#4ec9b0"/>
+  <text x="80" y="335" text-anchor="middle" font-family="Consolas, monospace" font-size="13" font-weight="bold" fill="#fff">①</text>
+  <text x="108" y="335" font-family="Consolas, monospace" font-size="13" fill="#333">init:  </text>
+  <text x="152" y="335" font-family="Consolas, monospace" font-size="13" fill="#4ec9b0">int* p = arr</text>
+  <line x1="258" y1="327" x2="381" y2="272" stroke="#4ec9b0" stroke-width="2" marker-end="url(#ag)"/>
+  <text x="530" y="335" font-family="Consolas, monospace" font-size="12" fill="#555">p now points to arr[0]</text>
+
+  <!-- Step ②: condition check pass 1 -->
+  <circle cx="80" cy="370" r="14" fill="#c586c0"/>
+  <text x="80" y="375" text-anchor="middle" font-family="Consolas, monospace" font-size="13" font-weight="bold" fill="#fff">②</text>
+  <text x="108" y="375" font-family="Consolas, monospace" font-size="13" fill="#333">condition:  p != end</text>
+  <text x="420" y="375" font-family="Consolas, monospace" font-size="13" font-weight="bold" fill="#2e7d32">→ true</text>
+  <text x="530" y="375" font-family="Consolas, monospace" font-size="12" fill="#555">enter the body</text>
+
+  <!-- Step ③: body pass 1 — orange highlight over arr[0], arrow hits bottom-center -->
+  <circle cx="80" cy="410" r="14" fill="#888"/>
+  <text x="80" y="415" text-anchor="middle" font-family="Consolas, monospace" font-size="13" font-weight="bold" fill="#fff">③</text>
+  <text x="108" y="415" font-family="Consolas, monospace" font-size="13" fill="#333">body:  cout &lt;&lt;</text>
+  <text x="228" y="415" font-family="Consolas, monospace" font-size="13" font-weight="bold" fill="#e65100"> *p</text>
+  <!-- Redraw arr[0] highlighted orange on top of the blue base -->
+  <rect x="380" y="266" width="60" height="34" rx="4" fill="#fff3e0" stroke="#e65100" stroke-width="2.5"/>
+  <text x="410" y="277" text-anchor="middle" font-family="Consolas, monospace" font-size="9" fill="#e65100">arr[0]</text>
+  <text x="410" y="293" text-anchor="middle" font-family="Consolas, monospace" font-size="14" font-weight="bold" fill="#e65100">10</text>
+  <!-- arrow from *p label to bottom-center of arr[0] -->
+  <line x1="248" y1="403" x2="408" y2="302" stroke="#e65100" stroke-width="2" stroke-dasharray="5,3" marker-end="url(#ao)"/>
+  <text x="530" y="415" font-family="Consolas, monospace" font-size="12" fill="#e65100">reads arr[0] = 10  ← p has NOT moved yet</text>
+
+  <!-- Step ④: increment pass 1 — orange, arrow hits top of arr[1] -->
+  <circle cx="80" cy="450" r="14" fill="#e65100"/>
+  <text x="80" y="455" text-anchor="middle" font-family="Consolas, monospace" font-size="13" font-weight="bold" fill="#fff">④</text>
+  <text x="108" y="455" font-family="Consolas, monospace" font-size="13" fill="#333">increment:  </text>
+  <text x="220" y="455" font-family="Consolas, monospace" font-size="13" font-weight="bold" fill="#ce9178">p++</text>
+  <line x1="248" y1="443" x2="472" y2="302" stroke="#e65100" stroke-width="2" marker-end="url(#ao2)"/>
+  <text x="530" y="455" font-family="Consolas, monospace" font-size="12" fill="#555">p advances to arr[1]  — old value returned, discarded</text>
+
+  <!-- Step ② again: condition check pass 2 -->
+  <circle cx="80" cy="490" r="14" fill="#c586c0"/>
+  <text x="80" y="495" text-anchor="middle" font-family="Consolas, monospace" font-size="13" font-weight="bold" fill="#fff">②</text>
+  <text x="108" y="495" font-family="Consolas, monospace" font-size="13" fill="#333">condition:  p != end</text>
+  <text x="420" y="495" font-family="Consolas, monospace" font-size="13" font-weight="bold" fill="#2e7d32">→ true</text>
+  <text x="530" y="495" font-family="Consolas, monospace" font-size="12" fill="#555">enter the body again</text>
+
+  <!-- Step ③ again: body pass 2 -->
+  <circle cx="80" cy="530" r="14" fill="#888"/>
+  <text x="80" y="535" text-anchor="middle" font-family="Consolas, monospace" font-size="13" font-weight="bold" fill="#fff">③</text>
+  <text x="108" y="535" font-family="Consolas, monospace" font-size="13" fill="#333">body:  cout &lt;&lt;</text>
+  <text x="228" y="535" font-family="Consolas, monospace" font-size="13" font-weight="bold" fill="#e65100"> *p</text>
+  <text x="530" y="535" font-family="Consolas, monospace" font-size="12" fill="#e65100">reads arr[1] = 20   (then ④ p++ again…)</text>
+
+  <!-- ===== CALLOUT ===== -->
+  <rect x="60" y="556" width="980" height="36" rx="8" fill="#fff3e0" stroke="#e65100" stroke-width="1.5"/>
+  <text x="550" y="571" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="12" font-weight="bold" fill="#e65100">
+    p++ works fine here — the for loop discards the return value (the old pointer).
+  </text>
+  <text x="550" y="585" text-anchor="middle" font-family="Consolas, monospace"
+        font-size="12" fill="#333">
+    arr[0] is still visited first. See the next diagram (++p) and the assembly comparison to see why ++p is preferred.
+  </text>
+  </g>
+</svg>

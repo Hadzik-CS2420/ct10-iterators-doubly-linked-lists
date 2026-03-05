@@ -239,7 +239,7 @@ int& SinglyLinkedList::Iterator::operator*() {
 
 // ? SEE DIAGRAM: images/for_loop_order_post.png  — for loop execution order with it++ (return value discarded)
 // ? SEE DIAGRAM: images/for_loop_order.png        — same loop with ++it; increment runs AFTER the body
-// ? SEE DIAGRAM: images/pointer_loop_increment_asm.png — why ++it is preferred: iterator objects can't be optimized like raw pointers
+// ? SEE DIAGRAM: images/pointer_loop_increment.png — why ++it is preferred: iterator objects can't be optimized like raw pointers
 
 // ? for-loop:
 //   for (auto it = list.begin(); it != list.end(); ++it)
