@@ -193,6 +193,8 @@ SinglyLinkedList::Iterator SinglyLinkedList::end() {
 //   - the for-loop checks it != list.end() before each iteration
 //   - two iterators are equal when they point to the same node (same address)
 //   - end() returns Iterator{nullptr}, so the loop stops when current_ reaches nullptr
+//   - we do NOT overload == here: range-based for only requires !=, so we only implement what's needed;
+//     if you needed ==, you would add a separate operator== overload alongside this one
 
 bool SinglyLinkedList::Iterator::operator!=(const Iterator& other) const {
     // TODO: Return true if this iterator's current_ differs from other's current_
