@@ -157,6 +157,10 @@ bool SinglyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 // 1. begin()
 // ---------------------------------------------------------------------------
 
+// ? for-loop:
+//   for (auto it = list.begin(); it != list.end(); ++it)
+//                  ^^^^^^^^^^^^
+
 // ! DISCUSSION: begin() returns an iterator starting at head_ (the first node).
 //   - if the list is empty, head_ is nullptr — begin() == end(), so the loop body never runs
 
@@ -169,6 +173,10 @@ SinglyLinkedList::Iterator SinglyLinkedList::begin() {
 // ---------------------------------------------------------------------------
 // 2. end()
 // ---------------------------------------------------------------------------
+
+// ? for-loop:
+//   for (auto it = list.begin(); it != list.end(); ++it)
+//                                      ^^^^^^^^^^
 
 // ! DISCUSSION: end() does NOT point to the last node — it constructs a brand new Iterator{nullptr}.
 //   - end() has no connection to any node; it exists only as a comparison target
@@ -189,12 +197,14 @@ SinglyLinkedList::Iterator SinglyLinkedList::end() {
 // 3. operator!=
 // ---------------------------------------------------------------------------
 
+// ? for-loop:
+//   for (auto it = list.begin(); it != list.end(); ++it)
+//                                ^^^^^^^^^^^^^^^^
+
 // ! DISCUSSION: Operator overloading — != is given a custom meaning on Iterator.
 //   - the for-loop checks it != list.end() before each iteration
 //   - two iterators are equal when they point to the same node (same address)
 //   - end() returns Iterator{nullptr}, so the loop stops when current_ reaches nullptr
-//   - we do NOT overload == here: range-based for only requires !=, so we only implement what's needed;
-//     if you needed ==, you would add a separate operator== overload alongside this one
 
 bool SinglyLinkedList::Iterator::operator!=(const Iterator& other) const {
     // TODO: Return true if this iterator's current_ differs from other's current_
@@ -206,6 +216,10 @@ bool SinglyLinkedList::Iterator::operator!=(const Iterator& other) const {
 // ---------------------------------------------------------------------------
 // 4. operator*
 // ---------------------------------------------------------------------------
+
+// ? for-loop:
+//   for (auto it = list.begin(); it != list.end(); ++it)  { *it; }
+//                                                             ^^^
 
 // ! DISCUSSION: Operator overloading — * is given a custom meaning on Iterator.
 //   - *it returns current_->data (the int stored in the node at this position)
@@ -226,6 +240,10 @@ int& SinglyLinkedList::Iterator::operator*() {
 // ? SEE DIAGRAM: images/for_loop_order_post.png  — for loop execution order with it++ (return value discarded)
 // ? SEE DIAGRAM: images/for_loop_order.png        — same loop with ++it; increment runs AFTER the body
 // ? SEE DIAGRAM: images/pointer_loop_increment_asm.png — why ++it is preferred: iterator objects can't be optimized like raw pointers
+
+// ? for-loop:
+//   for (auto it = list.begin(); it != list.end(); ++it)
+//                                                  ^^^^
 
 // ! DISCUSSION: Operator overloading — ++ is given a custom meaning on Iterator.
 //   - pre-increment (++it) advances current_ to the next node (current_ = current_->next)
