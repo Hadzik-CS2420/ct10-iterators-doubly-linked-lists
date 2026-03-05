@@ -153,7 +153,36 @@ bool SinglyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 //   for (int val : list)        for (auto it = list.begin(); it != list.end(); ++it)
 //       std::cout << val;           std::cout << *it;
 
-// --- operator* ---
+// --- 1. begin() ---
+
+// ! DISCUSSION: begin() returns an iterator starting at head_ (the first node).
+//   - if the list is empty, head_ is nullptr — begin() == end(), so the loop body never runs
+
+SinglyLinkedList::Iterator SinglyLinkedList::begin() {
+    return Iterator{head_};
+}
+
+// --- 2. end() ---
+
+// ! DISCUSSION: end() returns a sentinel iterator pointing "one past the last" node.
+//   - for a linked list, "one past the last" is nullptr — what next points to after the tail
+
+SinglyLinkedList::Iterator SinglyLinkedList::end() {
+    return Iterator{nullptr};
+}
+
+// --- 3. operator!= ---
+
+// ! DISCUSSION: Operator overloading — != is given a custom meaning on Iterator.
+//   - the for-loop checks it != list.end() before each iteration
+//   - two iterators are equal when they point to the same node (same address)
+//   - end() returns Iterator{nullptr}, so the loop stops when current_ reaches nullptr
+
+bool SinglyLinkedList::Iterator::operator!=(const Iterator& other) const {
+    return current_ != other.current_;
+}
+
+// --- 4. operator* ---
 
 // ! DISCUSSION: Operator overloading — * is given a custom meaning on Iterator.
 //   - *it returns current_->data (the int stored in the node at this position)
@@ -164,7 +193,7 @@ int& SinglyLinkedList::Iterator::operator*() {
     return current_->data;
 }
 
-// --- operator++ ---
+// --- 5. operator++ ---
 
 // ? SEE DIAGRAM: images/for_loop_order_post.png  — for loop execution order with it++ (return value discarded)
 // ? SEE DIAGRAM: images/for_loop_order.png        — same loop with ++it; increment runs AFTER the body
@@ -178,33 +207,4 @@ int& SinglyLinkedList::Iterator::operator*() {
 SinglyLinkedList::Iterator& SinglyLinkedList::Iterator::operator++() {
     current_ = current_->next;
     return *this;
-}
-
-// --- operator!= ---
-
-// ! DISCUSSION: Operator overloading — != is given a custom meaning on Iterator.
-//   - the for-loop checks it != list.end() before each iteration
-//   - two iterators are equal when they point to the same node (same address)
-//   - end() returns Iterator{nullptr}, so the loop stops when current_ reaches nullptr
-
-bool SinglyLinkedList::Iterator::operator!=(const Iterator& other) const {
-    return current_ != other.current_;
-}
-
-// --- begin() ---
-
-// ! DISCUSSION: begin() returns an iterator starting at head_ (the first node).
-//   - if the list is empty, head_ is nullptr — begin() == end(), so the loop body never runs
-
-SinglyLinkedList::Iterator SinglyLinkedList::begin() {
-    return Iterator{head_};
-}
-
-// --- end() ---
-
-// ! DISCUSSION: end() returns a sentinel iterator pointing "one past the last" node.
-//   - for a linked list, "one past the last" is nullptr — what next points to after the tail
-
-SinglyLinkedList::Iterator SinglyLinkedList::end() {
-    return Iterator{nullptr};
 }
