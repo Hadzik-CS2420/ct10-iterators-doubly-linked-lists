@@ -169,10 +169,10 @@ SinglyLinkedList::Iterator SinglyLinkedList::begin() {
 // ---------------------------------------------------------------------------
 
 // ! DISCUSSION: end() does NOT point to the last node — it constructs a brand new Iterator{nullptr}.
-//   - end() has no connection to any node in the list; it simply creates a fresh iterator
-//     whose current_ is nullptr, which serves as the agreed-upon "stop" signal
-//   - the loop works by comparison: when ++it advances past the tail, current_ becomes nullptr;
-//     that nullptr matches the nullptr inside end(), so operator!= returns false and the loop stops
+//   - end() has no connection to any node; it exists only as a comparison target
+//   - you cannot use end() to read the last value — it holds no node, only nullptr
+//   - the loop works by comparison: when ++it walks past the tail, current_ becomes nullptr;
+//     operator!= compares that nullptr against end()'s nullptr — they match, so the loop stops
 //   - this "one past the last" convention is used by every STL container (vector, list, map, etc.),
 //     so the same range-based for and algorithm syntax works uniformly across all of them
 //   - end() is never dereferenced — calling *it when it == end() is undefined behavior
