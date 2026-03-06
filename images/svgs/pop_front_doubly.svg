@@ -122,9 +122,9 @@
   <text x="383" y="310" text-anchor="middle" class="note" style="fill: #2980b9; font-style: normal; font-weight: bold;">prev</text>
 
   <!-- After: 4002 prev→nullptr (new head has nothing behind it) -->
-  <path d="M 230 300 L 230 315 L -18 315" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
-  <rect x="-83" y="309" width="63" height="16" rx="4" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1.5"/>
-  <text x="-52" y="321" text-anchor="middle" style="font-size: 12px; fill: #95a5a6; font-weight: bold;">nullptr</text>
+  <path d="M 230 300 L 230 315 L 200 315" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <rect x="135" y="309" width="63" height="16" rx="4" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1.5"/>
+  <text x="167" y="321" text-anchor="middle" style="font-size: 12px; fill: #95a5a6; font-weight: bold;">nullptr</text>
 
   <!-- Deleted node ghost -->
   <rect x="30" y="333" width="150" height="28" rx="4" fill="none" stroke="#e74c3c" stroke-width="2" stroke-dasharray="6,3"/>
