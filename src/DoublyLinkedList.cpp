@@ -8,6 +8,11 @@
 // Given implementation — review this before working on the TODOs below.
 // =============================================================================
 
+// ! DISCUSSION: No constructor implementation here — DoublyLinkedList() = default
+//   in the header tells the compiler to generate it. The compiler-generated
+//   constructor uses the in-class initializers (head_ = nullptr, tail_ = nullptr,
+//   size_ = 0) so there is nothing for us to write.
+
 // ? SEE DIAGRAM: images/doubly_node_structure.png — node with prev/data/next fields
 
 // ---------------------------------------------------------------------------
