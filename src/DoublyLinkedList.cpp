@@ -69,9 +69,9 @@ void DoublyLinkedList::push_front(int value) {
     auto* node = new DoublyNode{value, head_, nullptr};
 
     if (head_) {
-        head_->prev = node;
+        head_->prev = node;  // non-empty: old head points back to new node
     } else {
-        tail_ = node;
+        tail_ = node;        // empty: new node is also the tail
     }
 
     head_ = node;
