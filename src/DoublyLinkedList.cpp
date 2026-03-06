@@ -15,8 +15,10 @@
 //   in the header tells the compiler to generate it. The compiler-generated
 //   constructor uses the in-class initializers (head_ = nullptr, tail_ = nullptr,
 //   size_ = 0) so there is nothing for us to write.
-
-// ? SEE DIAGRAM: images/doubly_node_structure.png — node with prev/data/next fields
+//
+// ? SEE DIAGRAM: images/doubly_node_structure.png       — node with prev/data/next fields
+// ? SEE DIAGRAM: images/singly_vs_doubly_comparison.png — O(1) vs O(n) trade-offs at a glance
+//
 
 // ---------------------------------------------------------------------------
 // Destructor
@@ -62,9 +64,9 @@ bool DoublyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 // ---------------------------------------------------------------------------
 // 1. push_front()
 // ---------------------------------------------------------------------------
-
+//
 // ? SEE DIAGRAM: images/push_front_doubly.png — four pointer updates, O(1) prepend
-
+//
 // ! DISCUSSION: Inserting at the front requires updating FOUR pointers — two on the new node, two on the list:
 //   - new_node->next = old head    (new node points forward to old head)
 //   - new_node->prev = nullptr     (new node has nothing behind it)
@@ -89,9 +91,9 @@ void DoublyLinkedList::push_front(int value) {
 // ---------------------------------------------------------------------------
 // 2. push_back()
 // ---------------------------------------------------------------------------
-
+//
 // ? SEE DIAGRAM: images/push_back_doubly.png — O(1) append using tail_
-
+//
 // ! DISCUSSION: This is where tail_ pays off — O(1) instead of O(n).
 //   - singly linked list: push_back had to traverse the entire list to find the last node — O(n)
 //   - doubly linked list: tail_ points directly to the last node, so we attach in constant time — O(1)
@@ -119,64 +121,66 @@ void DoublyLinkedList::push_back(int value) {
 // ---------------------------------------------------------------------------
 // 3. pop_front()
 // ---------------------------------------------------------------------------
-
+//
 // ? SEE DIAGRAM: images/pop_front_doubly.png — four pointer updates, O(1) removal
-
+//
 // ! DISCUSSION: Removing from the front:
 //   - underflow check: if the list is empty, throw — cannot remove from nothing
-//   - save old head to a temp pointer, then advance head_ to head_->next
-//   - if the new head_ is NOT nullptr: clear head_->prev = nullptr (nothing behind it now)
-//   - if the new head_ IS nullptr: the list is now empty — set tail_ = nullptr too
-//   - delete the saved old head and decrement size_
+//   - pointer updates:
+//       - temp = head_             (save old head before advancing)
+//       - head_ = head_->next      (advance head_ to the next node)
+//       - head_->prev = nullptr    (new head has nothing behind it)
+//       - delete temp; --size_     (free old head and update count)
+//   - edge case: if the new head_ is nullptr, the list is now empty — set tail_ = nullptr too
 
 void DoublyLinkedList::pop_front() {
     if (!head_) {
         throw std::underflow_error("Cannot pop from an empty list");
     }
 
-    auto* temp = head_;
-    head_      = head_->next;
+    auto* temp = head_;           // temp = head_
+    head_ = head_->next;     // head_ = head_->next
 
     if (head_) {
-        head_->prev = nullptr;
+        head_->prev = nullptr;    // new head has nothing behind it
     } else {
-        tail_ = nullptr;
+        tail_ = nullptr;          // edge case: list is now empty
     }
 
-    delete temp;
+    delete temp;                  // delete temp; --size_
     --size_;
 }
 
 // ---------------------------------------------------------------------------
 // 4. pop_back()
 // ---------------------------------------------------------------------------
-
+//
 // ? SEE DIAGRAM: images/pop_back_doubly.png — O(1) removal via tail_->prev
-
+//
 // ! DISCUSSION: This is the other major payoff of a doubly linked list — O(1) pop_back.
 //   - singly linked list (CT8): needed trailing pointer traversal to find second-to-last — O(n)
 //   - doubly linked list: tail_->prev points DIRECTLY to the second-to-last node — O(1)
 //   - steps:
-//       - save tail_ to a temp pointer
-//       - retreat tail_ to tail_->prev
-//       - if the new tail_ is NOT nullptr: clear tail_->next = nullptr (nothing after it now)
-//       - if the new tail_ IS nullptr: the list is now empty — set head_ = nullptr too
-//       - delete the saved old tail and decrement size_
+//       - temp = tail_             (save old tail before retreating)
+//       - tail_ = tail_->prev      (retreat tail_ to the previous node)
+//       - tail_->next = nullptr    (new tail has nothing after it)
+//       - delete temp; --size_     (free old tail and update count)
+//   - edge case: if the new tail_ is nullptr, the list is now empty — set head_ = nullptr too
 
 void DoublyLinkedList::pop_back() {
     if (!head_) {
         throw std::underflow_error("Cannot pop from an empty list");
     }
 
-    auto* temp = tail_;
-    tail_      = tail_->prev;
+    auto* temp = tail_;           // temp = tail_
+    tail_      = tail_->prev;     // tail_ = tail_->prev
 
     if (tail_) {
-        tail_->next = nullptr;
+        tail_->next = nullptr;    // new tail has nothing after it
     } else {
-        head_ = nullptr;
+        head_ = nullptr;          // edge case: list is now empty
     }
 
-    delete temp;
+    delete temp;                  // delete temp; --size_
     --size_;
 }
