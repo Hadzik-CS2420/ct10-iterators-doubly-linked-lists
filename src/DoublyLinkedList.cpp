@@ -1,6 +1,5 @@
 #include "DoublyLinkedList.h"
 
-#include <format>
 #include <iostream>
 #include <stdexcept>
 
@@ -47,7 +46,7 @@ void DoublyLinkedList::print() const {
     //   Here we go forward (head to tail), same traversal as a singly linked list.
     auto* current = head_;
     while (current) {
-        std::cout << std::format("{} <-> ", current->data);
+        std::cout << current->data << " <-> ";
         current = current->next;
     }
     std::cout << "nullptr\n";
