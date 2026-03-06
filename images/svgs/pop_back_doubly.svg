@@ -17,6 +17,9 @@
     <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
       <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
     </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2980b9"/>
+    </marker>
     <marker id="ptr-arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
       <polygon points="0 0, 10 3.5, 0 7" fill="#8e44ad"/>
     </marker>
@@ -77,9 +80,8 @@
   <line x1="610" y1="87" x2="610" y2="107" stroke="#8e44ad" stroke-width="2" marker-end="url(#ptr-arrow)"/>
 
   <!-- key insight: tail_->prev reaches 4003 directly -->
-  <text x="525" y="172" text-anchor="middle" class="note" style="fill: #2980b9; font-style: normal; font-weight: bold;">tail_&#x2192;prev</text>
-  <path d="M 560 155 C 560 170, 460 170, 460 155" fill="none" stroke="#2980b9" stroke-width="2" stroke-dasharray="6,3"/>
-  <polygon points="456 155, 460 148, 464 155" fill="#2980b9"/>
+  <path d="M 560 150 L 560 165 L 440 165 L 440 150" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <text x="500" y="178" text-anchor="middle" class="note" style="fill: #2980b9; font-style: normal; font-weight: bold;">tail_&#x2192;prev</text>
 
   <!-- ==================== AFTER ==================== -->
   <text x="30" y="210" class="step-label">After: pop_back() &#x2014; 4004 removed, tail_ retreats to 4003</text>
