@@ -8,6 +8,10 @@
 // Given implementation — review this before working on the TODOs below.
 // =============================================================================
 
+// ---------------------------------------------------------------------------
+// Constructor
+// ---------------------------------------------------------------------------
+//
 // ! DISCUSSION: No constructor implementation here — DoublyLinkedList() = default
 //   in the header tells the compiler to generate it. The compiler-generated
 //   constructor uses the in-class initializers (head_ = nullptr, tail_ = nullptr,
