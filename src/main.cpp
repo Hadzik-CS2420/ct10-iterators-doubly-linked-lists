@@ -1,7 +1,6 @@
 #include "SinglyLinkedList.h"
 #include "DoublyLinkedList.h"
 
-#include <format>
 #include <iostream>
 
 int main() {
@@ -39,7 +38,7 @@ int main() {
     std::cout << "--- Walking the queue (explicit iterator) ---\n";
 
     for (auto it = tickets.begin(); it != tickets.end(); ++it) {
-        std::cout << std::format("  Ticket: {}\n", *it);
+        std::cout << "  Ticket: " << *it << "\n";
     }
 
     std::cout << "\n";
@@ -58,7 +57,7 @@ int main() {
         if (val > 3002) ++high_priority_count;
     }
 
-    std::cout << std::format("High-priority orders (> 3002): {}\n\n", high_priority_count);
+    std::cout << "High-priority orders (> 3002): " << high_priority_count << "\n\n";
 
     // ! DISCUSSION: Both loops above do exactly the same thing under the hood.
     //   The range-based for is just cleaner syntax when you don't need the iterator itself.
@@ -90,7 +89,7 @@ int main() {
 
     std::cout << "Drive-through: ";
     drive_through.print();
-    std::cout << std::format("Cars in line:  {}\n\n", drive_through.get_size());
+    std::cout << "Cars in line:  " << drive_through.get_size() << "\n\n";
 
     // --- A VIP arrives at the front ---
 
@@ -126,7 +125,7 @@ int main() {
 
     std::cout << "Drive-through: ";
     drive_through.print();
-    std::cout << std::format("Cars remaining: {}\n", drive_through.get_size());
+    std::cout << "Cars remaining: " << drive_through.get_size() << "\n";
 
     return 0;
 }
