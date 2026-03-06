@@ -1,6 +1,5 @@
 #include "SinglyLinkedList.h"
 
-#include <format>
 #include <iostream>
 #include <stdexcept>
 
@@ -119,7 +118,7 @@ void SinglyLinkedList::remove(int value) {
 void SinglyLinkedList::print() const {
     auto* current = head_;
     while (current) {
-        std::cout << std::format("{} -> ", current->data);
+        std::cout << current->data << " -> ";
         current = current->next;
     }
     std::cout << "nullptr\n";
