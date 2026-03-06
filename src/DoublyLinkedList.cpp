@@ -66,15 +66,15 @@ bool DoublyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 //     if the list was empty, skip that step and set tail_ to the new node instead
 
 void DoublyLinkedList::push_front(int value) {
-    auto* node = new DoublyNode{value, head_, nullptr};
+    auto* new_node = new DoublyNode{value, head_, nullptr};
 
     if (head_) {
-        head_->prev = node;  // non-empty: old head points back to new node
+        head_->prev = new_node;  // non-empty: old head points back to new node
     } else {
-        tail_ = node;        // empty: new node is also the tail
+        tail_ = new_node;        // empty: new node is also the tail
     }
 
-    head_ = node;
+    head_ = new_node;
     ++size_;
 }
 
@@ -96,15 +96,15 @@ void DoublyLinkedList::push_front(int value) {
 //     if the list was empty, skip that step and set head_ to the new node instead
 
 void DoublyLinkedList::push_back(int value) {
-    auto* node = new DoublyNode{value, nullptr, tail_};
+    auto* new_node = new DoublyNode{value, nullptr, tail_};
 
     if (tail_) {
-        tail_->next = node;
+        tail_->next = new_node;
     } else {
-        head_ = node;
+        head_ = new_node;
     }
 
-    tail_ = node;
+    tail_ = new_node;
     ++size_;
 }
 
