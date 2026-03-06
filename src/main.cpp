@@ -1,7 +1,6 @@
 #include "SinglyLinkedList.h"
 #include "DoublyLinkedList.h"
 
-#include <format>
 #include <iostream>
 
 int main() {
@@ -38,8 +37,9 @@ int main() {
 
     std::cout << "--- Walking the queue (explicit iterator) ---\n";
 
-    // TODO: Write a for loop using begin(), end(), ++, and * to print each ticket number.
-    //       Format each line as: "  Ticket: 3001"
+    for (auto it = tickets.begin(); it != tickets.end(); ++it) {
+        std::cout << "  Ticket: " << *it << "\n";
+    }
 
     std::cout << "\n";
 
@@ -53,10 +53,11 @@ int main() {
 
     int high_priority_count = 0;
 
-    // TODO: Write a range-based for loop over 'tickets'.
-    //       If the ticket number is greater than 3002, increment high_priority_count.
+    for (int val : tickets) {
+        if (val > 3002) ++high_priority_count;
+    }
 
-    std::cout << std::format("High-priority orders (> 3002): {}\n\n", high_priority_count);
+    std::cout << "High-priority orders (> 3002): " << high_priority_count << "\n\n";
 
     // ! DISCUSSION: Both loops above do exactly the same thing under the hood.
     //   The range-based for is just cleaner syntax when you don't need the iterator itself.
@@ -81,19 +82,21 @@ int main() {
 
     std::cout << "--- Cars pulling in ---\n";
 
-    // TODO: Push order IDs 4001, 4002, 4003, 4004 to the BACK of drive_through
-    //       (cars join the back of the line)
+    drive_through.push_back(4001);
+    drive_through.push_back(4002);
+    drive_through.push_back(4003);
+    drive_through.push_back(4004);
 
     std::cout << "Drive-through: ";
     drive_through.print();
-    std::cout << std::format("Cars in line:  {}\n\n", drive_through.get_size());
+    std::cout << "Cars in line:  " << drive_through.get_size() << "\n\n";
 
     // --- A VIP arrives at the front ---
 
     std::cout << "--- VIP skips to the front ---\n";
     std::cout << "Order 3999 — VIP customer, added to front of line.\n";
 
-    // TODO: Push order ID 3999 to the FRONT of drive_through
+    drive_through.push_front(3999);
 
     std::cout << "Drive-through: ";
     drive_through.print();
@@ -104,7 +107,7 @@ int main() {
     std::cout << "--- Front car served ---\n";
     std::cout << "Order 3999 served — removing from front.\n";
 
-    // TODO: Call pop_front() to serve the front car
+    drive_through.pop_front();
 
     std::cout << "Drive-through: ";
     drive_through.print();
@@ -118,11 +121,11 @@ int main() {
     // ! DISCUSSION: In CT8, this required trailing pointer traversal — O(n).
     //   Now with tail_->prev, we reach the second-to-last node in ONE step — O(1).
 
-    // TODO: Call pop_back() to remove the last car
+    drive_through.pop_back();
 
     std::cout << "Drive-through: ";
     drive_through.print();
-    std::cout << std::format("Cars remaining: {}\n", drive_through.get_size());
+    std::cout << "Cars remaining: " << drive_through.get_size() << "\n";
 
     return 0;
 }
