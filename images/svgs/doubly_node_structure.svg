@@ -52,8 +52,8 @@
   <rect x="90" y="287" width="60" height="30" rx="4" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1.5"/>
   <text x="120" y="307" text-anchor="middle" style="font-size: 12px; fill: #95a5a6; font-weight: bold;">...</text>
 
-  <!-- Arrow from prev node to DoublyNode prev field -->
-  <line x1="150" y1="302" x2="188" y2="302" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <!-- Arrow from DoublyNode prev field back to previous node -->
+  <line x1="190" y1="302" x2="152" y2="302" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
 
   <!-- DoublyNode box: prev | data | next -->
   <rect x="190" y="277" width="80" height="50" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
