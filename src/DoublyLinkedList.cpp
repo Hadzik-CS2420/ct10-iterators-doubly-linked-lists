@@ -120,6 +120,8 @@ void DoublyLinkedList::push_back(int value) {
 // 3. pop_front()
 // ---------------------------------------------------------------------------
 
+// ? SEE DIAGRAM: images/pop_front_doubly.png — four pointer updates, O(1) removal
+
 // ! DISCUSSION: Removing from the front:
 //   - underflow check: if the list is empty, throw — cannot remove from nothing
 //   - save old head to a temp pointer, then advance head_ to head_->next
