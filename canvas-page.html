@@ -124,7 +124,7 @@
         </tr>
         <tr style="background-color: #fafafa;">
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 1 &mdash; Range-based for</td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">write a range-based for loop to count tickets above a threshold; discuss how the compiler rewrites it into the explicit form</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">write a range-based for loop to count pending orders (tickets not yet called); discuss how the compiler rewrites it into the explicit form</td>
         </tr>
         <tr>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 2 &mdash; <code>push_back</code> (&times;4)</td>
@@ -132,11 +132,11 @@
         </tr>
         <tr style="background-color: #fafafa;">
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 2 &mdash; <code>push_front</code></td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">VIP car added to the front of the drive-through lane</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">curbside pickup order called ahead &mdash; food is ready, moved to front of serving queue</td>
         </tr>
         <tr>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 2 &mdash; <code>pop_front</code></td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">front car is served; O(1) removal from head using <code>head_-&gt;next</code></td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">curbside pickup served; O(1) removal from head using <code>head_-&gt;next</code></td>
         </tr>
         <tr style="background-color: #fafafa;">
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 2 &mdash; <code>pop_back</code></td>
@@ -163,6 +163,10 @@
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>current_</code> advancing node by node until it reaches nullptr</td>
         </tr>
         <tr>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>singly_vs_doubly_comparison</code></td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">O(1) vs O(n) trade-offs between singly and doubly linked lists at a glance</td>
+        </tr>
+        <tr style="background-color: #fafafa;">
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>doubly_node_structure</code></td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>DoublyNode</code> with <code>prev</code> ← <code>data</code> → <code>next</code> vs <code>Node</code> with only <code>data</code> → <code>next</code></td>
         </tr>
