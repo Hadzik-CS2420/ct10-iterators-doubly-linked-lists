@@ -8,6 +8,8 @@
 // Given implementation — review this before working on the TODOs below.
 // =============================================================================
 
+// ? SEE DIAGRAM: images/doubly_node_structure.png — node with prev/data/next fields
+
 // ---------------------------------------------------------------------------
 // Destructor
 // ---------------------------------------------------------------------------
@@ -53,8 +55,7 @@ bool DoublyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 // 1. push_front()
 // ---------------------------------------------------------------------------
 
-// ? SEE DIAGRAM: images/doubly_node_structure.png  — node with prev/data/next fields
-// ? SEE DIAGRAM: images/push_front_doubly.png       — four pointer updates, O(1) prepend
+// ? SEE DIAGRAM: images/push_front_doubly.png — four pointer updates, O(1) prepend
 
 // ! DISCUSSION: Inserting at the front requires updating FOUR pointers — two on the new node, two on the list:
 //   - new_node->next = old head    (new node points forward to old head)
