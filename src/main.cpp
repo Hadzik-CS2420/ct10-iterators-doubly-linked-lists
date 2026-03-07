@@ -144,5 +144,38 @@ int main() {
     drive_through.print();
     std::cout << "Cars remaining: " << drive_through.get_size() << "\n";
 
+    // =========================================================================
+    // PART 3 — DoublyLinkedList Iterator: forward & reverse traversal
+    // =========================================================================
+
+    // ! DISCUSSION: The doubly linked list's prev pointers unlock a new capability:
+    //   - SinglyLinkedList::Iterator can only move FORWARD (operator++)
+    //   - DoublyLinkedList::Iterator can move FORWARD (++) AND BACKWARD (--)
+    //   - begin()/end() work exactly like the singly linked list — forward traversal
+    //   - rbegin()/rend() start at tail_ and walk backward via prev — reverse traversal
+
+    std::cout << "\n=== Part 3: DoublyLinkedList Iterator -- Reviewing Orders ===\n\n";
+
+    std::cout << "Remaining orders: ";
+    drive_through.print();
+
+    // --- Forward iteration (same as SinglyLinkedList) ---
+
+    std::cout << "\n--- Forward (front to back) ---\n";
+
+    // TODO: Write a for loop using begin(), end(), and ++it to print each order.
+    //       Format each line as: "  Order: 4001"
+
+    // --- Reverse iteration (new — only possible with prev pointers) ---
+
+    // ! DISCUSSION: rbegin() returns an Iterator at tail_ (the last node).
+    //   operator-- walks backward via prev, and rend() is the nullptr sentinel.
+    //   This is the mirror image of the forward loop — same structure, opposite direction.
+
+    std::cout << "\n--- Reverse (back to front) ---\n";
+
+    // TODO: Write a for loop using rbegin(), rend(), and --it to print each order
+    //       in REVERSE. Format each line as: "  Order: 4003"
+
     return 0;
 }
