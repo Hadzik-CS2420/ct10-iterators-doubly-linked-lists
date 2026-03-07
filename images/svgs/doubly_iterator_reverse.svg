@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520">
+  <style>
+    text { font-family: 'Segoe UI', Arial, sans-serif; }
+    .title         { font-size: 18px; font-weight: bold; fill: #1a1a1a; }
+    .step-label    { font-size: 14px; font-weight: bold; fill: #333; }
+    .value         { font-size: 15px; font-weight: bold; fill: #fff; }
+    .value-sm      { font-size: 11px; font-weight: bold; fill: #fff; }
+    .field-label   { font-size: 10px; font-weight: bold; fill: #fff; }
+    .ptr-label     { font-size: 12px; font-weight: bold; fill: #8e44ad; }
+    .code          { font-size: 12px; fill: #2c3e50; font-family: 'Consolas', monospace; }
+    .note          { font-size: 11px; fill: #777; font-style: italic; }
+    .badge-text    { font-size: 12px; fill: #7d5a00; font-weight: bold; font-family: 'Consolas', monospace; }
+    .null-label    { font-size: 12px; font-weight: bold; fill: #95a5a6; }
+    .iter-label    { font-size: 13px; font-weight: bold; fill: #fff; }
+    .result-line   { font-size: 13px; font-weight: bold; fill: #8e44ad; }
+  </style>
+
+  <defs>
+    <marker id="arrow-red" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#e74c3c"/>
+    </marker>
+    <marker id="arrow-blue" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2980b9"/>
+    </marker>
+    <marker id="arrow-purple" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#8e44ad"/>
+    </marker>
+    <marker id="arrow-iter" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#2980b9"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="400" y="24" text-anchor="middle" class="title">Reverse Iteration: rbegin() at tail_, operator-- Walking Backward</text>
+
+  <!-- Loop code badge -->
+  <rect x="80" y="34" width="640" height="24" rx="12" fill="#fff8e1" stroke="#f39c12" stroke-width="1.5"/>
+  <text x="400" y="51" text-anchor="middle" class="badge-text">for (auto it = list.rbegin();  it != list.rend();  --it)  {  /* use *it */  }</text>
+
+  <!-- ==================== The Doubly Linked List ==================== -->
+  <text x="20" y="85" class="step-label">DoublyLinkedList: 4001 &#x2194; 4002 &#x2194; 4003</text>
+
+  <!-- head_ pointer -->
+  <text x="155" y="96" text-anchor="middle" class="ptr-label">head_</text>
+  <line x1="155" y1="100" x2="155" y2="123" stroke="#8e44ad" stroke-width="2" marker-end="url(#arrow-purple)"/>
+
+  <!-- tail_ pointer -->
+  <text x="555" y="96" text-anchor="middle" class="ptr-label">tail_</text>
+  <line x1="555" y1="100" x2="555" y2="123" stroke="#8e44ad" stroke-width="2" marker-end="url(#arrow-purple)"/>
+
+  <!-- Left nullptr -->
+  <rect x="15" y="135" width="58" height="22" rx="4" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1.5"/>
+  <text x="44" y="150" text-anchor="middle" class="null-label">nullptr</text>
+
+  <!-- Node 4001: prev | data | next -->
+  <rect x="95" y="125" width="45" height="42" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <rect x="140" y="125" width="60" height="42" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="200" y="125" width="45" height="42" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="117" y="143" text-anchor="middle" class="field-label">prev</text>
+  <text x="117" y="158" text-anchor="middle" class="value-sm">&#x2190;</text>
+  <text x="170" y="151" text-anchor="middle" class="value">4001</text>
+  <text x="222" y="143" text-anchor="middle" class="field-label">next</text>
+  <text x="222" y="158" text-anchor="middle" class="value-sm">&#x2192;</text>
+
+  <!-- Arrow: 4001 prev → left nullptr -->
+  <line x1="95" y1="146" x2="75" y2="146" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
+
+  <!-- Arrow: 4001 next → 4002 (forward, top) -->
+  <line x1="245" y1="140" x2="293" y2="140" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+  <!-- Arrow: 4002 prev → 4001 (backward, bottom) -->
+  <line x1="295" y1="152" x2="247" y2="152" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
+
+  <!-- Node 4002: prev | data | next -->
+  <rect x="295" y="125" width="45" height="42" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <rect x="340" y="125" width="60" height="42" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="400" y="125" width="45" height="42" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="317" y="143" text-anchor="middle" class="field-label">prev</text>
+  <text x="317" y="158" text-anchor="middle" class="value-sm">&#x2190;</text>
+  <text x="370" y="151" text-anchor="middle" class="value">4002</text>
+  <text x="422" y="143" text-anchor="middle" class="field-label">next</text>
+  <text x="422" y="158" text-anchor="middle" class="value-sm">&#x2192;</text>
+
+  <!-- Arrow: 4002 next → 4003 (forward, top) -->
+  <line x1="445" y1="140" x2="493" y2="140" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+  <!-- Arrow: 4003 prev → 4002 (backward, bottom) -->
+  <line x1="495" y1="152" x2="447" y2="152" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
+
+  <!-- Node 4003: prev | data | next -->
+  <rect x="495" y="125" width="45" height="42" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <rect x="540" y="125" width="60" height="42" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="600" y="125" width="45" height="42" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="517" y="143" text-anchor="middle" class="field-label">prev</text>
+  <text x="517" y="158" text-anchor="middle" class="value-sm">&#x2190;</text>
+  <text x="570" y="151" text-anchor="middle" class="value">4003</text>
+  <text x="622" y="143" text-anchor="middle" class="field-label">next</text>
+  <text x="622" y="158" text-anchor="middle" class="value-sm">&#x2192;</text>
+
+  <!-- Arrow: 4003 next → right nullptr -->
+  <line x1="645" y1="146" x2="683" y2="146" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <!-- Right nullptr -->
+  <rect x="685" y="135" width="58" height="22" rx="4" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1.5"/>
+  <text x="714" y="150" text-anchor="middle" class="null-label">nullptr</text>
+
+  <!-- ==================== rbegin() / rend() ==================== -->
+
+  <!-- rend() box — below left nullptr -->
+  <rect x="10" y="190" width="90" height="28" rx="6" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <text x="55" y="209" text-anchor="middle" class="iter-label">rend()</text>
+  <text x="55" y="232" text-anchor="middle" class="note">(sentinel)</text>
+
+  <!-- Dashed arrow from rend() up to left nullptr -->
+  <line x1="44" y1="190" x2="44" y2="160" stroke="#2980b9" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrow-iter)"/>
+
+  <!-- rbegin() box — below node 4003 -->
+  <rect x="520" y="190" width="100" height="28" rx="6" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <text x="570" y="209" text-anchor="middle" class="iter-label">rbegin()</text>
+
+  <!-- Dashed arrow from rbegin() up to node 4003 -->
+  <line x1="570" y1="190" x2="570" y2="170" stroke="#2980b9" stroke-width="2" stroke-dasharray="6,3" marker-end="url(#arrow-iter)"/>
+
+  <text x="20" y="260" class="step-label">rbegin() returns Iterator{tail_} &#x2014; starts at the last node</text>
+  <text x="20" y="277" class="code">Iterator rbegin() { return Iterator{tail_}; }    // mirror of begin() at head_</text>
+  <text x="20" y="297" class="step-label">rend() returns Iterator{nullptr} &#x2014; sentinel before the first node</text>
+  <text x="20" y="314" class="code">Iterator rend() { return Iterator{nullptr}; }     // mirror of end()</text>
+
+  <!-- Step: operator decrement traversal -->
+
+  <text x="20" y="348" class="step-label">operator--: current_ = current_&#x2192;prev (walks backward via prev pointer)</text>
+
+  <!-- Compact list showing decrement steps -->
+
+  <!-- Left nullptr -->
+  <rect x="15" y="375" width="58" height="22" rx="4" fill="#f4ecf7" stroke="#8e44ad" stroke-width="2"/>
+  <text x="44" y="390" text-anchor="middle" class="null-label">nullptr</text>
+
+  <!-- Node 4001 -->
+  <rect x="95"  y="367" width="45" height="42" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <rect x="140" y="367" width="60" height="42" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="200" y="367" width="45" height="42" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="117" y="385" text-anchor="middle" class="field-label">prev</text>
+  <text x="117" y="400" text-anchor="middle" class="value-sm">&#x2190;</text>
+  <text x="170" y="393" text-anchor="middle" class="value">4001</text>
+  <text x="222" y="385" text-anchor="middle" class="field-label">next</text>
+  <text x="222" y="400" text-anchor="middle" class="value-sm">&#x2192;</text>
+  <line x1="95" y1="388" x2="75" y2="388" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
+  <line x1="245" y1="382" x2="293" y2="382" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+  <line x1="295" y1="394" x2="247" y2="394" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
+
+  <!-- Node 4002 -->
+  <rect x="295" y="367" width="45" height="42" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <rect x="340" y="367" width="60" height="42" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
+  <rect x="400" y="367" width="45" height="42" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="317" y="385" text-anchor="middle" class="field-label">prev</text>
+  <text x="317" y="400" text-anchor="middle" class="value-sm">&#x2190;</text>
+  <text x="370" y="393" text-anchor="middle" class="value">4002</text>
+  <text x="422" y="385" text-anchor="middle" class="field-label">next</text>
+  <text x="422" y="400" text-anchor="middle" class="value-sm">&#x2192;</text>
+  <line x1="445" y1="382" x2="493" y2="382" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+  <line x1="495" y1="394" x2="447" y2="394" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
+
+  <!-- Node 4003 (highlighted — rbegin starts here) -->
+  <rect x="495" y="367" width="45" height="42" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
+  <rect x="540" y="367" width="60" height="42" rx="4" fill="#3498db" stroke="#2980b9" stroke-width="2.5"/>
+  <rect x="600" y="367" width="45" height="42" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
+  <text x="517" y="385" text-anchor="middle" class="field-label">prev</text>
+  <text x="517" y="400" text-anchor="middle" class="value-sm">&#x2190;</text>
+  <text x="570" y="393" text-anchor="middle" class="value">4003</text>
+  <text x="622" y="385" text-anchor="middle" class="field-label">next</text>
+  <text x="622" y="400" text-anchor="middle" class="value-sm">&#x2192;</text>
+  <line x1="645" y1="388" x2="683" y2="388" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow-red)"/>
+
+  <!-- Right nullptr -->
+  <rect x="685" y="377" width="58" height="22" rx="4" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1.5"/>
+  <text x="714" y="392" text-anchor="middle" class="null-label">nullptr</text>
+
+  <!-- current_ pointer above 4003 — starting position -->
+  <text x="570" y="340" text-anchor="middle" class="ptr-label">current_</text>
+  <line x1="570" y1="344" x2="570" y2="366" stroke="#8e44ad" stroke-width="2" marker-end="url(#arrow-purple)"/>
+
+  <!-- Straight arrows below nodes showing decrement direction -->
+  <!-- Arrow: 4003 to 4002 -->
+  <line x1="555" y1="422" x2="385" y2="422" stroke="#8e44ad" stroke-width="2.5" marker-end="url(#arrow-purple)"/>
+  <text x="470" y="418" text-anchor="middle" class="code" style="fill: #8e44ad; font-weight: bold;">&#x2012;&#x2012;it</text>
+
+  <!-- Arrow: 4002 to 4001 -->
+  <line x1="355" y1="442" x2="185" y2="442" stroke="#8e44ad" stroke-width="2.5" marker-end="url(#arrow-purple)"/>
+  <text x="270" y="438" text-anchor="middle" class="code" style="fill: #8e44ad; font-weight: bold;">&#x2012;&#x2012;it</text>
+
+  <!-- Arrow: 4001 to nullptr -->
+  <line x1="155" y1="462" x2="55" y2="462" stroke="#8e44ad" stroke-width="2.5" marker-end="url(#arrow-purple)"/>
+  <text x="105" y="458" text-anchor="middle" class="code" style="fill: #8e44ad; font-weight: bold;">&#x2012;&#x2012;it</text>
+
+  <!-- Stop label at nullptr -->
+  <text x="44" y="478" text-anchor="middle" class="note" style="fill: #8e44ad;">stop</text>
+
+  <!-- Result line -->
+  <text x="400" y="505" text-anchor="middle" class="result-line">*it yields: 4003, 4002, 4001 &#x2014; then current_ == nullptr == rend() &#x2192; loop stops</text>
+</svg>

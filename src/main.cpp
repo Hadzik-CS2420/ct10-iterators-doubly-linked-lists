@@ -162,19 +162,39 @@ int main() {
     std::cout << "Remaining orders: ";
     drive_through.print();
 
-    // --- Forward iteration (same as SinglyLinkedList) ---
+    // --- Forward iteration: explicit iterator ---
 
-    std::cout << "\n--- Forward (front to back) ---\n";
+    std::cout << "\n--- Forward (front to back, explicit iterator) ---\n";
+
+    // ! DISCUSSION: This is the explicit form — you control the iterator directly.
+    //   Equivalent range-based for:
+    //     for (int val : drive_through) { std::cout << "  Order: " << val << "\n"; }
 
     for (auto it = drive_through.begin(); it != drive_through.end(); ++it) {
         std::cout << "  Order: " << *it << "\n";
     }
 
-    // --- Reverse iteration (new — only possible with prev pointers) ---
+    // --- Forward iteration: range-based for ---
+
+    // ! DISCUSSION: The compiler rewrites this into the explicit form above.
+    //   Once begin() and end() exist, range-based for works automatically.
+    //   Explicit equivalent:
+    //     for (auto it = drive_through.begin(); it != drive_through.end(); ++it)
+    //         std::cout << "  Order: " << *it << "\n";
+
+    std::cout << "\n--- Forward (front to back, range-based for) ---\n";
+
+    for (int val : drive_through) {
+        std::cout << "  Order: " << val << "\n";
+    }
+
+    // --- Reverse iteration: explicit iterator ---
 
     // ! DISCUSSION: rbegin() returns an Iterator at tail_ (the last node).
     //   operator-- walks backward via prev, and rend() is the nullptr sentinel.
     //   This is the mirror image of the forward loop — same structure, opposite direction.
+    //   There is no range-based for equivalent — the language only calls begin()/end(),
+    //   so reverse iteration always requires the explicit form.
 
     std::cout << "\n--- Reverse (back to front) ---\n";
 
