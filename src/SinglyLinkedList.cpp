@@ -7,7 +7,9 @@
 // Given implementations — review these before working on the TODO sections.
 // =============================================================================
 
-// --- Destructor ---
+// ---------------------------------------------------------------------------
+// Destructor
+// ---------------------------------------------------------------------------
 
 SinglyLinkedList::~SinglyLinkedList() {
     while (head_) {
@@ -17,7 +19,9 @@ SinglyLinkedList::~SinglyLinkedList() {
     }
 }
 
-// --- Insertion ---
+// ---------------------------------------------------------------------------
+// Insertion
+// ---------------------------------------------------------------------------
 
 void SinglyLinkedList::push_front(int value) {
     head_ = new Node{value, head_};
@@ -40,7 +44,9 @@ void SinglyLinkedList::push_back(int value) {
     ++size_;
 }
 
-// --- Removal ---
+// ---------------------------------------------------------------------------
+// Removal
+// ---------------------------------------------------------------------------
 
 void SinglyLinkedList::pop_front() {
     if (!head_) {
@@ -66,8 +72,8 @@ void SinglyLinkedList::pop_back() {
     }
 
     // ! DISCUSSION: The trailing pointer pattern — O(n) cost.
-    //   We must walk the entire list to find the second-to-last node.
-    //   CT9's DoublyLinkedList eliminates this traversal with a tail_ pointer.
+    //   - must walk the entire list to find the second-to-last node
+    //   - CT9's DoublyLinkedList eliminates this with a tail_ pointer
     auto* previous = head_;
     auto* current  = head_->next;
     while (current->next) {
@@ -80,7 +86,9 @@ void SinglyLinkedList::pop_back() {
     --size_;
 }
 
-// --- Search & remove ---
+// ---------------------------------------------------------------------------
+// Search & Remove
+// ---------------------------------------------------------------------------
 
 bool SinglyLinkedList::contains(int value) const {
     auto* current = head_;
@@ -113,7 +121,9 @@ void SinglyLinkedList::remove(int value) {
     }
 }
 
-// --- Utility ---
+// ---------------------------------------------------------------------------
+// Utility
+// ---------------------------------------------------------------------------
 
 void SinglyLinkedList::print() const {
     auto* current = head_;
@@ -130,57 +140,31 @@ bool SinglyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 // =============================================================================
 // Iterator — implement the five members below.
 // =============================================================================
-
-// ? SEE DIAGRAM: images/iterator_begin_end.png — begin() at head_, end() at nullptr sentinel
-// ? SEE DIAGRAM: images/iterator_traversal.png — current_ advancing node by node
-
+//
+// ? SEE DIAGRAM: images/svgs/why_iterators.svg        — O(n²) get(i) vs O(n) iterator comparison
+// ? SEE DIAGRAM: images/svgs/iterator_five_pieces.svg  — the five members that make range-based for work
+// ? SEE DIAGRAM: images/singly/iterator_traversal.png    — current_ advancing node by node
+//
 // ! DISCUSSION: Why do linked lists need iterators?
+//   - linked lists have no indexing — get(i) walks from head every call → O(n²) total
+//   - an iterator remembers its position (current_), so ++it is O(1) → O(n) total
+//   - iterators also give linked lists the same range-based for syntax as vectors
 //
-//   Arrays and vectors support indexing — vec[i] jumps directly to element i
-//   in O(1) because elements sit in contiguous memory. Linked lists have no
-//   indexing. To reach element i, you must walk from head, following i pointers
-//   — that is O(n) every time. A naive loop using a hypothetical get(i) method
-//   would re-traverse from head on every call:
-//
-//     for (int i = 0; i < list.get_size(); ++i)
-//         std::cout << list.get(i);  // walks from head EVERY iteration — O(n) each = O(n²) total
-//
-//   An iterator solves this by remembering where you are. The current_ pointer
-//   holds your position in the list, and advancing (++it) is a single step — O(1).
-//   A full traversal is O(n) total, not O(n²).
-//
-//   Iterators also give linked lists the same for-each syntax as vectors:
-//     for (int val : myVector) { ... }   // works because vector has begin()/end()
-//     for (int val : myList)   { ... }   // works once WE add begin()/end()
-//   Same syntax, same interface — regardless of whether the container uses
-//   contiguous memory or heap-allocated nodes.
-
 // ! DISCUSSION: An iterator wraps a pointer and gives it a standard interface.
-//   The for-each loop (range-based for) calls these five pieces:
-//   - begin()     — returns an iterator pointing to the first node
-//   - end()       — returns a sentinel iterator (nullptr) marking one past the last
-//   - operator!=  — checks whether to continue (has the iterator reached end?)
-//   - operator*   — reads (or modifies) the current node's value
-//   - operator++  — advances to the next node
-//
-//   operator*, operator++, and operator!= use operator overloading — giving C++
-//   operators custom behavior on a user-defined type. The compiler calls our
-//   functions whenever it sees *, ++, or != applied to an Iterator object.
-//
-//   Equivalent forms — the compiler rewrites range-based for into the explicit version:
-//
-//   Range-based for:            Explicit iterator form:
-//   for (int val : list)        for (auto it = list.begin(); it != list.end(); ++it)
-//       std::cout << val;           std::cout << *it;
+//   - range-based for calls five pieces: begin(), end(), operator!=, operator*, operator++
+//   - these use operator overloading to give C++ operators custom behavior on Iterator objects
+//   - the compiler rewrites `for (int val : list)` into the explicit form automatically
 
 // ---------------------------------------------------------------------------
 // 1. begin()
 // ---------------------------------------------------------------------------
-
+//
+// ? SEE DIAGRAM: images/singly/iterator_begin_end.png — begin() at head_, end() at nullptr sentinel
+//
 // ? for-loop:
 //   for (auto it = list.begin(); it != list.end(); ++it)
 //                  ^^^^^^^^^^^^
-
+//
 // ! DISCUSSION: begin() returns an iterator starting at head_ (the first node).
 //   - if the list is empty, head_ is nullptr — begin() == end(), so the loop body never runs
 
@@ -193,11 +177,11 @@ SinglyLinkedList::Iterator SinglyLinkedList::begin() {
 // ---------------------------------------------------------------------------
 // 2. end()
 // ---------------------------------------------------------------------------
-
+//
 // ? for-loop:
 //   for (auto it = list.begin(); it != list.end(); ++it)
 //                                      ^^^^^^^^^^
-
+//
 // ! DISCUSSION: end() does NOT point to the last node — it constructs a brand new Iterator{nullptr}.
 //   - end() has no connection to any node; it exists only as a comparison target
 //   - you cannot use end() to read the last value — it holds no node, only nullptr
@@ -216,11 +200,13 @@ SinglyLinkedList::Iterator SinglyLinkedList::end() {
 // ---------------------------------------------------------------------------
 // 3. operator!=
 // ---------------------------------------------------------------------------
-
+//
+// ? SEE DIAGRAM: images/singly/for_loop_order_post.png — for loop execution order with it++ (return value discarded)
+//
 // ? for-loop:
 //   for (auto it = list.begin(); it != list.end(); ++it)
 //                                ^^^^^^^^^^^^^^^^
-
+//
 // ! DISCUSSION: Operator overloading — != is given a custom meaning on Iterator.
 //   - the for-loop checks it != list.end() before each iteration
 //   - two iterators are equal when they point to the same node (same address)
@@ -236,11 +222,11 @@ bool SinglyLinkedList::Iterator::operator!=(const Iterator& other) const {
 // ---------------------------------------------------------------------------
 // 4. operator*
 // ---------------------------------------------------------------------------
-
+//
 // ? for-loop:
 //   for (auto it = list.begin(); it != list.end(); ++it)  { *it; }
 //                                                             ^^^
-
+//
 // ! DISCUSSION: Operator overloading — * is given a custom meaning on Iterator.
 //   - *it returns current_->data (the int stored in the node at this position)
 //   - mirrors how *ptr gives access to the value a raw pointer points to
@@ -256,15 +242,14 @@ int& SinglyLinkedList::Iterator::operator*() {
 // ---------------------------------------------------------------------------
 // 5. operator++
 // ---------------------------------------------------------------------------
-
-// ? SEE DIAGRAM: images/for_loop_order_post.png  — for loop execution order with it++ (return value discarded)
-// ? SEE DIAGRAM: images/for_loop_order.png        — same loop with ++it; increment runs AFTER the body
-// ? SEE DIAGRAM: images/pointer_loop_increment.png — why ++it is preferred: iterator objects can't be optimized like raw pointers
-
+//
+// ? SEE DIAGRAM: images/singly/for_loop_order.png        — same loop with ++it; increment runs AFTER the body
+// ? SEE DIAGRAM: images/singly/pointer_loop_increment.png — why ++it is preferred: iterator objects can't be optimized like raw pointers
+//
 // ? for-loop:
 //   for (auto it = list.begin(); it != list.end(); ++it)
 //                                                  ^^^^
-
+//
 // ! DISCUSSION: Operator overloading — ++ is given a custom meaning on Iterator.
 //   - pre-increment (++it) advances current_ to the next node (current_ = current_->next)
 //   - returns Iterator& (*this) so the for-loop can call it naturally

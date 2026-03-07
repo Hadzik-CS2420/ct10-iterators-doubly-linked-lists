@@ -11,21 +11,21 @@
 // Constructor
 // ---------------------------------------------------------------------------
 //
-// ! DISCUSSION: No constructor implementation here — DoublyLinkedList() = default
-//   in the header tells the compiler to generate it. The compiler-generated
-//   constructor uses the in-class initializers (head_ = nullptr, tail_ = nullptr,
-//   size_ = 0) so there is nothing for us to write.
+// ! DISCUSSION: No constructor implementation needed.
+//   - DoublyLinkedList() = default in the header tells the compiler to generate it
+//   - the compiler-generated constructor uses the in-class initializers
+//     (head_ = nullptr, tail_ = nullptr, size_ = 0)
 //
-// ? SEE DIAGRAM: images/doubly_node_structure.png       — node with prev/data/next fields
-// ? SEE DIAGRAM: images/singly_vs_doubly_comparison.png — O(1) vs O(n) trade-offs at a glance
+// ? SEE DIAGRAM: images/doubly/doubly_node_structure.png       — node with prev/data/next fields
+// ? SEE DIAGRAM: images/doubly/singly_vs_doubly_comparison.png — O(1) vs O(n) trade-offs at a glance
 //
 
 // ---------------------------------------------------------------------------
 // Destructor
 // ---------------------------------------------------------------------------
 //
-// Same temp-pointer pattern as the singly linked list: save head, advance, delete.
-// The prev pointers don't matter here — we're freeing every node in forward order.
+// - same temp-pointer pattern as singly linked list: save head, advance, delete
+// - prev pointers don't matter here — we're freeing every node in forward order
 //
 // ! DISCUSSION: Why not delete backwards using tail_?
 //   - we could walk tail_ backwards via prev, but forward traversal is simpler and equally correct
@@ -45,7 +45,7 @@ DoublyLinkedList::~DoublyLinkedList() {
 
 void DoublyLinkedList::print() const {
     // ! DISCUSSION: Doubly linked lists can be printed in either direction.
-    //   Here we go forward (head to tail), same traversal as a singly linked list.
+    //   - here we go forward (head to tail), same traversal as a singly linked list
     auto* current = head_;
     while (current) {
         std::cout << current->data << " <-> ";
@@ -65,7 +65,7 @@ bool DoublyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 // 1. push_front()
 // ---------------------------------------------------------------------------
 //
-// ? SEE DIAGRAM: images/push_front_doubly.png — four pointer updates, O(1) prepend
+// ? SEE DIAGRAM: images/doubly/push_front_doubly.png — four pointer updates, O(1) prepend
 //
 // ! DISCUSSION: Inserting at the front requires updating FOUR pointers — two on the new node, two on the list:
 //   - new_node->next = old head    (new node points forward to old head)
@@ -91,7 +91,7 @@ void DoublyLinkedList::push_front(int value) {
 // 2. push_back()
 // ---------------------------------------------------------------------------
 //
-// ? SEE DIAGRAM: images/push_back_doubly.png — O(1) append using tail_
+// ? SEE DIAGRAM: images/doubly/push_back_doubly.png — O(1) append using tail_
 //
 // ! DISCUSSION: This is where tail_ pays off — O(1) instead of O(n).
 //   - singly linked list: push_back had to traverse the entire list to find the last node — O(n)
@@ -120,7 +120,7 @@ void DoublyLinkedList::push_back(int value) {
 // 3. pop_front()
 // ---------------------------------------------------------------------------
 //
-// ? SEE DIAGRAM: images/pop_front_doubly.png — four pointer updates, O(1) removal
+// ? SEE DIAGRAM: images/doubly/pop_front_doubly.png — four pointer updates, O(1) removal
 //
 // ! DISCUSSION: Removing from the front:
 //   - underflow check: if the list is empty, throw — cannot remove from nothing
@@ -150,7 +150,7 @@ void DoublyLinkedList::pop_front() {
 // 4. pop_back()
 // ---------------------------------------------------------------------------
 //
-// ? SEE DIAGRAM: images/pop_back_doubly.png — O(1) removal via tail_->prev
+// ? SEE DIAGRAM: images/doubly/pop_back_doubly.png — O(1) removal via tail_->prev
 //
 // ! DISCUSSION: This is the other major payoff of a doubly linked list — O(1) pop_back.
 //   - singly linked list (CT8): needed trailing pointer traversal to find second-to-last — O(n)
@@ -179,23 +179,17 @@ void DoublyLinkedList::pop_back() {
 
 // =============================================================================
 // Iterator — six members that enable forward AND reverse traversal.
-//
-// The first five (begin, end, operator!=, operator*, operator++) follow the
-// SAME patterns you implemented in Part 1 for SinglyLinkedList::Iterator.
-// They are given here so you can focus on the NEW concepts: operator--,
-// rbegin(), and rend().
 // =============================================================================
-
-// ? SEE DIAGRAM: images/doubly_iterator_reverse.png — rbegin() at tail_, operator-- walking backward via prev
-
-// ! DISCUSSION: The doubly linked list iterator reuses the same patterns from
-//   SinglyLinkedList::Iterator (operator*, operator++, operator!=, begin, end)
-//   and adds two new capabilities:
+//
+// ? SEE DIAGRAM: images/svgs/doubly_iterator_overview.svg  — six pieces: five reused from SLL + operator-- for reverse
+// ? SEE DIAGRAM: images/doubly/doubly_iterator_reverse.png   — rbegin() at tail_, operator-- walking backward via prev
+//
+// ! DISCUSSION: DLL iterator reuses SinglyLinkedList patterns and adds two new capabilities:
 //   - operator--  : moves backward via current_->prev (impossible on a singly linked list)
 //   - rbegin/rend : start at tail_ and walk backward to nullptr
 
 // ---------------------------------------------------------------------------
-// Given: begin() / end() — forward iteration (same pattern as SinglyLinkedList)
+// 1. begin() / end() — forward iteration (same pattern as SinglyLinkedList)
 // ---------------------------------------------------------------------------
 
 DoublyLinkedList::Iterator DoublyLinkedList::begin() {
@@ -207,9 +201,9 @@ DoublyLinkedList::Iterator DoublyLinkedList::end() {
 }
 
 // ---------------------------------------------------------------------------
-// TODO: rbegin() / rend() — reverse iteration
+// 2. rbegin() / rend() — reverse iteration
 // ---------------------------------------------------------------------------
-
+//
 // ! DISCUSSION: rbegin() starts at the LAST node (tail_), not the first.
 //   - rend() is the nullptr sentinel — the loop stops when current_->prev reaches nullptr
 //   - this mirrors begin()/end() but walks the other direction
@@ -228,7 +222,7 @@ DoublyLinkedList::Iterator DoublyLinkedList::rend() {
 }
 
 // ---------------------------------------------------------------------------
-// Given: operator!= — same logic as SinglyLinkedList::Iterator
+// 3. operator!= — same logic as SinglyLinkedList::Iterator
 // ---------------------------------------------------------------------------
 
 bool DoublyLinkedList::Iterator::operator!=(const Iterator& other) const {
@@ -236,7 +230,7 @@ bool DoublyLinkedList::Iterator::operator!=(const Iterator& other) const {
 }
 
 // ---------------------------------------------------------------------------
-// Given: operator* — same logic as SinglyLinkedList::Iterator
+// 4. operator* — same logic as SinglyLinkedList::Iterator
 // ---------------------------------------------------------------------------
 
 int& DoublyLinkedList::Iterator::operator*() {
@@ -244,11 +238,11 @@ int& DoublyLinkedList::Iterator::operator*() {
 }
 
 // ---------------------------------------------------------------------------
-// Given: operator++ — forward traversal (same as SinglyLinkedList)
+// 5. operator++ — forward traversal (same as SinglyLinkedList)
 // ---------------------------------------------------------------------------
-
+//
 // ! DISCUSSION: Advances to the next node — identical to singly linked list.
-//   current_->next exists on both Node and DoublyNode.
+//   - current_->next exists on both Node and DoublyNode
 
 DoublyLinkedList::Iterator& DoublyLinkedList::Iterator::operator++() {
     current_ = current_->next;
@@ -256,9 +250,9 @@ DoublyLinkedList::Iterator& DoublyLinkedList::Iterator::operator++() {
 }
 
 // ---------------------------------------------------------------------------
-// TODO: operator-- — REVERSE traversal (new for doubly linked list)
+// 6. operator-- — REVERSE traversal (new for doubly linked list)
 // ---------------------------------------------------------------------------
-
+//
 // ! DISCUSSION: This is the key new operator — only possible with prev pointers.
 //   - SinglyLinkedList::Iterator has no operator-- because Node has no prev pointer
 //   - DoublyNode stores prev, so we can walk backward: current_ = current_->prev
