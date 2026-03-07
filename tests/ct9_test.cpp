@@ -206,3 +206,71 @@ TEST(DoublyLinkedListTest, PopBackThrowsOnEmpty) {
     DoublyLinkedList list;
     EXPECT_THROW(list.pop_back(), std::underflow_error);
 }
+
+// ==================== DoublyLinkedList Iterator Tests (5 points) ====================
+
+TEST(DoublyIteratorTest, BeginReturnsFirstElement) {
+    DoublyLinkedList list;
+    list.push_back(10);
+    list.push_back(20);
+    EXPECT_EQ(*list.begin(), 10);
+}
+
+TEST(DoublyIteratorTest, ForwardIteration) {
+    DoublyLinkedList list;
+    list.push_back(10);
+    list.push_back(20);
+    list.push_back(30);
+
+    std::vector<int> collected;
+    for (auto it = list.begin(); it != list.end(); ++it) {
+        collected.push_back(*it);
+    }
+
+    ASSERT_EQ(collected.size(), 3u);
+    EXPECT_EQ(collected[0], 10);
+    EXPECT_EQ(collected[1], 20);
+    EXPECT_EQ(collected[2], 30);
+}
+
+TEST(DoublyIteratorTest, RbeginReturnsLastElement) {
+    DoublyLinkedList list;
+    list.push_back(10);
+    list.push_back(20);
+    EXPECT_EQ(*list.rbegin(), 20);
+}
+
+TEST(DoublyIteratorTest, ReverseIteration) {
+    DoublyLinkedList list;
+    list.push_back(10);
+    list.push_back(20);
+    list.push_back(30);
+
+    std::vector<int> collected;
+    for (auto it = list.rbegin(); it != list.rend(); --it) {
+        collected.push_back(*it);
+    }
+
+    ASSERT_EQ(collected.size(), 3u);
+    EXPECT_EQ(collected[0], 30);
+    EXPECT_EQ(collected[1], 20);
+    EXPECT_EQ(collected[2], 10);
+}
+
+TEST(DoublyIteratorTest, DecrementFromMiddle) {
+    DoublyLinkedList list;
+    list.push_back(10);
+    list.push_back(20);
+    list.push_back(30);
+
+    auto it = list.begin();
+    ++it; // now at 20
+    ++it; // now at 30
+    --it; // back to 20
+    EXPECT_EQ(*it, 20);
+}
+
+TEST(DoublyIteratorTest, EmptyListBeginEqualsEnd) {
+    DoublyLinkedList list;
+    EXPECT_FALSE(list.begin() != list.end());
+}

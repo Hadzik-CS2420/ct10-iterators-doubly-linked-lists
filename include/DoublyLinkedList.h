@@ -43,6 +43,34 @@ public:
     // Utility
     void print() const;
 
+    // -------------------------------------------------------------------------
+    // Iterator — nested class that walks the list in BOTH directions
+    //
+    // ! DISCUSSION: Unlike SinglyLinkedList::Iterator (forward-only),
+    //   DoublyLinkedList::Iterator supports BOTH directions:
+    //   - operator++ moves forward  (current_ = current_->next)
+    //   - operator-- moves backward (current_ = current_->prev)
+    //   This is possible because each DoublyNode has a prev pointer.
+    //   A singly linked list can only go forward — there is no prev to follow.
+    // -------------------------------------------------------------------------
+    class Iterator {
+    public:
+        explicit Iterator(DoublyNode* node) : current_{node} {}
+
+        int&      operator*();                              // dereference — same as singly
+        Iterator& operator++();                             // forward  — same as singly
+        Iterator& operator--();                             // backward — NEW: only possible with prev pointers
+        bool      operator!=(const Iterator& other) const;  // comparison — same as singly
+
+    private:
+        DoublyNode* current_;
+    };
+
+    Iterator begin();    // returns an Iterator pointing to head_ (first node)
+    Iterator end();      // returns an Iterator pointing past the last node (nullptr)
+    Iterator rbegin();   // returns an Iterator pointing to tail_ (last node)
+    Iterator rend();     // returns an Iterator pointing before the first node (nullptr)
+
 private:
     DoublyNode* head_ = nullptr;
     DoublyNode* tail_ = nullptr;

@@ -184,3 +184,86 @@ void DoublyLinkedList::pop_back() {
     delete temp;                  // delete temp; --size_
     --size_;
 }
+
+// =============================================================================
+// Iterator — six members that enable forward AND reverse traversal.
+// =============================================================================
+
+// ? SEE DIAGRAM: images/doubly_iterator_reverse.png — rbegin() at tail_, operator-- walking backward via prev
+
+// ! DISCUSSION: The doubly linked list iterator reuses the same patterns from
+//   SinglyLinkedList::Iterator (operator*, operator++, operator!=, begin, end)
+//   and adds two new capabilities:
+//   - operator--  : moves backward via current_->prev (impossible on a singly linked list)
+//   - rbegin/rend : start at tail_ and walk backward to nullptr
+
+// ---------------------------------------------------------------------------
+// 1. begin() / end() — forward iteration (same pattern as SinglyLinkedList)
+// ---------------------------------------------------------------------------
+
+DoublyLinkedList::Iterator DoublyLinkedList::begin() {
+    return Iterator{head_};
+}
+
+DoublyLinkedList::Iterator DoublyLinkedList::end() {
+    return Iterator{nullptr};
+}
+
+// ---------------------------------------------------------------------------
+// 2. rbegin() / rend() — reverse iteration
+// ---------------------------------------------------------------------------
+
+// ! DISCUSSION: rbegin() starts at the LAST node (tail_), not the first.
+//   - rend() is the nullptr sentinel — the loop stops when current_->prev reaches nullptr
+//   - this mirrors begin()/end() but walks the other direction
+//   - usage: for (auto it = list.rbegin(); it != list.rend(); --it)
+
+DoublyLinkedList::Iterator DoublyLinkedList::rbegin() {
+    return Iterator{tail_};
+}
+
+DoublyLinkedList::Iterator DoublyLinkedList::rend() {
+    return Iterator{nullptr};
+}
+
+// ---------------------------------------------------------------------------
+// 3. operator!= — same logic as SinglyLinkedList::Iterator
+// ---------------------------------------------------------------------------
+
+bool DoublyLinkedList::Iterator::operator!=(const Iterator& other) const {
+    return current_ != other.current_;
+}
+
+// ---------------------------------------------------------------------------
+// 4. operator* — same logic as SinglyLinkedList::Iterator
+// ---------------------------------------------------------------------------
+
+int& DoublyLinkedList::Iterator::operator*() {
+    return current_->data;
+}
+
+// ---------------------------------------------------------------------------
+// 5. operator++ — forward traversal (same as SinglyLinkedList)
+// ---------------------------------------------------------------------------
+
+// ! DISCUSSION: Advances to the next node — identical to singly linked list.
+//   current_->next exists on both Node and DoublyNode.
+
+DoublyLinkedList::Iterator& DoublyLinkedList::Iterator::operator++() {
+    current_ = current_->next;
+    return *this;
+}
+
+// ---------------------------------------------------------------------------
+// 6. operator-- — REVERSE traversal (new for doubly linked list)
+// ---------------------------------------------------------------------------
+
+// ! DISCUSSION: This is the key new operator — only possible with prev pointers.
+//   - SinglyLinkedList::Iterator has no operator-- because Node has no prev pointer
+//   - DoublyNode stores prev, so we can walk backward: current_ = current_->prev
+//   - same pattern as operator++ but in the opposite direction
+
+DoublyLinkedList::Iterator& DoublyLinkedList::Iterator::operator--() {
+    current_ = current_->prev;
+    return *this;
+}
