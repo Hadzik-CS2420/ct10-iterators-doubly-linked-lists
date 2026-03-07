@@ -134,6 +134,27 @@ bool SinglyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 // ? SEE DIAGRAM: images/iterator_begin_end.png — begin() at head_, end() at nullptr sentinel
 // ? SEE DIAGRAM: images/iterator_traversal.png — current_ advancing node by node
 
+// ! DISCUSSION: Why do linked lists need iterators?
+//
+//   Arrays and vectors support indexing — vec[i] jumps directly to element i
+//   in O(1) because elements sit in contiguous memory. Linked lists have no
+//   indexing. To reach element i, you must walk from head, following i pointers
+//   — that is O(n) every time. A naive loop using a hypothetical get(i) method
+//   would re-traverse from head on every call:
+//
+//     for (int i = 0; i < list.get_size(); ++i)
+//         std::cout << list.get(i);  // walks from head EVERY iteration — O(n) each = O(n²) total
+//
+//   An iterator solves this by remembering where you are. The current_ pointer
+//   holds your position in the list, and advancing (++it) is a single step — O(1).
+//   A full traversal is O(n) total, not O(n²).
+//
+//   Iterators also give linked lists the same for-each syntax as vectors:
+//     for (int val : myVector) { ... }   // works because vector has begin()/end()
+//     for (int val : myList)   { ... }   // works once WE add begin()/end()
+//   Same syntax, same interface — regardless of whether the container uses
+//   contiguous memory or heap-allocated nodes.
+
 // ! DISCUSSION: An iterator wraps a pointer and gives it a standard interface.
 //   The for-each loop (range-based for) calls these five pieces:
 //   - begin()     — returns an iterator pointing to the first node
