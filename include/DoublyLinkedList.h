@@ -59,7 +59,7 @@ public:
 
         int&      operator*();                              // dereference — same as singly
         Iterator& operator++();                             // forward  — same as singly
-        Iterator& operator--();                             // backward — NEW: only possible with prev pointers
+        Iterator& operator--();                             // backward — only possible with prev pointers
         bool      operator!=(const Iterator& other) const;  // comparison — same as singly
 
     private:
