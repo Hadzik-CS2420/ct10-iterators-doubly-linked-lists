@@ -3,7 +3,7 @@
 <h2>👨‍💻 Code-Together 9: Iterators &amp; Doubly Linked Lists</h2>
 
 <h3>&#x1F3AF; Overview</h3>
-<p>An in-class code-together activity introducing two new concepts that build on the singly linked list from CT7 and CT8. In Part 1, students add a nested <strong>Iterator class</strong> to the existing <code>SinglyLinkedList</code> &mdash; enabling range-based for loops and standard iterator syntax. In Part 2, students implement a <strong>DoublyLinkedList</strong> with <code>prev_</code> and <code>tail_</code> pointers, unlocking O(1) push and pop from both ends. The scenario follows Farr&#x2019;s Ice Cream: the manager uses an iterator to inspect the ticket queue, then tracks drive-through orders in a doubly linked list.</p>
+<p>An in-class code-together activity introducing two new concepts that build on the singly linked list from CT7 and CT8. In Part 1, students add a nested <strong>Iterator class</strong> to the existing <code>SinglyLinkedList</code> &mdash; enabling range-based for loops and standard iterator syntax. In Part 2, students implement a <strong>DoublyLinkedList</strong> with <code>prev_</code> and <code>tail_</code> pointers, unlocking O(1) push and pop from both ends. The scenario follows Farr's Ice Cream: the manager uses an iterator to inspect the ticket queue, then tracks drive-through orders in a doubly linked list.</p>
 
 <h3>&#x1F4D6; Learning Objectives</h3>
 <p>By completing this activity, you will be able to:</p>
@@ -18,13 +18,12 @@
 
 <h3>&#x1F680; Getting Started</h3>
 
-<h4>Step 1: Accept the Assignment</h4>
-<p>Click the button below to create your personal repository:</p>
-<p><a style="display: inline-block; padding: 10px 24px; font-size: 1em; font-weight: 600; color: #fff; background-color: #0b874b; border-radius: 4px; text-decoration: none;" href="https://classroom.github.com/a/_I44ffw3" target="_blank" rel="noopener">Accept Assignment on GitHub</a></p>
+<h4>Step 1: Fork the Repository</h4>
+<p>Click the button below to fork the assignment repository to your GitHub account:</p>
+<p><a style="display: inline-block; padding: 10px 24px; font-size: 1em; font-weight: 600; color: #fff; background-color: #0b874b; border-radius: 4px; text-decoration: none;" href="https://hadzikcs.netlify.app/gh?course=sh/CS2420&task=ct9-iterators-doubly-linked-lists" target="_blank" rel="noopener">Fork Repository on GitHub</a></p>
 
 <div style="padding: 14px 18px; border-radius: 4px; margin-bottom: 16px; background-color: #fcf8e3; border: 1px solid #faebcc; color: #8a6d3b;">
-    <strong>Repository Access Issue?</strong><br />
-    If you don&#x2019;t see the repository after accepting, check your email for the GitHub invite.
+    <strong>First time?</strong> You&#x2019;ll need a GitHub account. Sign in (or create one) before clicking the button above.
 </div>
 
 <h4>Step 2: Clone in Visual Studio</h4>
@@ -50,7 +49,7 @@
 <h3>&#x1F4DA; Teaching Order</h3>
 <p>Work through the files in the order <code>main.cpp</code> calls them:</p>
 
-<h4>1. <code>SinglyLinkedList.cpp</code> &mdash; Iterator class (5 TODOs)</h4>
+<h4>1. <code>SinglyLinkedList.cpp</code> &mdash; Iterator class (5 TODOs) (5 TODOs)</h4>
 <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
     <thead>
         <tr>
@@ -60,28 +59,28 @@
     </thead>
     <tbody>
         <tr>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>operator*</code> &mdash; Dereferencing</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">operator\* &mdash; Dereferencing</td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">returns a reference to <code>current_-&gt;data</code>; mirrors raw pointer dereference; explain why returning by reference allows <code>*it = value</code></td>
         </tr>
         <tr style="background-color: #fafafa;">
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>operator++</code> &mdash; Advancing</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">operator++ &mdash; Advancing</td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">sets <code>current_</code> to <code>current_-&gt;next</code> and returns <code>*this</code>; pre-increment returns the updated iterator</td>
         </tr>
         <tr>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>operator!=</code> &mdash; Loop condition</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">operator!= &mdash; Loop condition</td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">compares <code>current_</code> with <code>other.current_</code>; the range-based for loop calls this before every iteration</td>
         </tr>
         <tr style="background-color: #fafafa;">
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>begin()</code> &mdash; Start sentinel</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">begin() &mdash; Start sentinel</td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">returns <code>Iterator{head_}</code>; if the list is empty, <code>head_</code> is nullptr and <code>begin() == end()</code></td>
         </tr>
         <tr>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>end()</code> &mdash; Past-the-end sentinel</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">end() &mdash; Past-the-end sentinel</td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">returns <code>Iterator{nullptr}</code>; represents one position past the last node</td>
         </tr>
     </tbody>
 </table>
-<h4>2. <code>DoublyLinkedList.cpp</code> &mdash; Doubly linked list operations (10 TODOs)</h4>
+<h4>2. <code>DoublyLinkedList.cpp</code> &mdash; Doubly linked list operations (10 TODOs) (10 TODOs)</h4>
 <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
     <thead>
         <tr>
@@ -91,24 +90,24 @@
     </thead>
     <tbody>
         <tr>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>push_front</code> &mdash; Insert at head</td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">four pointer updates: new node links to old head; old head&#x2019;s <code>prev</code> points back; if empty, <code>tail_</code> is set; <code>head_</code> advances</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">push_front &mdash; Insert at head</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">four pointer updates: new node links to old head; old head's <code>prev</code> points back; if empty, <code>tail_</code> is set; <code>head_</code> advances</td>
         </tr>
         <tr style="background-color: #fafafa;">
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>push_back</code> &mdash; O(1) append</td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">four pointer updates: new node&#x2019;s <code>prev</code> links to old tail; old tail&#x2019;s <code>next</code> points forward; if empty, <code>head_</code> is set; <code>tail_</code> advances; contrast with CT8&#x2019;s O(n) traversal</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">push_back &mdash; O(1) append</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">four pointer updates: new node's <code>prev</code> links to old tail; old tail's <code>next</code> points forward; if empty, <code>head_</code> is set; <code>tail_</code> advances; contrast with CT8's O(n) traversal</td>
         </tr>
         <tr>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>pop_front</code> &mdash; Remove head</td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">save old head; advance <code>head_</code>; clear new head&#x2019;s <code>prev</code>; if now empty, clear <code>tail_</code>; delete saved</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">pop_front &mdash; Remove head</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">save old head; advance <code>head_</code>; clear new head's <code>prev</code>; if now empty, clear <code>tail_</code>; delete saved</td>
         </tr>
         <tr style="background-color: #fafafa;">
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>pop_back</code> &mdash; O(1) removal</td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">save old tail; retreat <code>tail_</code> via <code>prev</code>; clear new tail&#x2019;s <code>next</code>; if now empty, clear <code>head_</code>; delete saved; contrast with CT8&#x2019;s trailing pointer traversal</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">pop_back &mdash; O(1) removal</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">save old tail; retreat <code>tail_</code> via <code>prev</code>; clear new tail's <code>next</code>; if now empty, clear <code>head_</code>; delete saved; contrast with CT8's trailing pointer traversal</td>
         </tr>
     </tbody>
 </table>
-<h4>3. <code>main.cpp</code> &mdash; Farr&#x2019;s Ice Cream Scenario (8 TODOs)</h4>
+<h4>3. <code>main.cpp</code> &mdash; Farr's Ice Cream Scenario (8 TODOs) (8 TODOs)</h4>
 <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
     <thead>
         <tr>
@@ -123,23 +122,23 @@
         </tr>
         <tr style="background-color: #fafafa;">
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 1 &mdash; Range-based for</td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">write a range-based for loop to count pending orders (tickets not yet called); discuss how the compiler rewrites it into the explicit form</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">write a range-based for loop to count tickets above a threshold; discuss how the compiler rewrites it into the explicit form</td>
         </tr>
         <tr>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 2 &mdash; <code>push_back</code> (&times;4)</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 2 &mdash; push_back (×4)</td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">cars join the drive-through lane; demonstrates O(1) append with <code>tail_</code></td>
         </tr>
         <tr style="background-color: #fafafa;">
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 2 &mdash; <code>push_front</code></td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">curbside pickup order called ahead &mdash; food is ready, moved to front of serving queue</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 2 &mdash; push_front</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">VIP car added to the front</td>
         </tr>
         <tr>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 2 &mdash; <code>pop_front</code></td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">curbside pickup served; O(1) removal from head using <code>head_-&gt;next</code></td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 2 &mdash; pop_front</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">front car is served</td>
         </tr>
         <tr style="background-color: #fafafa;">
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 2 &mdash; <code>pop_back</code></td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">last car gives up; O(1) via <code>tail_-&gt;prev</code> vs CT8&#x2019;s O(n) trailing pointer traversal</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Part 2 &mdash; pop_back</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">last car gives up; O(1) vs CT8's O(n) trailing pointer</td>
         </tr>
     </tbody>
 </table>
@@ -155,19 +154,15 @@
     <tbody>
         <tr>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>iterator_begin_end</code></td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>begin()</code> pointing to <code>head_</code>, <code>end()</code> pointing to nullptr sentinel</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>begin()</code> pointing to head_, <code>end()</code> pointing to nullptr sentinel</td>
         </tr>
         <tr style="background-color: #fafafa;">
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>iterator_traversal</code></td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>current_</code> advancing node by node until it reaches nullptr</td>
         </tr>
         <tr>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>singly_vs_doubly_comparison</code></td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">O(1) vs O(n) trade-offs between singly and doubly linked lists at a glance</td>
-        </tr>
-        <tr style="background-color: #fafafa;">
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>doubly_node_structure</code></td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>DoublyNode</code> with <code>prev</code> ← <code>data</code> → <code>next</code> vs <code>Node</code> with only <code>data</code> → <code>next</code></td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">DoublyNode with <code>prev</code> ← <code>data</code> → <code>next</code> vs Node with only <code>data</code> → <code>next</code></td>
         </tr>
         <tr style="background-color: #fafafa;">
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>push_back_doubly</code></td>
@@ -181,7 +176,7 @@
 </table>
 
 <h3>&#x1F4CA; Grading (30 points)</h3>
-<p>Your code is auto-graded by GitHub Classroom when you push. Tests check that each TODO produces the correct output.</p>
+<p>Your code is auto-graded when you push. Tests check that each TODO produces the correct output.</p>
 <table style="width: 100%; border-collapse: collapse; margin-bottom: 16px;">
     <thead>
         <tr>
@@ -199,7 +194,7 @@
         <tr style="background-color: #fafafa;">
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>operator*</code></td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">3</td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Dereferences to the current node&#x2019;s data value</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Dereferences to the current node's data value</td>
         </tr>
         <tr>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>operator++</code></td>
@@ -214,27 +209,27 @@
         <tr>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>begin()</code> / <code>end()</code></td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">4</td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>begin()</code> points to <code>head_</code>; <code>end()</code> is the nullptr sentinel</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">begin() points to head_; end() is the nullptr sentinel</td>
         </tr>
         <tr style="background-color: #fafafa;">
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>push_front</code></td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">3</td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Inserts at head; updates <code>tail_</code> when list was empty</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Inserts at head; updates tail_ when list was empty</td>
         </tr>
         <tr>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>push_back</code></td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">4</td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">O(1) insert at tail using <code>tail_</code>; updates <code>head_</code> when list was empty</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">O(1) insert at tail using tail_; updates head_ when list was empty</td>
         </tr>
         <tr style="background-color: #fafafa;">
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>pop_front</code></td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">3</td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Removes head; updates <code>tail_</code> when list becomes empty</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">Removes head; updates tail_ when list becomes empty</td>
         </tr>
         <tr>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;"><code>pop_back</code></td>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">5</td>
-            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">O(1) removal using <code>prev_</code>; updates <code>head_</code> when list becomes empty</td>
+            <td style="border: 1px solid #c7cdd1; padding: 10px 14px;">O(1) removal using prev_; updates head_ when list becomes empty</td>
         </tr>
         <tr>
             <td style="border: 1px solid #c7cdd1; padding: 10px 14px; font-weight: 700; background-color: #f5f5f5;"><strong>Total</strong></td>
