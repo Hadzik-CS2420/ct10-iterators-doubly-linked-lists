@@ -1,10 +1,17 @@
 {
   "assignment": {
-    "canvas_title":         "👨‍💻 Code-Together 9: Iterators & Doubly Linked Lists",
-    "points_possible":      30,
-    "submission_types":     ["online_url"],
-    "github_classroom":     true,
+    "canvas_title": "👨‍💻 Code-Together 9: Iterators & Doubly Linked Lists",
+    "points_possible": 30,
+    "submission_types": [
+      "online_upload"
+    ],
+    "github_classroom": true,
     "github_classroom_url": "https://classroom.github.com/a/_I44ffw3",
-    "github_template_url":  "https://github.com/Hadzik-CS2420-GH-Classroom/ct9-iterators-doubly-linked-lists"
+    "github_template_url": "https://github.com/Hadzik-CS2420-GH-Classroom/ct9-iterators-doubly-linked-lists",
+    "allowed_extensions": [
+      "png",
+      "jpg",
+      "jpeg"
+    ]
   }
 }
