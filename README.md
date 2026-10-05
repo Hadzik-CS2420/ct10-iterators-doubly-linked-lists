@@ -1,8 +1,18 @@
-# CT9 — Iterators & Doubly Linked Lists
+# Code-Together 10: Iterators & Doubly Linked Lists
 
 ## Overview
 
 An in-class code-together activity introducing two new concepts that build on the singly linked list from CT7 and CT8. In Part 1, students add a nested **Iterator class** to the existing `SinglyLinkedList` — enabling range-based for loops and standard iterator syntax. In Part 2, students implement a **DoublyLinkedList** with `prev_` and `tail_` pointers, unlocking O(1) push and pop from both ends. The scenario follows Farr's Ice Cream: the manager uses an iterator to inspect the ticket queue, then tracks drive-through orders in a doubly linked list.
+
+> ▶️ **Run the tests yourself.** From the top of this repo:
+>
+> ```
+> python3 tests/scorecard.py
+> ```
+>
+> It builds if it needs to, runs the suite, and prints a scored breakdown that
+> matches what the autograder awards. Submit a **screenshot of that output** —
+> not a repository URL.
 
 ## Learning Objectives
 

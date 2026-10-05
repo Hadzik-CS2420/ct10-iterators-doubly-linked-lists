@@ -20,7 +20,14 @@ TEST(IteratorTest, BeginReturnsFirstElement) {
     SinglyLinkedList list;
     list.push_back(10);
     list.push_back(20);
-    EXPECT_EQ(*list.begin(), 10);
+    auto it = list.begin();
+    // Checked before dereferencing. begin() starts out as Iterator{nullptr}
+    // in the starter, and *it on that segfaults -- which kills the whole run
+    // and prints no score at all. Failing here instead keeps every other
+    // test reportable.
+    ASSERT_TRUE(it != list.end())
+        << "begin() must return the first node, not end(), for a non-empty list";
+    EXPECT_EQ(*it, 10);
 }
 
 TEST(IteratorTest, DereferenceAfterIncrement) {
@@ -28,6 +35,12 @@ TEST(IteratorTest, DereferenceAfterIncrement) {
     list.push_back(10);
     list.push_back(20);
     auto it = list.begin();
+    // Checked before dereferencing. begin() starts out as Iterator{nullptr}
+    // in the starter, and *it on that segfaults -- which kills the whole run
+    // and prints no score at all. Failing here instead keeps every other
+    // test reportable.
+    ASSERT_TRUE(it != list.end())
+        << "begin() must return the first node, not end(), for a non-empty list";
     ++it;
     EXPECT_EQ(*it, 20);
 }
@@ -213,7 +226,14 @@ TEST(DoublyIteratorTest, BeginReturnsFirstElement) {
     DoublyLinkedList list;
     list.push_back(10);
     list.push_back(20);
-    EXPECT_EQ(*list.begin(), 10);
+    auto it = list.begin();
+    // Checked before dereferencing. begin() starts out as Iterator{nullptr}
+    // in the starter, and *it on that segfaults -- which kills the whole run
+    // and prints no score at all. Failing here instead keeps every other
+    // test reportable.
+    ASSERT_TRUE(it != list.end())
+        << "begin() must return the first node, not end(), for a non-empty list";
+    EXPECT_EQ(*it, 10);
 }
 
 TEST(DoublyIteratorTest, ForwardIteration) {
@@ -237,7 +257,12 @@ TEST(DoublyIteratorTest, RbeginReturnsLastElement) {
     DoublyLinkedList list;
     list.push_back(10);
     list.push_back(20);
-    EXPECT_EQ(*list.rbegin(), 20);
+    auto it = list.rbegin();
+    // rbegin() starts as Iterator{nullptr} in the starter; dereferencing
+    // that segfaults and no score is printed for anything.
+    ASSERT_TRUE(it != list.rend())
+        << "rbegin() must return the last node, not rend(), for a non-empty list";
+    EXPECT_EQ(*it, 20);
 }
 
 TEST(DoublyIteratorTest, ReverseIteration) {
@@ -264,6 +289,10 @@ TEST(DoublyIteratorTest, DecrementFromMiddle) {
     list.push_back(30);
 
     auto it = list.begin();
+    // Same reason as the other dereference guards: a null begin() would
+    // segfault here and take the whole run with it.
+    ASSERT_TRUE(it != list.end())
+        << "begin() must return the first node, not end(), for a non-empty list";
     ++it; // now at 20
     ++it; // now at 30
     --it; // back to 20
