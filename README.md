@@ -2,7 +2,7 @@
 
 ## Overview
 
-An in-class code-together activity introducing two new concepts that build on the singly linked list from CT7 and CT8. In Part 1, students add a nested **Iterator class** to the existing `SinglyLinkedList` — enabling range-based for loops and standard iterator syntax. In Part 2, students implement a **DoublyLinkedList** with `prev_` and `tail_` pointers, unlocking O(1) push and pop from both ends. The scenario follows Farr's Ice Cream: the manager uses an iterator to inspect the ticket queue, then tracks drive-through orders in a doubly linked list.
+An in-class code-together activity introducing two new concepts that build on the singly linked list from CT 08 and CT 09. In Part 1, students add a nested **Iterator class** to the existing `SinglyLinkedList` — enabling range-based for loops and standard iterator syntax. In Part 2, students implement a **DoublyLinkedList** with `prev_` and `tail_` pointers, unlocking O(1) push and pop from both ends. The scenario follows Farr's Ice Cream: the manager uses an iterator to inspect the ticket queue, then tracks drive-through orders in a doubly linked list.
 
 > ▶️ **Run the tests yourself.** From the top of this repo:
 >
@@ -13,6 +13,13 @@ An in-class code-together activity introducing two new concepts that build on th
 > It builds if it needs to, runs the suite, and prints a scored breakdown that
 > matches what the autograder awards. Submit a **screenshot of that output** —
 > not a repository URL.
+
+> ▶️ **Watch it run, one pointer at a time.** Your repo has
+> `images/stepper.html` — **double-click it** to open it in your browser and
+> press **Next**. It runs a `for` loop piece by piece (which of `begin()`, `!=`,
+> `*` and `++` happens when), every pointer update of a doubly linked push and
+> pop, and what goes wrong when popping the last node leaves `head_` dangling.
+> Nothing to install, and it works offline.
 
 ## Learning Objectives
 
@@ -35,8 +42,8 @@ An in-class code-together activity introducing two new concepts that build on th
 
 | File | Purpose |
 |---|---|
-| `Node.h` | Simple `Node` struct (`int data`, `Node* next`) — same as CT7/CT8 |
-| `SinglyLinkedList.h` | All CT7+CT8 methods given; adds nested `Iterator` class declaration |
+| `Node.h` | Simple `Node` struct (`int data`, `Node* next`) — same as CT 08 / CT 09 |
+| `SinglyLinkedList.h` | All CT 08 + CT 09 methods given; adds nested `Iterator` class declaration |
 | `DoublyNode.h` | New `DoublyNode` struct (`int data`, `DoublyNode* next`, `DoublyNode* prev`) |
 | `DoublyLinkedList.h` | `DoublyLinkedList` class: `head_`, `tail_`, `size_`; Rule of 5 all deleted |
 
@@ -54,12 +61,12 @@ Review the given implementations (destructor, push/pop, contains, remove) as a q
 
 ### 2. `DoublyLinkedList.cpp` — Doubly linked list operations (10 TODOs)
 
-Walk through the given destructor first — same temp-pointer pattern as CT7/CT8, going forward (ignoring `prev`).
+Walk through the given destructor first — same temp-pointer pattern as CT 08 / CT 09, going forward (ignoring `prev`).
 
 1. **push_front — Insert at head** — four pointer updates: new node links to old head; old head's `prev` points back; if empty, `tail_` is set; `head_` advances
-2. **push_back — O(1) append** — four pointer updates: new node's `prev` links to old tail; old tail's `next` points forward; if empty, `head_` is set; `tail_` advances; contrast with CT8's O(n) traversal
+2. **push_back — O(1) append** — four pointer updates: new node's `prev` links to old tail; old tail's `next` points forward; if empty, `head_` is set; `tail_` advances; contrast with CT 08's O(n) traversal
 3. **pop_front — Remove head** — save old head; advance `head_`; clear new head's `prev`; if now empty, clear `tail_`; delete saved
-4. **pop_back — O(1) removal** — save old tail; retreat `tail_` via `prev`; clear new tail's `next`; if now empty, clear `head_`; delete saved; contrast with CT8's trailing pointer traversal
+4. **pop_back — O(1) removal** — save old tail; retreat `tail_` via `prev`; clear new tail's `next`; if now empty, clear `head_`; delete saved; contrast with CT 08's trailing pointer traversal
 
 ### 3. `main.cpp` — Farr's Ice Cream Scenario (8 TODOs)
 
@@ -68,7 +75,7 @@ Walk through the given destructor first — same temp-pointer pattern as CT7/CT8
 3. **Part 2 — push_back (×4)** — cars join the drive-through lane; demonstrates O(1) append with `tail_`
 4. **Part 2 — push_front** — VIP car added to the front
 5. **Part 2 — pop_front** — front car is served
-6. **Part 2 — pop_back** — last car gives up; O(1) vs CT8's O(n) trailing pointer
+6. **Part 2 — pop_back** — last car gives up; O(1) vs CT 08's O(n) trailing pointer
 
 ## Key Concepts
 

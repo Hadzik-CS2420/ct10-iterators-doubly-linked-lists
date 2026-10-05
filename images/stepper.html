@@ -1,0 +1,706 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CS 2420 &middot; Iterator &amp; Doubly Stepper</title>
+<!--
+  Iterator & Doubly Stepper -- CT 10, Iterators & Doubly Linked Lists
+
+  Open this file in a browser. Double-click it, or right-click in VS Code ->
+  "Reveal in File Explorer" and double-click there. Nothing to install, no
+  internet needed, no extension: it is one self-contained file.
+
+  WHY NOT IN VS CODE: VS Code has no built-in HTML preview that runs
+  JavaScript. The markdown preview strips scripts and Simple Browser needs a
+  URL. Every student already has a browser.
+
+  images/singly/for_loop_order.png tries to show the order a for loop runs
+  its four pieces in. Demo 1 is that picture, run. Demos 2 and 3 are the four
+  pointer updates of a doubly linked insert and remove, one per frame --
+  the stills show before and after, and every bug lives in between.
+
+  As in the CT 09 stepper, frames are not written by hand. A small model of
+  the list is mutated line by line and each frame snapshots it, so the
+  picture is what the code would actually do.
+
+  Addresses are made up and deliberately tidy.
+
+  Everything is deliberately plain: no libraries, no build step, no fetch().
+  It has to work from a file:// URL on a Chromebook.
+-->
+<style>
+  :root {
+    --ink: #1a1a2e; --muted: #555; --line: #cbd5e1; --panel: #f8fafc;
+    --blue: #2573a7; --green: #1c7e45; --red: #c0392b; --orange: #a95c19;
+    --purple: #8e44ad; --teal: #00695c;
+    --zoom: 2.2;
+  }
+  html { font-size: calc(16px * var(--zoom)); }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', Arial, sans-serif; color: var(--ink);
+    background: #fff; margin: 0; padding: 0 1rem 4rem; line-height: 1.5;
+  }
+  .wrap { max-width: min(1700px, 97vw); margin: 0 auto; }
+  header {
+    background: linear-gradient(135deg,#00695c 0%,#00796b 100%);
+    color: #fff; border-radius: 12px; padding: 1.5rem 2rem; margin: 1.5rem 0;
+  }
+  header h1 { margin: 0; font-size: 1.5rem; }
+  header p { margin: .5rem 0 0; font-size: .95rem; }
+  nav { margin-bottom: 1.5rem; font-size: .9rem; }
+  nav a {
+    display: inline-block; margin: 0 .5rem .4rem 0; padding: .3rem .7rem;
+    background: #e0f2f1; color: #00695c; border-radius: 999px;
+    text-decoration: none; border: 1px solid #b2dfdb;
+  }
+  nav a:hover, nav a:focus { background: #b2dfdb; }
+  section {
+    border: 1px solid var(--line); border-radius: 10px; padding: 1.25rem 1.5rem;
+    margin-bottom: 1.75rem;
+  }
+  section > h2 { margin: 0 0 .25rem; font-size: 1.15rem; }
+  .sub { margin: 0 0 1rem; color: var(--muted); font-size: .9rem; }
+  .cols { display: flex; gap: 1.25rem; flex-wrap: wrap; }
+  .col { flex: 1 1 20rem; min-width: 18rem; }
+  pre.code {
+    background: #1e1e2e; color: #cdd6f4; border-radius: 8px; padding: .85rem 0;
+    font-family: Consolas, 'Courier New', monospace; font-size: .76rem;
+    line-height: 1.7; margin: 0; overflow-x: auto;
+  }
+  pre.code .ln {
+    display: block; padding: 0 1rem 0 1.75rem; white-space: pre;
+    border-left: .35rem solid transparent; position: relative;
+  }
+  pre.code .ln.on {
+    background: #51546b; border-left-color: #f9e2af; color: #fff;
+    box-shadow: inset 0 0 0 .08rem rgba(249, 226, 175, .55);
+  }
+  pre.code .ln.on::before {
+    content: "\25B6"; position: absolute; left: .5rem; color: #f9e2af;
+  }
+  .kw { color: #cba6f7; } .fn { color: #89dceb; } .st { color: #a6e3a1; }
+  .nu { color: #fab387; } .cm { color: #9399b2; font-style: italic; }
+  .ty { color: #f9e2af; } .bad { color: #f38ba8; font-weight: bold; }
+  .panel {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 8px;
+    padding: .75rem 1rem; margin-top: .75rem;
+  }
+  .panel h3 {
+    margin: 0 0 .5rem; font-size: .75rem; letter-spacing: .06em;
+    text-transform: uppercase; color: #37474f;
+  }
+  .panel.vars-p { border-left: .25rem solid var(--blue); }
+  .panel.list-p { border-left: .25rem solid var(--orange); }
+  .panel.list-p.wide { margin: 0 0 .9rem; }
+  .vars { display: flex; gap: .5rem; flex-wrap: wrap; }
+  .var {
+    background: #fff; border: 1px solid var(--line); border-radius: 6px;
+    padding: .3rem .6rem; font-family: Consolas, monospace; font-size: .8rem;
+  }
+  .var b { color: var(--blue); font-weight: 600; }
+  .var.changed { border-color: var(--green); background: #e8f5e9; }
+  .var.dead { border-color: var(--red); background: #fce4ec; color: #8e1b10; }
+  .out {
+    font-family: Consolas, monospace; font-size: .85rem; white-space: pre;
+    min-height: 2.5rem; margin: 0; color: var(--ink);
+  }
+  .note { font-size: .88rem; color: var(--muted); min-height: 3.2rem; margin: .6rem 0 0; }
+  .note b { color: var(--ink); }
+  .controls { display: flex; gap: .5rem; align-items: center; margin-top: .9rem; flex-wrap: wrap; }
+  button {
+    font: inherit; font-size: .88rem; padding: .4rem .9rem; border-radius: 6px;
+    border: 1px solid #00695c; background: #00695c; color: #fff; cursor: pointer;
+  }
+  button.ghost { background: #fff; color: #00695c; }
+  button:disabled { opacity: .4; cursor: default; }
+  .count { font-size: .85rem; color: var(--muted); margin-left: auto; font-variant-numeric: tabular-nums; }
+  label.opt { font-size: .88rem; color: var(--muted); display: inline-flex; align-items: center; gap: .35rem; }
+  select { font: inherit; font-size: .88rem; padding: .25rem; }
+
+  /* The list. Nodes keep their place for the whole demo, even after they are
+     freed -- the point is to watch the links change around them. */
+  .chain { display: flex; gap: .45rem; flex-wrap: nowrap; align-items: flex-end; overflow-x: auto; padding-bottom: .8rem; }
+  .slot { display: flex; flex-direction: column; align-items: center; gap: .25rem; flex: 0 0 auto; }
+  .tags { display: flex; flex-direction: column; align-items: center; gap: .15rem; min-height: 3.6rem; justify-content: flex-end; }
+  .tag {
+    font-family: Consolas, monospace; font-size: .66rem; padding: .05rem .4rem;
+    border-radius: 999px; color: #fff; white-space: nowrap; background: var(--muted);
+  }
+  /* t- prefix: a tag named "node" must not pick up the .node box style */
+  .tag.t-head_ { background: var(--purple); }
+  .tag.t-tail_ { background: var(--teal); }
+  .tag.t-it    { background: var(--blue); }
+  .tag.t-end   { background: #6e6e6e; }
+  .tag.t-temp, .tag.t-node { background: var(--orange); }
+  .tag.t-dangling { background: var(--red); }
+  .tag::after { content: " \2193"; }
+  .node {
+    border: 2px solid var(--line); border-radius: 7px; background: #fff;
+    font-family: Consolas, monospace; text-align: center; min-width: 4.2rem;
+    padding: .2rem .35rem;
+  }
+  .node .nv { display: block; font-size: 1rem; font-weight: bold; }
+  .node .nn { display: block; font-size: .64rem; color: var(--muted); border-top: 1px solid var(--line); margin-top: .1rem; padding: .05rem .15rem 0; }
+  .node .nn.chg { color: #fff; background: var(--green); border-radius: 3px; }
+  .node .addr { display: block; font-size: .58rem; color: #757575; }
+  .node.now  { border-color: var(--blue); background: #eaf2f8; }
+  .node.new  { border-color: var(--green); background: #e8f5e9; }
+  .node.free { border-style: dashed; color: #9e9e9e; background: #fafafa; transform: translateY(.6rem); }
+  .node.free .nv { text-decoration: line-through; }
+  .nullend {
+    font-family: Consolas, monospace; font-size: .75rem; color: var(--muted);
+    border: 1px dashed var(--line); border-radius: 7px; padding: .55rem .4rem;
+  }
+  footer { color: var(--muted); font-size: .85rem; border-top: 1px solid var(--line); padding-top: 1rem; }
+  .sizebar { display: flex; align-items: center; gap: .4rem; flex-wrap: wrap; margin-top: .9rem; font-size: .8rem; }
+  .sizebar button {
+    background: rgba(255,255,255,.16); color: #fff; border-color: rgba(255,255,255,.6);
+    font-size: .8rem; padding: .25rem .7rem;
+  }
+  .sizebar button:hover { background: rgba(255,255,255,.3); }
+  .sizebar .val { font-variant-numeric: tabular-nums; opacity: .85; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Iterator &amp; Doubly Stepper</h1>
+  <p>CS 2420 &middot; Module 4 &middot; Code-Together 10 &middot; press <b>Next</b> (or the &rarr; key)
+     and watch the pointers move.</p>
+  <div class="sizebar" id="sizebar">
+    <span>Text size</span>
+    <button data-zoom="out" title="Smaller">A&minus;</button>
+    <button data-zoom="in" title="Bigger">A+</button>
+    <button data-zoom="projector">Projector</button>
+    <button data-zoom="reset">Reset</button>
+    <span class="val" id="zoomval"></span>
+  </div>
+</header>
+
+<nav>
+  <a href="#d1">1. What a for loop does with an iterator</a>
+  <a href="#d2">2. Doubly linked insert &mdash; four pointers</a>
+  <a href="#d3">3. Doubly linked remove &mdash; and the empty list</a>
+</nav>
+
+<section id="d1">
+  <h2>1. What a <code>for</code> loop does with an iterator</h2>
+  <p class="sub">The loop header is split across lines so you can see which piece runs when. Every piece
+     is one of the five members you write: <code>begin()</code>, <code>end()</code>, <code>!=</code>,
+     <code>*</code> and <code>++</code>.</p>
+  <div class="controls" style="margin: 0 0 .9rem;">
+    <label class="opt">Written as
+      <select data-opt="form">
+        <option value="explicit">an explicit iterator loop</option>
+        <option value="range">a range-based for</option>
+      </select>
+    </label>
+    <label class="opt">List
+      <select data-opt="list">
+        <option value="3">10, 20, 30</option>
+        <option value="0">empty</option>
+      </select>
+    </label>
+  </div>
+  <div class="panel list-p wide"><h3>The list</h3><div class="chain" data-chain></div></div>
+  <div class="cols">
+    <div class="col">
+      <pre class="code" data-code></pre>
+    </div>
+    <div class="col">
+      <div class="panel vars-p" style="margin-top: 0;"><h3>Variables</h3><div class="vars" data-vars></div></div>
+      <div class="panel"><h3>Output</h3><p class="out" data-out></p></div>
+    </div>
+  </div>
+  <p class="note" data-note></p>
+  <div class="controls" data-controls></div>
+</section>
+
+<section id="d2">
+  <h2>2. Doubly linked insert &mdash; four pointers</h2>
+  <p class="sub">Every insert touches four pointers: two on the new node, one on its neighbor, one on the
+     list. No walking &mdash; <code>head_</code> and <code>tail_</code> are already at the ends.</p>
+  <div class="controls" style="margin: 0 0 .9rem;">
+    <label class="opt">Run
+      <select data-opt="op">
+        <option value="back">push_back(40) onto 10, 20, 30</option>
+        <option value="front">push_front(5) onto 10, 20, 30</option>
+        <option value="empty">push_back(40) onto an empty list</option>
+      </select>
+    </label>
+  </div>
+  <div class="panel list-p wide"><h3>The list</h3><div class="chain" data-chain></div></div>
+  <div class="cols">
+    <div class="col">
+      <pre class="code" data-code></pre>
+    </div>
+    <div class="col">
+      <div class="panel vars-p" style="margin-top: 0;"><h3>Variables</h3><div class="vars" data-vars></div></div>
+      <div class="panel"><h3>print()</h3><p class="out" data-out></p></div>
+    </div>
+  </div>
+  <p class="note" data-note></p>
+  <div class="controls" data-controls></div>
+</section>
+
+<section id="d3">
+  <h2>3. Doubly linked remove &mdash; and the empty list</h2>
+  <p class="sub"><code>tail_-&gt;prev</code> is the second-to-last node, so <code>pop_back</code> no longer
+     walks. The case to watch is popping the <b>last</b> node: both ends have to be cleared.</p>
+  <div class="controls" style="margin: 0 0 .9rem;">
+    <label class="opt">Run
+      <select data-opt="op">
+        <option value="back">pop_back() on 10, 20, 30</option>
+        <option value="front">pop_front() on 10, 20, 30</option>
+        <option value="last">pop_back() on a one-node list</option>
+        <option value="bug">pop_back() on one node, forgetting the else</option>
+      </select>
+    </label>
+  </div>
+  <div class="panel list-p wide"><h3>The list</h3><div class="chain" data-chain></div></div>
+  <div class="cols">
+    <div class="col">
+      <pre class="code" data-code></pre>
+    </div>
+    <div class="col">
+      <div class="panel vars-p" style="margin-top: 0;"><h3>Variables</h3><div class="vars" data-vars></div></div>
+      <div class="panel"><h3>print()</h3><p class="out" data-out></p></div>
+    </div>
+  </div>
+  <p class="note" data-note></p>
+  <div class="controls" data-controls></div>
+</section>
+
+<footer>
+  <p>Part of <b>Code-Together 10</b>. The still versions are in <code>images/singly/</code> and
+     <code>images/doubly/</code>, and the Diagrams table in <code>README.md</code> says what each one is for.</p>
+</footer>
+
+</div>
+
+<script>
+/* Text size -- one custom property drives every rem on the page, and the
+   choice is remembered per machine. Same as the CT 05-09 steppers. */
+(function () {
+  var root = document.documentElement, KEY = "cs2420-stepper-zoom", DEFAULT = 2.2;
+  var out = document.getElementById("zoomval");
+  function set(z) {
+    z = Math.max(1, Math.min(4.5, Math.round(z * 10) / 10));
+    root.style.setProperty("--zoom", z);
+    if (out) { out.textContent = Math.round(z / DEFAULT * 100) + "%"; }
+    try { localStorage.setItem(KEY, z); } catch (e) {}
+  }
+  function current() {
+    return parseFloat(getComputedStyle(root).getPropertyValue("--zoom")) || DEFAULT;
+  }
+  var saved = NaN;
+  try { saved = parseFloat(localStorage.getItem(KEY)); } catch (e) {}
+  set(isNaN(saved) ? DEFAULT : saved);
+  document.getElementById("sizebar").addEventListener("click", function (e) {
+    var act = e.target.getAttribute("data-zoom");
+    if (!act) { return; }
+    if (act === "in") { set(current() + 0.2); }
+    if (act === "out") { set(current() - 0.2); }
+    if (act === "projector") { set(3.2); }
+    if (act === "reset") { set(DEFAULT); }
+  });
+})();
+
+function esc(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+}
+
+/* ------------------------------------------------------------------ *
+ * The list model.
+ *
+ * { nodes, ptr, size, doubly }. Nodes never move or disappear; a freed node
+ * just changes state and stays where it was. Each node has a pos (screen
+ * order), next and prev (node index or null), and chg -- the fields that
+ * changed in this step, to be highlighted.
+ *
+ * ptr holds every named pointer: head_, tail_, and locals such as temp or
+ * it. A key that is absent has not been declared yet. tagOrder says which
+ * of them to draw as tags above the nodes, and in what order.
+ * ------------------------------------------------------------------ */
+var ADDR = ["0x7A10", "0x7A40", "0x7A70", "0x7AA0", "0x7AD0"];
+
+function makeList(vals, doubly) {
+  var L = { nodes: [], ptr: { head_: null }, size: 0, doubly: doubly };
+  if (doubly) { L.ptr.tail_ = null; }
+  vals.forEach(function (v, k) {
+    L.nodes.push({ v: v, addr: ADDR[k], pos: k, state: "", chg: {},
+                   next: k + 1 < vals.length ? k + 1 : null, prev: k > 0 ? k - 1 : null });
+  });
+  if (vals.length) { L.ptr.head_ = 0; if (doubly) { L.ptr.tail_ = vals.length - 1; } }
+  L.size = vals.length;
+  return L;
+}
+function addNode(L, v, pos) {
+  L.nodes.push({ v: v, addr: ADDR[L.nodes.length], pos: pos, state: "new", chg: {}, next: null, prev: null });
+  return L.nodes.length - 1;
+}
+function clone(L) { return JSON.parse(JSON.stringify(L)); }
+
+function ptrText(L, p) {
+  if (p === null) { return "nullptr"; }
+  var n = L.nodes[p];
+  return n.addr + "  (" + (n.state === "free" ? "dangling" : n.v) + ")";
+}
+
+function printed(L) {
+  var s = "", p = L.ptr.head_, guard = 0, arrow = L.doubly ? " <-> " : " -> ";
+  while (p !== null && guard++ < 10) {
+    if (L.nodes[p].state === "free") { return s + "?? (reading freed memory)"; }
+    s += L.nodes[p].v + arrow;
+    p = L.nodes[p].next;
+  }
+  return s + "nullptr";
+}
+
+/* Collects frames. varNames are shown in the Variables panel in that order,
+   once declared; "changed" is worked out against the previous frame. */
+function Recorder(code, varNames, tagOrder, extra) {
+  var frames = [], last = {};
+  return {
+    frames: frames,
+    push: function (line, L, note, out) {
+      var vars = (extra || []).map(function (v) { return { name: v[0], value: v[1] }; });
+      varNames.forEach(function (k) {
+        if (k === "size_") { vars.push({ name: k, value: String(L.size) }); return; }
+        if (!(k in L.ptr)) { return; }
+        var p = L.ptr[k];
+        vars.push({ name: k === "it" ? "it.current_" : k, value: ptrText(L, p),
+                    dead: p !== null && L.nodes[p].state === "free" });
+      });
+      vars.forEach(function (v) {
+        v.changed = !v.dead && last[v.name] !== undefined && last[v.name] !== v.value;
+        last[v.name] = v.value;
+      });
+      frames.push({ code: code, line: line, chain: clone(L), tagOrder: tagOrder,
+                    vars: vars, out: out, note: note });
+      L.nodes.forEach(function (n) { n.chg = {}; if (n.state === "new") { n.state = ""; } });
+    }
+  };
+}
+
+function chainHtml(L, tagOrder) {
+  function tags(match) {
+    var t = "";
+    tagOrder.forEach(function (k) {
+      var isEnd = k === "end()";
+      var p = isEnd ? null : L.ptr[k];
+      if (!isEnd && !(k in L.ptr)) { return; }
+      if (p !== match) { return; }
+      var dangling = match !== null && L.nodes[match].state === "free";
+      var cls = isEnd ? "end" : dangling ? "dangling" : k;
+      t += '<span class="tag t-' + cls + '">' + k + "</span>";
+    });
+    return '<div class="tags">' + t + "</div>";
+  }
+  function name(i) { return i === null ? "null" : L.nodes[i].v; }
+  var order = L.nodes.map(function (n, k) { return k; })
+                     .sort(function (a, b) { return L.nodes[a].pos - L.nodes[b].pos; });
+  var html = order.map(function (k) {
+    var n = L.nodes[k];
+    var prev = L.doubly ? '<span class="nn' + (n.chg.prev ? " chg" : "") + '">&larr; prev ' + name(n.prev) + "</span>" : "";
+    var next = '<span class="nn' + (n.chg.next ? " chg" : "") + '">next ' + name(n.next) + " &rarr;</span>";
+    var label = n.state === "free" ? "freed" : n.addr;
+    return '<div class="slot">' + tags(k) + '<div class="node ' + n.state + '">' +
+           '<span class="nv">' + n.v + "</span>" + prev + next +
+           '<span class="addr">' + label + "</span></div></div>";
+  }).join("");
+  return html + '<div class="slot">' + tags(null) + '<div class="nullend">nullptr</div></div>';
+}
+
+/* ------------------------------------------------------------------ *
+ * The harness. Frames are computed up front, so Prev is just an index
+ * going down and can never desynchronize from the code.
+ * ------------------------------------------------------------------ */
+function Stepper(section, build) {
+  var i = 0, frames = [], timer = null;
+  var codeEl  = section.querySelector("[data-code]");
+  var varsEl  = section.querySelector("[data-vars]");
+  var outEl   = section.querySelector("[data-out]");
+  var chainEl = section.querySelector("[data-chain]");
+  var noteEl  = section.querySelector("[data-note]");
+  var bar     = section.querySelector("[data-controls]");
+
+  bar.innerHTML =
+    '<button class="ghost" data-act="prev">&larr; Prev</button>' +
+    '<button data-act="next">Next &rarr;</button>' +
+    '<button class="ghost" data-act="play">Play</button>' +
+    '<button class="ghost" data-act="reset">Reset</button>' +
+    '<span class="count" data-count></span>';
+  var countEl = bar.querySelector("[data-count]");
+  var playBtn = bar.querySelector('[data-act="play"]');
+
+  function draw() {
+    var f = frames[i] || {};
+    codeEl.innerHTML = (f.code || []).map(function (line, n) {
+      // A blank spacer line must still occupy a row -- an empty span collapses
+      // to zero height and the grouping the code was written with disappears.
+      return '<span class="ln' + (n === f.line ? " on" : "") + '">' +
+             (line === "" ? "&nbsp;" : line) + "</span>";
+    }).join("");
+    varsEl.innerHTML = (f.vars || []).map(function (v) {
+      return '<span class="var' + (v.changed ? " changed" : "") + (v.dead ? " dead" : "") +
+             '"><b>' + esc(v.name) + "</b> = " + esc(v.value) + "</span>";
+    }).join("");
+    if (chainEl) { chainEl.innerHTML = f.chain ? chainHtml(f.chain, f.tagOrder) : ""; }
+    if (outEl)   { outEl.textContent = f.out ? f.out : " "; }
+    if (noteEl)  { noteEl.innerHTML = f.note || "&nbsp;"; }
+    countEl.textContent = "step " + (i + 1) + " of " + frames.length;
+    bar.querySelector('[data-act="prev"]').disabled = (i === 0);
+    bar.querySelector('[data-act="next"]').disabled = (i === frames.length - 1);
+  }
+
+  function go(n) {
+    i = Math.max(0, Math.min(frames.length - 1, n));
+    draw();
+    if (timer && i === frames.length - 1) { stop(); }
+  }
+  function stop() { clearInterval(timer); timer = null; playBtn.textContent = "Play"; }
+  function play() {
+    if (timer) { stop(); return; }
+    if (i === frames.length - 1) { i = 0; }
+    playBtn.textContent = "Pause";
+    timer = setInterval(function () { go(i + 1); }, 1100);
+  }
+
+  bar.addEventListener("click", function (e) {
+    var act = e.target.getAttribute("data-act");
+    if (!act) { return; }
+    if (act === "next") { stop(); go(i + 1); }
+    if (act === "prev") { stop(); go(i - 1); }
+    if (act === "reset") { stop(); go(0); }
+    if (act === "play") { play(); }
+  });
+
+  section.setAttribute("tabindex", "0");
+  section.addEventListener("keydown", function (e) {
+    if (e.key === "ArrowRight") { stop(); go(i + 1); e.preventDefault(); }
+    if (e.key === "ArrowLeft")  { stop(); go(i - 1); e.preventDefault(); }
+  });
+
+  section.querySelectorAll("[data-opt]").forEach(function (el) {
+    el.addEventListener("change", function () { stop(); rebuild(); });
+  });
+
+  function opts() {
+    var o = {};
+    section.querySelectorAll("[data-opt]").forEach(function (el) {
+      o[el.getAttribute("data-opt")] = (el.type === "checkbox") ? el.checked : el.value;
+    });
+    return o;
+  }
+  function rebuild() { frames = build(opts()); i = 0; draw(); }
+  rebuild();
+  section.stepper = { count: function () { return frames.length; }, go: go, frames: function () { return frames; } };
+}
+
+/* ------------------------------------------------------------------ *
+ * Demo 1 -- the for loop, piece by piece
+ *
+ * Both forms share line numbers: 0 = begin, 1 = test, 2 = increment,
+ * 3 = body. The range-based form puts what the compiler generates in
+ * the comments, on the same lines.
+ * ------------------------------------------------------------------ */
+Stepper(document.getElementById("d1"), function (o) {
+  var range = o.form === "range";
+  var vals = o.list === "0" ? [] : [10, 20, 30];
+  var code = range ? [
+    '<span class="kw">for</span> (<span class="ty">int</span> x : list)         <span class="cm">// auto it = list.begin();</span>',
+    '                           <span class="cm">// it != list.end()</span>',
+    '                           <span class="cm">// ++it</span>',
+    '    std::cout &lt;&lt; x &lt;&lt; <span class="st">" "</span>;  <span class="cm">// int x = *it;</span>',
+    '}'
+  ] : [
+    '<span class="kw">for</span> (<span class="kw">auto</span> it = list.<span class="fn">begin</span>();',
+    '     it != list.<span class="fn">end</span>();',
+    '     ++it) {',
+    '    std::cout &lt;&lt; *it &lt;&lt; <span class="st">" "</span>;',
+    '}'
+  ];
+  var L = makeList(vals, false);
+  var R = Recorder(code, ["it"], ["head_", "it", "end()"]);
+  var out = "";
+  R.push(null, L, range
+    ? "A range-based <b>for</b>. You never see an iterator &mdash; but the compiler writes the loop on the " +
+      "right for you, and calls your five members to do it."
+    : "The same loop, written out by hand. Watch which of the three header pieces runs, and when.", out);
+  L.ptr.it = L.ptr.head_;
+  R.push(0, L, "<b>begin()</b> runs <b>once</b>, before anything else. It returns <b>Iterator{head_}</b>, so " +
+    "<b>it</b> starts on " + (vals.length ? "the first node." : "<b>nullptr</b> &mdash; the list is empty."), out);
+  while (true) {
+    var at = L.ptr.it;
+    if (at === null) {
+      R.push(1, L, "<b>operator!=</b> compares <b>current_</b> with <b>end()</b>&#x2019;s <b>nullptr</b>. " +
+        "They are equal, so the loop ends." + (vals.length
+          ? " <b>end()</b> was never a node &mdash; it is the place you arrive after the last one."
+          : " On an empty list <b>begin() == end()</b> from the start, and the body never runs once."), out);
+      R.push(4, L, "Done. " + (vals.length ? "Three trips through the body, and <b>end()</b> was never dereferenced."
+        : "Nothing printed, and nothing crashed."), out);
+      break;
+    }
+    R.push(1, L, "Test: <b>it != list.end()</b>. <b>current_</b> is on " + L.nodes[at].v +
+      ", not <b>nullptr</b>, so <b>operator!=</b> returns true and the body runs.", out);
+    L.nodes[at].state = "now";
+    out += L.nodes[at].v + " ";
+    R.push(3, L, "Body: <b>*it</b> calls <b>operator*</b>, which returns <b>current_-&gt;data</b> &mdash; " +
+      L.nodes[at].v + ". It returns <b>int&amp;</b>, so <b>*it = 99</b> would change the node itself.", out);
+    L.nodes[at].state = "";
+    L.ptr.it = L.nodes[at].next;
+    R.push(2, L, "Increment: <b>++it</b> calls <b>operator++</b>, which sets <b>current_ = current_-&gt;next</b>. " +
+      "It runs <b>after</b> the body, not before &mdash; the first value is never skipped." +
+      (L.ptr.it === null ? " The last node&#x2019;s <b>next</b> is <b>nullptr</b>, so that is where <b>it</b> lands." : ""), out);
+  }
+  return R.frames;
+});
+
+/* ------------------------------------------------------------------ *
+ * Demo 2 -- doubly linked insert
+ * ------------------------------------------------------------------ */
+Stepper(document.getElementById("d2"), function (o) {
+  var op = o.op || "back";
+  var front = op === "front";
+  var code = front ? [
+    '<span class="ty">void</span> DoublyLinkedList::<span class="fn">push_front</span>(<span class="ty">int</span> value) {',
+    '    <span class="kw">auto</span>* node = <span class="kw">new</span> DoublyNode{value,',
+    '                            head_, <span class="kw">nullptr</span>};  <span class="cm">// next, prev</span>',
+    '    <span class="kw">if</span> (head_) head_-&gt;prev = node;',
+    '    <span class="kw">else</span>       tail_ = node;',
+    '    head_ = node;',
+    '    ++size_;',
+    '}'
+  ] : [
+    '<span class="ty">void</span> DoublyLinkedList::<span class="fn">push_back</span>(<span class="ty">int</span> value) {',
+    '    <span class="kw">auto</span>* node = <span class="kw">new</span> DoublyNode{value,',
+    '                            <span class="kw">nullptr</span>, tail_};  <span class="cm">// next, prev</span>',
+    '    <span class="kw">if</span> (tail_) tail_-&gt;next = node;',
+    '    <span class="kw">else</span>       head_ = node;',
+    '    tail_ = node;',
+    '    ++size_;',
+    '}'
+  ];
+  var value = front ? 5 : 40;
+  var L = makeList(op === "empty" ? [] : [10, 20, 30], true);
+  var R = Recorder(code, ["head_", "tail_", "node", "size_"], ["head_", "tail_", "node"], [["value", String(value)]]);
+  R.push(0, L, (front ? "push_front" : "push_back") + "(" + value + ") onto " +
+    (L.size ? "<b>10 &lt;-&gt; 20 &lt;-&gt; 30</b>." : "an <b>empty</b> list &mdash; <b>head_</b> and <b>tail_</b> are both <b>nullptr</b>."),
+    printed(L));
+  var k = addNode(L, value, front ? -1 : 99);
+  var nb = front ? L.ptr.head_ : L.ptr.tail_;
+  if (front) { L.nodes[k].next = nb; L.nodes[k].chg.next = true; }
+  else       { L.nodes[k].prev = nb; L.nodes[k].chg.prev = true; }
+  L.ptr.node = k;
+  R.push(1, L, "<b>Pointers 1 and 2</b>, both on the new node, set by the constructor. " + (nb === null
+    ? "With an empty list both are <b>nullptr</b>: nothing on either side."
+    : (front ? "<b>next</b> points at the old head, <b>prev</b> is <b>nullptr</b> &mdash; nothing in front of it."
+             : "<b>prev</b> points back at the old tail, <b>next</b> is <b>nullptr</b> &mdash; nothing after it.")) +
+    " Note <b>DoublyNode{value, next, prev}</b> takes <b>next</b> first.", printed(L));
+  if (nb !== null) {
+    if (front) { L.nodes[nb].prev = k; L.nodes[nb].chg.prev = true; }
+    else       { L.nodes[nb].next = k; L.nodes[nb].chg.next = true; }
+    R.push(3, L, "<b>Pointer 3</b>, on the neighbor. The old " + (front ? "head&#x2019;s <b>prev</b>" : "tail&#x2019;s <b>next</b>") +
+      " now points at the new node. The two are linked both ways.", printed(L));
+  } else {
+    R.push(3, L, "The list was empty, so there is no neighbor to link to. The <b>if</b> is false&hellip;", printed(L));
+    if (front) { L.ptr.tail_ = k; } else { L.ptr.head_ = k; }
+    R.push(4, L, "&hellip;and the <b>else</b> runs instead: the new node is " + (front ? "also the <b>tail</b>" : "also the <b>head</b>") +
+      ". <b>Forget this line and that end stays nullptr</b> &mdash; the next pop from that end dereferences it and crashes.",
+      printed(L));
+  }
+  if (front) { L.ptr.head_ = k; } else { L.ptr.tail_ = k; }
+  R.push(5, L, "<b>Pointer 4</b>, on the list: <b>" + (front ? "head_" : "tail_") + "</b> moves to the new node. " +
+    "No loop anywhere &mdash; this is O(1). CT 08&#x2019;s singly linked push_back had to walk the whole list.",
+    printed(L));
+  L.size++;
+  R.push(6, L, "Count it.", printed(L));
+  delete L.ptr.node;
+  R.push(7, L, "Done. <b>node</b> was a local and is gone; the list owns the node now.", printed(L));
+  return R.frames;
+});
+
+/* ------------------------------------------------------------------ *
+ * Demo 3 -- doubly linked remove, and the one-node case
+ * ------------------------------------------------------------------ */
+Stepper(document.getElementById("d3"), function (o) {
+  var op = o.op || "back";
+  var front = op === "front";
+  var bug = op === "bug";
+  var code = front ? [
+    '<span class="ty">void</span> DoublyLinkedList::<span class="fn">pop_front</span>() {',
+    '    <span class="kw">if</span> (!head_) <span class="kw">throw</span> underflow_error(...);',
+    '    <span class="kw">auto</span>* temp = head_;',
+    '    head_ = head_-&gt;next;',
+    '    <span class="kw">if</span> (head_) head_-&gt;prev = <span class="kw">nullptr</span>;',
+    '    <span class="kw">else</span>       tail_ = <span class="kw">nullptr</span>;',
+    '    <span class="kw">delete</span> temp;',
+    '    --size_;',
+    '}'
+  ] : [
+    '<span class="ty">void</span> DoublyLinkedList::<span class="fn">pop_back</span>() {',
+    '    <span class="kw">if</span> (!head_) <span class="kw">throw</span> underflow_error(...);',
+    '    <span class="kw">auto</span>* temp = tail_;',
+    '    tail_ = tail_-&gt;prev;',
+    '    <span class="kw">if</span> (tail_) tail_-&gt;next = <span class="kw">nullptr</span>;',
+    bug ? '    <span class="cm">// (no else)</span>' : '    <span class="kw">else</span>       head_ = <span class="kw">nullptr</span>;',
+    '    <span class="kw">delete</span> temp;',
+    '    --size_;',
+    '}'
+  ];
+  var one = op === "last" || bug;
+  var L = makeList(one ? [10] : [10, 20, 30], true);
+  var R = Recorder(code, ["head_", "tail_", "temp", "size_"], ["head_", "tail_", "temp"]);
+  R.push(0, L, (front ? "pop_front()" : "pop_back()") + " on " + (one ? "a list with <b>one</b> node: it is the head <i>and</i> the tail." : "<b>10 &lt;-&gt; 20 &lt;-&gt; 30</b>."), printed(L));
+  R.push(1, L, "The list is not empty, so no exception.", printed(L));
+  var t = front ? L.ptr.head_ : L.ptr.tail_;
+  L.ptr.temp = t;
+  R.push(2, L, "Save the node that is leaving. Same temp pointer pattern as CT 08: save, move, delete.", printed(L));
+  var nb = front ? L.nodes[t].next : L.nodes[t].prev;
+  if (front) { L.ptr.head_ = nb; } else { L.ptr.tail_ = nb; }
+  R.push(3, L, nb === null
+    ? "Move <b>" + (front ? "head_" : "tail_") + "</b> one step in&hellip; and it lands on <b>nullptr</b>. That was the only node."
+    : (front ? "<b>head_</b> steps forward to 20." : "<b>tail_</b> steps back to 20 through <b>prev</b>. That one step is what CT 08 needed a whole trailing-pointer walk for."),
+    printed(L));
+  if (nb !== null) {
+    if (front) { L.nodes[nb].prev = null; L.nodes[nb].chg.prev = true; }
+    else       { L.nodes[nb].next = null; L.nodes[nb].chg.next = true; }
+    R.push(4, L, "The new " + (front ? "head&#x2019;s <b>prev</b>" : "tail&#x2019;s <b>next</b>") +
+      " still pointed at the node that is leaving. Cut it, or the list keeps a link into memory that is about to be freed.",
+      printed(L));
+  } else {
+    R.push(4, L, "The " + (front ? "new head" : "new tail") + " is <b>nullptr</b>, so there is no link to cut. The <b>if</b> is false&hellip;",
+      printed(L));
+    if (bug) {
+      R.push(5, L, "&hellip;and there is no <b>else</b>. <b>head_</b> is still pointing at the node we are about to delete.",
+        printed(L));
+    } else {
+      if (front) { L.ptr.tail_ = null; } else { L.ptr.head_ = null; }
+      R.push(5, L, "&hellip;so the <b>else</b> clears the <b>other</b> end too. The list is empty, and both " +
+        "<b>head_</b> and <b>tail_</b> say so.", printed(L));
+    }
+  }
+  L.nodes[t].state = "free";
+  R.push(6, L, bug
+    ? "Delete it. <b>head_</b> is now dangling &mdash; it holds the address of freed memory."
+    : "Free the saved node. Nothing in the list points at it any more.", printed(L));
+  L.size--;
+  R.push(7, L, bug
+    ? "<b>size_</b> is 0, so <b>is_empty()</b> says true &mdash; but <b>head_</b> disagrees. print() and the " +
+      "destructor both start from <b>head_</b>: the destructor will delete this node a <b>second</b> time."
+    : "Count it.", printed(L));
+  delete L.ptr.temp;
+  R.push(8, L, bug
+    ? "A double delete is undefined behavior: a crash at exit if you are lucky, silent heap damage if not. " +
+      "<b>PopBackToEmpty</b> and <b>PopBackThenPushBack</b> exist to catch exactly this."
+    : (one ? "Empty, and consistent: <b>head_</b>, <b>tail_</b> and <b>size_</b> all agree." : "Done in O(1), with no loop anywhere."),
+    printed(L));
+  return R.frames;
+});
+</script>
+</body>
+</html>
