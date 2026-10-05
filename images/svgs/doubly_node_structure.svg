@@ -1,16 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380">
-  <style>
-    text { font-family: 'Segoe UI', Arial, sans-serif; }
-    .title { font-size: 18px; font-weight: bold; fill: #1a1a1a; }
-    .step-label { font-size: 14px; font-weight: bold; fill: #333; }
-    .value { font-size: 15px; font-weight: bold; fill: #fff; }
-    .value-sm { font-size: 11px; font-weight: bold; fill: #fff; }
-    .field-label { font-size: 11px; font-weight: bold; fill: #fff; }
-    .ptr-label { font-size: 12px; font-weight: bold; fill: #8e44ad; }
-    .code { font-size: 12px; fill: #2c3e50; font-family: 'Consolas', monospace; }
-    .note { font-size: 11px; fill: #777; font-style: italic; }
-    .compare { font-size: 13px; font-weight: bold; fill: #e74c3c; }
-  </style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 380" font-family="'Segoe UI', Arial, sans-serif">
+  <rect width="100%" height="100%" fill="white"/>
 
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
@@ -21,18 +10,18 @@
     </marker>
   </defs>
 
-  <text x="400" y="28" text-anchor="middle" class="title">DoublyNode vs Node: Structural Comparison</text>
+  <text x="400" y="28" text-anchor="middle" font-size="18px" font-weight="bold" fill="#1a1a1a">DoublyNode vs Node: Structural Comparison</text>
 
   <!-- ==================== Singly Linked Node ==================== -->
-  <text x="30" y="68" class="step-label">Node (singly linked) &#x2014; CT7/CT8</text>
-  <text x="30" y="88" class="code">struct Node { int data; Node* next; };</text>
+  <text x="30" y="68" font-size="14px" font-weight="bold" fill="#333">Node (singly linked) &#x2014; CT7/CT8</text>
+  <text x="30" y="88" font-size="12px" fill="#2c3e50" font-family="'Consolas', monospace">struct Node { int data; Node* next; };</text>
 
   <!-- Node box: data | next -->
   <rect x="200" y="105" width="100" height="50" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
   <rect x="300" y="105" width="80" height="50" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="250" y="135" text-anchor="middle" class="value">42</text>
-  <text x="340" y="128" text-anchor="middle" class="field-label">next</text>
-  <text x="340" y="143" text-anchor="middle" class="value-sm">&#x2192;</text>
+  <text x="250" y="135" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">42</text>
+  <text x="340" y="128" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
+  <text x="340" y="143" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">&#x2192;</text>
 
   <!-- Arrow out of next -->
   <line x1="380" y1="130" x2="438" y2="130" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
@@ -41,12 +30,12 @@
   <rect x="440" y="115" width="60" height="30" rx="4" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1.5"/>
   <text x="470" y="135" text-anchor="middle" style="font-size: 12px; fill: #95a5a6; font-weight: bold;">...</text>
 
-  <text x="30" y="185" class="note">Two fields: data stores the value, next points forward to the next node.</text>
-  <text x="30" y="200" class="note">Can only traverse forward. No way to go backwards.</text>
+  <text x="30" y="185" font-size="11px" fill="#777" font-style="italic">Two fields: data stores the value, next points forward to the next node.</text>
+  <text x="30" y="200" font-size="11px" fill="#777" font-style="italic">Can only traverse forward. No way to go backwards.</text>
 
   <!-- ==================== Doubly Linked Node ==================== -->
-  <text x="30" y="240" class="step-label">DoublyNode (doubly linked) &#x2014; CT9</text>
-  <text x="30" y="260" class="code">struct DoublyNode { int data; DoublyNode* next; DoublyNode* prev; };</text>
+  <text x="30" y="240" font-size="14px" font-weight="bold" fill="#333">DoublyNode (doubly linked) &#x2014; CT9</text>
+  <text x="30" y="260" font-size="12px" fill="#2c3e50" font-family="'Consolas', monospace">struct DoublyNode { int data; DoublyNode* next; DoublyNode* prev; };</text>
 
   <!-- Prev node placeholder -->
   <rect x="90" y="287" width="60" height="30" rx="4" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1.5"/>
@@ -59,11 +48,11 @@
   <rect x="190" y="277" width="80" height="50" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
   <rect x="270" y="277" width="100" height="50" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
   <rect x="370" y="277" width="80" height="50" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="230" y="295" text-anchor="middle" class="field-label">prev</text>
-  <text x="230" y="315" text-anchor="middle" class="value-sm">&#x2190;</text>
-  <text x="320" y="307" text-anchor="middle" class="value">42</text>
-  <text x="410" y="295" text-anchor="middle" class="field-label">next</text>
-  <text x="410" y="315" text-anchor="middle" class="value-sm">&#x2192;</text>
+  <text x="230" y="295" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">prev</text>
+  <text x="230" y="315" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">&#x2190;</text>
+  <text x="320" y="307" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">42</text>
+  <text x="410" y="295" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
+  <text x="410" y="315" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">&#x2192;</text>
 
   <!-- Arrow out of next -->
   <line x1="450" y1="302" x2="488" y2="302" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
@@ -72,6 +61,6 @@
   <rect x="490" y="287" width="60" height="30" rx="4" fill="#ecf0f1" stroke="#bdc3c7" stroke-width="1.5"/>
   <text x="520" y="307" text-anchor="middle" style="font-size: 12px; fill: #95a5a6; font-weight: bold;">...</text>
 
-  <text x="30" y="355" class="note">Three fields: prev points backward, data stores the value, next points forward.</text>
-  <text x="30" y="370" class="note">Can traverse in both directions. tail_-&gt;prev reaches the second-to-last node instantly.</text>
+  <text x="30" y="355" font-size="11px" fill="#777" font-style="italic">Three fields: prev points backward, data stores the value, next points forward.</text>
+  <text x="30" y="370" font-size="11px" fill="#777" font-style="italic">Can traverse in both directions. tail_-&gt;prev reaches the second-to-last node instantly.</text>
 </svg>

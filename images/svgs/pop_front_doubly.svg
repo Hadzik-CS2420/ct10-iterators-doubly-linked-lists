@@ -1,16 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-90 0 990 540">
-  <style>
-    text { font-family: 'Segoe UI', Arial, sans-serif; }
-    .title { font-size: 18px; font-weight: bold; fill: #1a1a1a; }
-    .step-label { font-size: 14px; font-weight: bold; fill: #333; }
-    .value { font-size: 15px; font-weight: bold; fill: #fff; }
-    .field-label { font-size: 11px; font-weight: bold; fill: #fff; }
-    .ptr-label { font-size: 12px; font-weight: bold; fill: #8e44ad; }
-    .deleted { font-size: 12px; font-weight: bold; fill: #e74c3c; }
-    .code { font-size: 12px; fill: #2c3e50; font-family: 'Consolas', monospace; }
-    .note { font-size: 11px; fill: #777; font-style: italic; }
-    .step-num { font-size: 12px; font-weight: bold; fill: #e74c3c; }
-  </style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-90 0 990 540" font-family="'Segoe UI', Arial, sans-serif">
+  <rect width="100%" height="100%" fill="white"/>
 
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
@@ -24,22 +13,22 @@
     </marker>
   </defs>
 
-  <text x="400" y="28" text-anchor="middle" class="title">pop_front: O(1) Removal Using head_</text>
+  <text x="400" y="28" text-anchor="middle" font-size="18px" font-weight="bold" fill="#1a1a1a">pop_front: O(1) Removal Using head_</text>
 
   <!-- ==================== BEFORE ==================== -->
-  <text x="30" y="62" class="step-label">Before: list contains 4001 &#x2194; 4002 &#x2194; 4003</text>
+  <text x="30" y="62" font-size="14px" font-weight="bold" fill="#333">Before: list contains 4001 &#x2194; 4002 &#x2194; 4003</text>
 
   <!-- head_ pointer -->
-  <text x="110" y="82" text-anchor="middle" class="ptr-label">head_</text>
+  <text x="110" y="82" text-anchor="middle" font-size="12px" font-weight="bold" fill="#8e44ad">head_</text>
   <line x1="110" y1="87" x2="110" y2="107" stroke="#8e44ad" stroke-width="2" marker-end="url(#ptr-arrow)"/>
 
   <!-- Node 4001 -->
   <rect x="30" y="110" width="50" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
   <rect x="80" y="110" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
   <rect x="140" y="110" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="55" y="135" text-anchor="middle" class="field-label">prev</text>
-  <text x="110" y="135" text-anchor="middle" class="value">4001</text>
-  <text x="165" y="135" text-anchor="middle" class="field-label">next</text>
+  <text x="55" y="135" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">prev</text>
+  <text x="110" y="135" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">4001</text>
+  <text x="165" y="135" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
 
   <!-- Arrow 4001→4002 -->
   <line x1="190" y1="130" x2="228" y2="130" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
@@ -48,9 +37,9 @@
   <rect x="230" y="110" width="50" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
   <rect x="280" y="110" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
   <rect x="340" y="110" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="255" y="135" text-anchor="middle" class="field-label">prev</text>
-  <text x="310" y="135" text-anchor="middle" class="value">4002</text>
-  <text x="365" y="135" text-anchor="middle" class="field-label">next</text>
+  <text x="255" y="135" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">prev</text>
+  <text x="310" y="135" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">4002</text>
+  <text x="365" y="135" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
 
   <!-- Arrow 4002→4003 -->
   <line x1="390" y1="130" x2="428" y2="130" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
@@ -59,12 +48,12 @@
   <rect x="430" y="110" width="50" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
   <rect x="480" y="110" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
   <rect x="540" y="110" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="455" y="135" text-anchor="middle" class="field-label">prev</text>
-  <text x="510" y="135" text-anchor="middle" class="value">4003</text>
-  <text x="565" y="135" text-anchor="middle" class="field-label">next</text>
+  <text x="455" y="135" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">prev</text>
+  <text x="510" y="135" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">4003</text>
+  <text x="565" y="135" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
 
   <!-- tail_ pointer -->
-  <text x="510" y="82" text-anchor="middle" class="ptr-label">tail_</text>
+  <text x="510" y="82" text-anchor="middle" font-size="12px" font-weight="bold" fill="#8e44ad">tail_</text>
   <line x1="510" y1="87" x2="510" y2="107" stroke="#8e44ad" stroke-width="2" marker-end="url(#ptr-arrow)"/>
 
   <!-- nullptr after 4003 (next) -->
@@ -75,7 +64,7 @@
   <!-- Before: prev back-arrows -->
   <path d="M 455 150 L 455 163 L 310 163 L 310 150" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
   <path d="M 255 150 L 255 163 L 110 163 L 110 150" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
-  <text x="383" y="171" text-anchor="middle" class="note" style="fill: #2980b9; font-style: normal; font-weight: bold;">prev</text>
+  <text x="383" y="171" text-anchor="middle" font-size="11px" fill="#777" font-style="italic" style="fill: #2980b9; font-style: normal; font-weight: bold;">prev</text>
 
   <!-- Before: 4001 prev→nullptr (routes left) -->
   <path d="M 30 150 L 30 163 L -18 163" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
@@ -83,23 +72,23 @@
   <text x="-52" y="169" text-anchor="middle" style="font-size: 12px; fill: #95a5a6; font-weight: bold;">nullptr</text>
 
   <!-- ==================== AFTER ==================== -->
-  <text x="30" y="212" class="step-label">After: pop_front() &#x2014; 4001 removed, head_ advances to 4002</text>
+  <text x="30" y="212" font-size="14px" font-weight="bold" fill="#333">After: pop_front() &#x2014; 4001 removed, head_ advances to 4002</text>
 
   <!-- head_ pointer (now points to 4002) -->
-  <text x="310" y="232" text-anchor="middle" class="ptr-label">head_</text>
+  <text x="310" y="232" text-anchor="middle" font-size="12px" font-weight="bold" fill="#8e44ad">head_</text>
   <line x1="310" y1="237" x2="310" y2="257" stroke="#8e44ad" stroke-width="2" marker-end="url(#ptr-arrow)"/>
 
   <!-- tail_ pointer (unchanged) -->
-  <text x="510" y="232" text-anchor="middle" class="ptr-label">tail_</text>
+  <text x="510" y="232" text-anchor="middle" font-size="12px" font-weight="bold" fill="#8e44ad">tail_</text>
   <line x1="510" y1="237" x2="510" y2="257" stroke="#8e44ad" stroke-width="2" marker-end="url(#ptr-arrow)"/>
 
   <!-- Node 4002 (new head — highlighted) -->
   <rect x="230" y="260" width="50" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
   <rect x="280" y="260" width="60" height="40" rx="4" fill="#3498db" stroke="#2980b9" stroke-width="2.5"/>
   <rect x="340" y="260" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="255" y="285" text-anchor="middle" class="field-label">prev</text>
-  <text x="310" y="285" text-anchor="middle" class="value">4002</text>
-  <text x="365" y="285" text-anchor="middle" class="field-label">next</text>
+  <text x="255" y="285" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">prev</text>
+  <text x="310" y="285" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">4002</text>
+  <text x="365" y="285" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
 
   <!-- Arrow 4002→4003 -->
   <line x1="390" y1="280" x2="428" y2="280" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
@@ -108,9 +97,9 @@
   <rect x="430" y="260" width="50" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
   <rect x="480" y="260" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
   <rect x="540" y="260" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="455" y="285" text-anchor="middle" class="field-label">prev</text>
-  <text x="510" y="285" text-anchor="middle" class="value">4003</text>
-  <text x="565" y="285" text-anchor="middle" class="field-label">next</text>
+  <text x="455" y="285" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">prev</text>
+  <text x="510" y="285" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">4003</text>
+  <text x="565" y="285" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
 
   <!-- nullptr after 4003 (unchanged) -->
   <line x1="590" y1="280" x2="628" y2="280" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
@@ -119,7 +108,7 @@
 
   <!-- After: prev back-arrows -->
   <path d="M 455 300 L 455 315 L 310 315 L 310 300" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
-  <text x="383" y="310" text-anchor="middle" class="note" style="fill: #2980b9; font-style: normal; font-weight: bold;">prev</text>
+  <text x="383" y="310" text-anchor="middle" font-size="11px" fill="#777" font-style="italic" style="fill: #2980b9; font-style: normal; font-weight: bold;">prev</text>
 
   <!-- After: 4002 prev→nullptr (new head has nothing behind it) -->
   <path d="M 230 300 L 230 315 L 200 315" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
@@ -128,16 +117,16 @@
 
   <!-- Deleted node ghost -->
   <rect x="30" y="333" width="150" height="28" rx="4" fill="none" stroke="#e74c3c" stroke-width="2" stroke-dasharray="6,3"/>
-  <text x="105" y="352" text-anchor="middle" class="deleted">4001 deleted</text>
+  <text x="105" y="352" text-anchor="middle" font-size="12px" font-weight="bold" fill="#e74c3c">4001 deleted</text>
 
   <!-- ==================== Steps explanation ==================== -->
-  <text x="30" y="390" class="step-num">Pointer updates:</text>
-  <text x="30" y="408" class="code">1. temp   = head_              // save old head (4001) before advancing</text>
-  <text x="30" y="426" class="code">2. head_  = head_-&gt;next        // advance head_ to next node (4002) &#x2014; O(1)</text>
-  <text x="30" y="444" class="code">3. head_-&gt;prev = nullptr       // new head (4002) has nothing behind it</text>
-  <text x="30" y="462" class="code">4. delete temp; --size_;       // free old head and update count</text>
+  <text x="30" y="390" font-size="12px" font-weight="bold" fill="#e74c3c">Pointer updates:</text>
+  <text x="30" y="408" font-size="12px" fill="#2c3e50" font-family="'Consolas', monospace">1. temp   = head_              // save old head (4001) before advancing</text>
+  <text x="30" y="426" font-size="12px" fill="#2c3e50" font-family="'Consolas', monospace">2. head_  = head_-&gt;next        // advance head_ to next node (4002) &#x2014; O(1)</text>
+  <text x="30" y="444" font-size="12px" fill="#2c3e50" font-family="'Consolas', monospace">3. head_-&gt;prev = nullptr       // new head (4002) has nothing behind it</text>
+  <text x="30" y="462" font-size="12px" fill="#2c3e50" font-family="'Consolas', monospace">4. delete temp; --size_;       // free old head and update count</text>
 
   <!-- Notes -->
-  <text x="400" y="496" text-anchor="middle" class="note">O(1) &#x2014; head_ points directly to the front. No traversal needed.</text>
-  <text x="400" y="513" text-anchor="middle" class="note">Edge case: if head_ is nullptr after step 2, the list is now empty &#x2014; set tail_ = nullptr too.</text>
+  <text x="400" y="496" text-anchor="middle" font-size="11px" fill="#777" font-style="italic">O(1) &#x2014; head_ points directly to the front. No traversal needed.</text>
+  <text x="400" y="513" text-anchor="middle" font-size="11px" fill="#777" font-style="italic">Edge case: if head_ is nullptr after step 2, the list is now empty &#x2014; set tail_ = nullptr too.</text>
 </svg>

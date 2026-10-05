@@ -1,17 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="-90 0 990 540">
-  <style>
-    text { font-family: 'Segoe UI', Arial, sans-serif; }
-    .title { font-size: 18px; font-weight: bold; fill: #1a1a1a; }
-    .step-label { font-size: 14px; font-weight: bold; fill: #333; }
-    .value { font-size: 15px; font-weight: bold; fill: #fff; }
-    .value-sm { font-size: 11px; font-weight: bold; fill: #fff; }
-    .field-label { font-size: 11px; font-weight: bold; fill: #fff; }
-    .ptr-label { font-size: 12px; font-weight: bold; fill: #8e44ad; }
-    .new-label { font-size: 12px; font-weight: bold; fill: #e67e22; }
-    .code { font-size: 12px; fill: #2c3e50; font-family: 'Consolas', monospace; }
-    .note { font-size: 11px; fill: #777; font-style: italic; }
-    .step-num { font-size: 12px; font-weight: bold; fill: #e74c3c; }
-  </style>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-90 0 990 540" font-family="'Segoe UI', Arial, sans-serif">
+  <rect width="100%" height="100%" fill="white"/>
 
   <defs>
     <marker id="arrow" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
@@ -28,22 +16,22 @@
     </marker>
   </defs>
 
-  <text x="400" y="28" text-anchor="middle" class="title">push_front: O(1) Prepend Using head_</text>
+  <text x="400" y="28" text-anchor="middle" font-size="18px" font-weight="bold" fill="#1a1a1a">push_front: O(1) Prepend Using head_</text>
 
   <!-- ==================== BEFORE ==================== -->
-  <text x="30" y="62" class="step-label">Before: list contains 4001 &#x2194; 4002 &#x2194; 4003</text>
+  <text x="30" y="62" font-size="14px" font-weight="bold" fill="#333">Before: list contains 4001 &#x2194; 4002 &#x2194; 4003</text>
 
   <!-- head_ pointer -->
-  <text x="110" y="82" text-anchor="middle" class="ptr-label">head_</text>
+  <text x="110" y="82" text-anchor="middle" font-size="12px" font-weight="bold" fill="#8e44ad">head_</text>
   <line x1="110" y1="87" x2="110" y2="107" stroke="#8e44ad" stroke-width="2" marker-end="url(#ptr-arrow)"/>
 
   <!-- Node 4001: prev | data | next -->
   <rect x="30" y="110" width="50" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
   <rect x="80" y="110" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
   <rect x="140" y="110" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="55" y="135" text-anchor="middle" class="field-label">prev</text>
-  <text x="110" y="135" text-anchor="middle" class="value">4001</text>
-  <text x="165" y="135" text-anchor="middle" class="field-label">next</text>
+  <text x="55" y="135" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">prev</text>
+  <text x="110" y="135" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">4001</text>
+  <text x="165" y="135" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
 
   <!-- Arrow 4001 next→4002 -->
   <line x1="190" y1="130" x2="228" y2="130" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
@@ -52,9 +40,9 @@
   <rect x="230" y="110" width="50" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
   <rect x="280" y="110" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
   <rect x="340" y="110" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="255" y="135" text-anchor="middle" class="field-label">prev</text>
-  <text x="310" y="135" text-anchor="middle" class="value">4002</text>
-  <text x="365" y="135" text-anchor="middle" class="field-label">next</text>
+  <text x="255" y="135" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">prev</text>
+  <text x="310" y="135" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">4002</text>
+  <text x="365" y="135" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
 
   <!-- Arrow 4002 next→4003 -->
   <line x1="390" y1="130" x2="428" y2="130" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
@@ -63,12 +51,12 @@
   <rect x="430" y="110" width="50" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
   <rect x="480" y="110" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
   <rect x="540" y="110" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="455" y="135" text-anchor="middle" class="field-label">prev</text>
-  <text x="510" y="135" text-anchor="middle" class="value">4003</text>
-  <text x="565" y="135" text-anchor="middle" class="field-label">next</text>
+  <text x="455" y="135" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">prev</text>
+  <text x="510" y="135" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">4003</text>
+  <text x="565" y="135" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
 
   <!-- tail_ pointer (before) -->
-  <text x="510" y="82" text-anchor="middle" class="ptr-label">tail_</text>
+  <text x="510" y="82" text-anchor="middle" font-size="12px" font-weight="bold" fill="#8e44ad">tail_</text>
   <line x1="510" y1="87" x2="510" y2="107" stroke="#8e44ad" stroke-width="2" marker-end="url(#ptr-arrow)"/>
 
   <!-- nullptr after 4003 (next) -->
@@ -79,7 +67,7 @@
   <!-- Before: prev back-arrows (blue, below the nodes) -->
   <path d="M 455 150 L 455 163 L 310 163 L 310 150" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
   <path d="M 255 150 L 255 163 L 110 163 L 110 150" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
-  <text x="383" y="171" text-anchor="middle" class="note" style="fill: #2980b9; font-style: normal; font-weight: bold;">prev</text>
+  <text x="383" y="171" text-anchor="middle" font-size="11px" fill="#777" font-style="italic" style="fill: #2980b9; font-style: normal; font-weight: bold;">prev</text>
 
   <!-- Before: 4001 prev→nullptr (routes left) -->
   <path d="M 30 150 L 30 163 L -18 163" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
@@ -87,26 +75,26 @@
   <text x="-52" y="169" text-anchor="middle" style="font-size: 12px; fill: #95a5a6; font-weight: bold;">nullptr</text>
 
   <!-- ==================== AFTER ==================== -->
-  <text x="30" y="212" class="step-label">After: push_front(4000) &#x2014; four pointer updates, O(1)</text>
+  <text x="30" y="212" font-size="14px" font-weight="bold" fill="#333">After: push_front(4000) &#x2014; four pointer updates, O(1)</text>
 
   <!-- head_ pointer (now points to new node 4000) -->
-  <text x="110" y="232" text-anchor="middle" class="ptr-label">head_</text>
+  <text x="110" y="232" text-anchor="middle" font-size="12px" font-weight="bold" fill="#8e44ad">head_</text>
   <line x1="110" y1="237" x2="110" y2="257" stroke="#8e44ad" stroke-width="2" marker-end="url(#ptr-arrow)"/>
 
   <!-- tail_ pointer (unchanged — still points to 4003) -->
-  <text x="710" y="232" text-anchor="middle" class="ptr-label">tail_</text>
+  <text x="710" y="232" text-anchor="middle" font-size="12px" font-weight="bold" fill="#8e44ad">tail_</text>
   <line x1="710" y1="237" x2="710" y2="257" stroke="#8e44ad" stroke-width="2" marker-end="url(#ptr-arrow)"/>
 
   <!-- NEW Node 4000 (highlighted border) -->
   <rect x="30" y="260" width="50" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
   <rect x="80" y="260" width="60" height="40" rx="4" fill="#3498db" stroke="#2980b9" stroke-width="2.5"/>
   <rect x="140" y="260" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="55" y="285" text-anchor="middle" class="field-label">prev</text>
-  <text x="110" y="285" text-anchor="middle" class="value">4000</text>
-  <text x="165" y="285" text-anchor="middle" class="field-label">next</text>
+  <text x="55" y="285" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">prev</text>
+  <text x="110" y="285" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">4000</text>
+  <text x="165" y="285" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
 
   <!-- new node label (offset left to avoid overlapping head_ line) -->
-  <text x="55" y="252" text-anchor="middle" class="new-label">new node</text>
+  <text x="55" y="252" text-anchor="middle" font-size="12px" font-weight="bold" fill="#e67e22">new node</text>
 
   <!-- Arrow 4000 next→4001 (NEW — green to show it's a new link) -->
   <line x1="190" y1="280" x2="228" y2="280" stroke="#27ae60" stroke-width="2.5" marker-end="url(#arrow-green)"/>
@@ -115,9 +103,9 @@
   <rect x="230" y="260" width="50" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
   <rect x="280" y="260" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
   <rect x="340" y="260" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="255" y="285" text-anchor="middle" class="field-label">prev</text>
-  <text x="310" y="285" text-anchor="middle" class="value">4001</text>
-  <text x="365" y="285" text-anchor="middle" class="field-label">next</text>
+  <text x="255" y="285" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">prev</text>
+  <text x="310" y="285" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">4001</text>
+  <text x="365" y="285" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
 
   <!-- Arrow 4001→4002 -->
   <line x1="390" y1="280" x2="428" y2="280" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
@@ -126,9 +114,9 @@
   <rect x="430" y="260" width="50" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
   <rect x="480" y="260" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
   <rect x="540" y="260" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="455" y="285" text-anchor="middle" class="field-label">prev</text>
-  <text x="510" y="285" text-anchor="middle" class="value">4002</text>
-  <text x="565" y="285" text-anchor="middle" class="field-label">next</text>
+  <text x="455" y="285" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">prev</text>
+  <text x="510" y="285" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">4002</text>
+  <text x="565" y="285" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
 
   <!-- Arrow 4002→4003 -->
   <line x1="590" y1="280" x2="628" y2="280" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
@@ -137,9 +125,9 @@
   <rect x="630" y="260" width="50" height="40" rx="4" fill="#2980b9" stroke="#2471a3" stroke-width="2"/>
   <rect x="680" y="260" width="60" height="40" rx="4" fill="#2ecc71" stroke="#27ae60" stroke-width="2"/>
   <rect x="740" y="260" width="50" height="40" rx="4" fill="#f39c12" stroke="#e67e22" stroke-width="2"/>
-  <text x="655" y="285" text-anchor="middle" class="field-label">prev</text>
-  <text x="710" y="285" text-anchor="middle" class="value">4003</text>
-  <text x="765" y="285" text-anchor="middle" class="field-label">next</text>
+  <text x="655" y="285" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">prev</text>
+  <text x="710" y="285" text-anchor="middle" font-size="15px" font-weight="bold" fill="#fff">4003</text>
+  <text x="765" y="285" text-anchor="middle" font-size="11px" font-weight="bold" fill="#fff">next</text>
 
   <!-- nullptr after 4003 (next — unchanged) -->
   <line x1="790" y1="280" x2="818" y2="280" stroke="#e74c3c" stroke-width="2" marker-end="url(#arrow)"/>
@@ -151,7 +139,7 @@
   <path d="M 655 300 L 655 315 L 510 315 L 510 300" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
   <path d="M 455 300 L 455 315 L 310 315 L 310 300" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
   <path d="M 255 300 L 255 315 L 110 315 L 110 300" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
-  <text x="183" y="310" text-anchor="middle" class="note" style="fill: #2980b9; font-style: normal; font-weight: bold;">prev</text>
+  <text x="183" y="310" text-anchor="middle" font-size="11px" fill="#777" font-style="italic" style="fill: #2980b9; font-style: normal; font-weight: bold;">prev</text>
 
   <!-- After: 4000 prev→nullptr (routes left) -->
   <path d="M 30 300 L 30 315 L -18 315" fill="none" stroke="#2980b9" stroke-width="2" marker-end="url(#arrow-blue)"/>
@@ -159,13 +147,13 @@
   <text x="-52" y="321" text-anchor="middle" style="font-size: 12px; fill: #95a5a6; font-weight: bold;">nullptr</text>
 
   <!-- ==================== Steps explanation ==================== -->
-  <text x="30" y="360" class="step-num">Pointer updates:</text>
-  <text x="30" y="378" class="code">1. new_node-&gt;next = head_        // new node points forward to old head (4001)</text>
-  <text x="30" y="396" class="code">2. new_node-&gt;prev = nullptr      // new node has nothing behind it</text>
-  <text x="30" y="414" class="code">3. head_-&gt;prev    = new_node     // old head (4001) now points back to new node</text>
-  <text x="30" y="432" class="code">4. head_           = new_node     // list&apos;s head pointer advances to new node</text>
+  <text x="30" y="360" font-size="12px" font-weight="bold" fill="#e74c3c">Pointer updates:</text>
+  <text x="30" y="378" font-size="12px" fill="#2c3e50" font-family="'Consolas', monospace">1. new_node-&gt;next = head_        // new node points forward to old head (4001)</text>
+  <text x="30" y="396" font-size="12px" fill="#2c3e50" font-family="'Consolas', monospace">2. new_node-&gt;prev = nullptr      // new node has nothing behind it</text>
+  <text x="30" y="414" font-size="12px" fill="#2c3e50" font-family="'Consolas', monospace">3. head_-&gt;prev    = new_node     // old head (4001) now points back to new node</text>
+  <text x="30" y="432" font-size="12px" fill="#2c3e50" font-family="'Consolas', monospace">4. head_           = new_node     // list&apos;s head pointer advances to new node</text>
 
   <!-- Comparison note -->
-  <text x="400" y="466" text-anchor="middle" class="note">O(1) &#x2014; head_ points directly to the front. No traversal needed.</text>
-  <text x="400" y="483" text-anchor="middle" class="note">Edge case: if the list was empty, skip step 3 and set tail_ = new_node instead.</text>
+  <text x="400" y="466" text-anchor="middle" font-size="11px" fill="#777" font-style="italic">O(1) &#x2014; head_ points directly to the front. No traversal needed.</text>
+  <text x="400" y="483" text-anchor="middle" font-size="11px" fill="#777" font-style="italic">Edge case: if the list was empty, skip step 3 and set tail_ = new_node instead.</text>
 </svg>

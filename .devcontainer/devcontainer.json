@@ -1,5 +1,5 @@
 {
-  "name": "ct10-iterators-doubly-linked-lists",
+  "name": "CS 2420 · ct10-iterators-doubly-linked-lists",
   "image": "mcr.microsoft.com/devcontainers/cpp:1-ubuntu-24.04",
   "containerEnv": {
     "CC": "gcc-13",
