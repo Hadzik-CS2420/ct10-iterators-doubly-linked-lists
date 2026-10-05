@@ -76,15 +76,16 @@ bool DoublyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 //     if the list was empty, skip that step and set tail_ to the new node instead
 
 void DoublyLinkedList::push_front(int value) {
-    // TODO: Create a new DoublyNode on the heap with the given value
-    //       (next points to current head_, prev is nullptr)
+    auto* new_node = new DoublyNode{value, head_, nullptr};  // new_node->next = old head, new_node->prev = nullptr
 
-    // TODO: If the list is NOT empty: set head_->prev to point back to the new node
+    if (head_) {
+        head_->prev = new_node;  // old_head->prev = new_node
+    } else {
+        tail_ = new_node;        // edge case: list was empty, new node is also the tail
+    }
 
-    // TODO: If the list WAS empty: set tail_ to the new node
-    //       (the new node is both the head and the tail)
-
-    // TODO: Set head_ to the new node and increment size_
+    head_ = new_node;  // head_ = new_node
+    ++size_;
 }
 
 // ---------------------------------------------------------------------------
@@ -105,15 +106,16 @@ void DoublyLinkedList::push_front(int value) {
 //     if the list was empty, skip that step and set head_ to the new node instead
 
 void DoublyLinkedList::push_back(int value) {
-    // TODO: Create a new DoublyNode on the heap with the given value
-    //       (prev points to current tail_, next is nullptr)
+    auto* new_node = new DoublyNode{value, nullptr, tail_};  // new_node->next = nullptr, new_node->prev = old tail_
 
-    // TODO: If the list is NOT empty: set tail_->next to point forward to the new node
+    if (tail_) {
+        tail_->next = new_node;  // old_tail->next = new_node
+    } else {
+        head_ = new_node;        // edge case: list was empty, new node is also the head
+    }
 
-    // TODO: If the list WAS empty: set head_ to the new node
-    //       (the new node is both the head and the tail)
-
-    // TODO: Set tail_ to the new node and increment size_
+    tail_ = new_node;  // tail_ = new_node
+    ++size_;
 }
 
 // ---------------------------------------------------------------------------
@@ -136,14 +138,17 @@ void DoublyLinkedList::pop_front() {
         throw std::underflow_error("Cannot pop from an empty list");
     }
 
-    // TODO: Save head_ to a temp pointer
+    auto* temp = head_;           // temp = head_
+    head_ = head_->next;     // head_ = head_->next
 
-    // TODO: Advance head_ to the next node
+    if (head_) {
+        head_->prev = nullptr;    // new head has nothing behind it
+    } else {
+        tail_ = nullptr;          // edge case: list is now empty
+    }
 
-    // TODO: If the new head_ is NOT nullptr: clear its prev pointer to nullptr
-    //       Otherwise (list is now empty): set tail_ = nullptr
-
-    // TODO: Delete the saved old head and decrement size_
+    delete temp;                  // delete temp; --size_
+    --size_;
 }
 
 // ---------------------------------------------------------------------------
@@ -167,14 +172,17 @@ void DoublyLinkedList::pop_back() {
         throw std::underflow_error("Cannot pop from an empty list");
     }
 
-    // TODO: Save tail_ to a temp pointer
+    auto* temp = tail_;           // temp = tail_
+    tail_      = tail_->prev;     // tail_ = tail_->prev
 
-    // TODO: Retreat tail_ to the previous node (tail_->prev)
+    if (tail_) {
+        tail_->next = nullptr;    // new tail has nothing after it
+    } else {
+        head_ = nullptr;          // edge case: list is now empty
+    }
 
-    // TODO: If the new tail_ is NOT nullptr: clear its next pointer to nullptr
-    //       Otherwise (list is now empty): set head_ = nullptr
-
-    // TODO: Delete the saved old tail and decrement size_
+    delete temp;                  // delete temp; --size_
+    --size_;
 }
 
 // =============================================================================
@@ -210,15 +218,11 @@ DoublyLinkedList::Iterator DoublyLinkedList::end() {
 //   - usage: for (auto it = list.rbegin(); it != list.rend(); --it)
 
 DoublyLinkedList::Iterator DoublyLinkedList::rbegin() {
-    // TODO: Return an Iterator constructed with tail_
-
-    return Iterator{nullptr}; // placeholder — remove this line when done
+    return Iterator{tail_};
 }
 
 DoublyLinkedList::Iterator DoublyLinkedList::rend() {
-    // TODO: Return an Iterator constructed with nullptr
-
-    return Iterator{nullptr}; // placeholder — this happens to be correct; make it explicit
+    return Iterator{nullptr};
 }
 
 // ---------------------------------------------------------------------------
@@ -259,8 +263,6 @@ DoublyLinkedList::Iterator& DoublyLinkedList::Iterator::operator++() {
 //   - same pattern as operator++ but in the opposite direction
 
 DoublyLinkedList::Iterator& DoublyLinkedList::Iterator::operator--() {
-    // TODO: Move current_ to the previous node (current_->prev)
-    // TODO: Return *this
-
-    return *this; // placeholder — ensure this is the last line after your implementation
+    current_ = current_->prev;
+    return *this;
 }

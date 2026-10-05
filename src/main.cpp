@@ -41,8 +41,9 @@ int main() {
 
     std::cout << "--- Walking the queue (explicit iterator) ---\n";
 
-    // TODO: Write a for loop using begin(), end(), ++, and * to print each ticket number.
-    //       Format each line as: "  Ticket: 3001"
+    for (auto it = tickets.begin(); it != tickets.end(); ++it) {
+        std::cout << "  Ticket: " << *it << "\n";
+    }
 
     std::cout << "\n";
 
@@ -65,8 +66,9 @@ int main() {
 
     int pending_count = 0;
 
-    // TODO: Write a range-based for loop over 'tickets'.
-    //       If the ticket number is greater than 3002, increment pending_count.
+    for (int val : tickets) {
+        if (val > 3002) ++pending_count;
+    }
 
     std::cout << "Pending orders (after ticket 3002): " << pending_count << "\n\n";
 
@@ -100,8 +102,10 @@ int main() {
 
     std::cout << "--- Cars pulling in ---\n";
 
-    // TODO: Push order IDs 4001, 4002, 4003, 4004 to the BACK of drive_through
-    //       (cars join the back of the line)
+    drive_through.push_back(4001);
+    drive_through.push_back(4002);
+    drive_through.push_back(4003);
+    drive_through.push_back(4004);
 
     std::cout << "Drive-through: ";
     drive_through.print();
@@ -118,8 +122,7 @@ int main() {
     std::cout << "--- Curbside pickup moves to front ---\n";
     std::cout << "Order 3999 -- called ahead, order ready, moved to front of serving queue.\n";
 
-    // TODO: Push order ID 3999 to the FRONT of drive_through
-    //       (curbside pickup — called ahead, order is ready)
+    drive_through.push_front(3999);
 
     std::cout << "Drive-through: ";
     drive_through.print();
@@ -132,7 +135,7 @@ int main() {
     std::cout << "--- Front car served ---\n";
     std::cout << "Order 3999 served -- curbside pickup complete, removing from front.\n";
 
-    // TODO: Call pop_front() to serve the front car
+    drive_through.pop_front();
 
     std::cout << "Drive-through: ";
     drive_through.print();
@@ -148,7 +151,7 @@ int main() {
     std::cout << "--- Last car gives up ---\n";
     std::cout << "Order 4004 -- tired of waiting, left the lane.\n";
 
-    // TODO: Call pop_back() to remove the last car
+    drive_through.pop_back();
 
     std::cout << "Drive-through: ";
     drive_through.print();
@@ -179,8 +182,9 @@ int main() {
 
     std::cout << "\n--- Forward (front to back, explicit iterator) ---\n";
 
-    // TODO: Write a for loop using begin(), end(), and ++it to print each order.
-    //       Format each line as: "  Order: 4001"
+    for (auto it = drive_through.begin(); it != drive_through.end(); ++it) {
+        std::cout << "  Order: " << *it << "\n";
+    }
 
     // ---------------------------------------------------------------------------
     // Forward iteration: range-based for
@@ -194,8 +198,9 @@ int main() {
 
     std::cout << "\n--- Forward (front to back, range-based for) ---\n";
 
-    // TODO: Write a range-based for loop over drive_through to print each order.
-    //       Format each line as: "  Order: 4001"
+    for (int val : drive_through) {
+        std::cout << "  Order: " << val << "\n";
+    }
 
     // ---------------------------------------------------------------------------
     // Reverse iteration: explicit iterator
@@ -209,8 +214,9 @@ int main() {
 
     std::cout << "\n--- Reverse (back to front) ---\n";
 
-    // TODO: Write a for loop using rbegin(), rend(), and --it to print each order
-    //       in REVERSE. Format each line as: "  Order: 4003"
+    for (auto it = drive_through.rbegin(); it != drive_through.rend(); --it) {
+        std::cout << "  Order: " << *it << "\n";
+    }
 
     return 0;
 }

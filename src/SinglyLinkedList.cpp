@@ -169,9 +169,7 @@ bool SinglyLinkedList::is_empty()  const noexcept { return size_ == 0; }
 //   - if the list is empty, head_ is nullptr — begin() == end(), so the loop body never runs
 
 SinglyLinkedList::Iterator SinglyLinkedList::begin() {
-    // TODO: Return an Iterator constructed with head_
-
-    return Iterator{nullptr}; // placeholder — remove this line when done
+    return Iterator{head_};
 }
 
 // ---------------------------------------------------------------------------
@@ -192,9 +190,7 @@ SinglyLinkedList::Iterator SinglyLinkedList::begin() {
 //   - end() is never dereferenced — calling *it when it == end() is undefined behavior
 
 SinglyLinkedList::Iterator SinglyLinkedList::end() {
-    // TODO: Return an Iterator constructed with nullptr
-
-    return Iterator{nullptr}; // placeholder — this happens to be correct; make it explicit
+    return Iterator{nullptr};
 }
 
 // ---------------------------------------------------------------------------
@@ -213,10 +209,7 @@ SinglyLinkedList::Iterator SinglyLinkedList::end() {
 //   - end() returns Iterator{nullptr}, so the loop stops when current_ reaches nullptr
 
 bool SinglyLinkedList::Iterator::operator!=(const Iterator& other) const {
-    // TODO: Return true if this iterator's current_ differs from other's current_
-    //       (Hint: compare current_ with other.current_)
-
-    return false; // placeholder — remove this line when done
+    return current_ != other.current_;
 }
 
 // ---------------------------------------------------------------------------
@@ -233,10 +226,7 @@ bool SinglyLinkedList::Iterator::operator!=(const Iterator& other) const {
 //   - returns int& (reference) so changes go through to the node directly
 
 int& SinglyLinkedList::Iterator::operator*() {
-    // TODO: Return a reference to the data field of the current node
-    //       (Hint: current_ is a Node* — access its data member)
-
-    return current_->data; // placeholder — replace with your implementation
+    return current_->data;
 }
 
 // ---------------------------------------------------------------------------
@@ -256,8 +246,6 @@ int& SinglyLinkedList::Iterator::operator*() {
 //   - note: post-increment (it++) would be a separate overload that returns a copy before advancing
 
 SinglyLinkedList::Iterator& SinglyLinkedList::Iterator::operator++() {
-    // TODO: Advance current_ to the next node
-    // TODO: Return *this
-
-    return *this; // placeholder — ensure this is the last line after your implementation
+    current_ = current_->next;
+    return *this;
 }
