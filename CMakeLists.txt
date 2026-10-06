@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.24)
-project(ct9-iterators-doubly-linked-lists LANGUAGES CXX)
+project(ct10-iterators-doubly-linked-lists LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 23)
 

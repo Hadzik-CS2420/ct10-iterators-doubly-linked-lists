@@ -29,7 +29,7 @@
 //
 // ! DISCUSSION: Why not delete backwards using tail_?
 //   - we could walk tail_ backwards via prev, but forward traversal is simpler and equally correct
-//   - the same temp-pointer pattern from CT7 works here too
+//   - the same temp-pointer pattern from CT 08 works here too
 
 DoublyLinkedList::~DoublyLinkedList() {
     while (head_) {
@@ -153,7 +153,7 @@ void DoublyLinkedList::pop_front() {
 // ? SEE DIAGRAM: images/doubly/pop_back_doubly.png — O(1) removal via tail_->prev
 //
 // ! DISCUSSION: This is the other major payoff of a doubly linked list — O(1) pop_back.
-//   - singly linked list (CT8): needed trailing pointer traversal to find second-to-last — O(n)
+//   - singly linked list (CT 09): needed trailing pointer traversal to find second-to-last — O(n)
 //   - doubly linked list: tail_->prev points DIRECTLY to the second-to-last node — O(1)
 //   - steps:
 //       - temp = tail_             (save old tail before retreating)

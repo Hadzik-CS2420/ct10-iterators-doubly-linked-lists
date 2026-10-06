@@ -73,7 +73,7 @@ void SinglyLinkedList::pop_back() {
 
     // ! DISCUSSION: The trailing pointer pattern — O(n) cost.
     //   - must walk the entire list to find the second-to-last node
-    //   - CT9's DoublyLinkedList eliminates this with a tail_ pointer
+    //   - CT 10's DoublyLinkedList eliminates this with a tail_ pointer
     auto* previous = head_;
     auto* current  = head_->next;
     while (current->next) {

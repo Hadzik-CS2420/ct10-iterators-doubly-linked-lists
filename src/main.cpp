@@ -4,7 +4,7 @@
 #include <iostream>
 
 int main() {
-    std::cout << "=== Code-Together 9: Iterators & Doubly Linked Lists -- Farr's Ice Cream ===\n\n";
+    std::cout << "=== Code-Together 10: Iterators & Doubly Linked Lists -- Farr's Ice Cream ===\n\n";
 
     // =========================================================================
     // PART 1 — Iterator: walking the ticket queue
@@ -142,7 +142,7 @@ int main() {
     // Last car changes their mind
     // ---------------------------------------------------------------------------
     //
-    // ! DISCUSSION: In CT8, pop_back required trailing pointer traversal — O(n).
+    // ! DISCUSSION: In CT 09, pop_back required trailing pointer traversal — O(n).
     //   - now tail_->prev reaches the second-to-last node in ONE step — O(1)
 
     std::cout << "--- Last car gives up ---\n";
